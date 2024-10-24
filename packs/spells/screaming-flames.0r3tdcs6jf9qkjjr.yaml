@@ -12,26 +12,27 @@ system:
         unchained:
           cost: 2
           type: action
-      attackNotes:
-        - '[[/r 1d3]] Wisdom or [[/r 1d6]] Sanity damage'
       damage:
         parts:
-          - formula: min(5, floor(@cl / 2))d8
+          - formula: (min(5, floor(@cl / 2)))d8
             type:
               custom: ''
               values:
                 - fire
       duration:
         units: inst
+      effect: >-
+        a sheet of flame up to 15 ft. long and 10 ft. high that moves 15 ft. in
+        a straight line.
       name: Use
+      notes:
+        footer:
+          - '[[/r 1d3]] Wisdom or [[/r 1d6]] Sanity damage'
       range:
         units: close
       save:
         description: Reflex half and Will negates (see text)
         type: ref
-      spellEffect: >-
-        a sheet of flame up to 15 ft. long and 10 ft. high that moves 15 ft. in
-        a straight line.
   components:
     divineFocus: 2
     material: true

@@ -35,21 +35,23 @@ export class ItemChange extends foundry.abstract.DataModel {
     };
   }
 
-  static migrateData(data) {
+  static migrateData(source) {
     // Update terminology
-    if (data.subTarget) {
-      data.target = data.subTarget;
-      delete data.subTarget;
+    if (source.subTarget) {
+      source.target = source.subTarget;
+      delete source.subTarget;
     }
-    if (data.modifier) {
-      data.type = data.modifier;
-      delete data.modifier;
+    if (source.modifier) {
+      source.type = source.modifier;
+      delete source.modifier;
     }
     // Script operator is no longer supported
     // And migrate legacy operators
-    if (data.operator === "script") data.operator = "add";
-    else if (data.operator === "+") data.operator = "add";
-    else if (data.operator === "=") data.operator = "set";
+    if (source.operator === "script") source.operator = "add";
+    else if (source.operator === "+") source.operator = "add";
+    else if (source.operator === "=") source.operator = "set";
+
+    return super.migrateData(source);
   }
 
   constructor(data, options = {}) {
@@ -168,8 +170,6 @@ export class ItemChange extends foundry.abstract.DataModel {
   }
 
   _preUpdate(data) {
-    data = new this.constructor(data).toObject();
-
     // Make sure sub-target is valid
     /*
     // BUG: This does not work reliably for much anything but skills
@@ -183,8 +183,6 @@ export class ItemChange extends foundry.abstract.DataModel {
       }
     }
     */
-
-    return data;
   }
 
   /**
@@ -212,7 +210,7 @@ export class ItemChange extends foundry.abstract.DataModel {
 
     this.updateTime = new Date();
 
-    data = this._preUpdate(data);
+    this._preUpdate(data);
     // Prevent ID alterations
     if (data._id) delete data._id;
 

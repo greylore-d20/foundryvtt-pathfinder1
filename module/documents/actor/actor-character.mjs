@@ -46,8 +46,8 @@ export class ActorCharacterPF extends ActorPF {
    */
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
-
     if (!changed.system) return;
+    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
     // Update experience
     this._updateExp(changed);
@@ -62,11 +62,10 @@ export class ActorCharacterPF extends ActorPF {
   _updateExp(changed) {
     const xpData = changed.system.details?.xp;
 
-    if (xpData?.value === 0) {
+    if (xpData?.value <= 0) {
       // Reset XP to minimum possible
-      const level =
-        this.itemTypes.class?.filter((o) => o.subType !== "mythic").reduce((cur, o) => cur + o.system.level, 0) ?? 0;
-
+      // BUG: This will have stale value if the update changed classes, too
+      const level = this.system.details?.level?.value ?? 0;
       xpData.value = level > 0 ? this.getLevelExp(level - 1) : 0;
     }
   }

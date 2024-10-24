@@ -21,6 +21,7 @@ system:
                 - acid
       duration:
         units: inst
+      effect: 60-ft. line
       measureTemplate:
         size: '60'
         type: ray
@@ -31,7 +32,6 @@ system:
       save:
         description: Reflex partial (see text)
         type: ref
-      spellEffect: 60-ft. line
   components:
     material: true
     somatic: true
@@ -61,6 +61,8 @@ system:
   sources:
     - id: PZO1117
       pages: '204'
-  subschool: creation
+  subschool:
+    value:
+      - creation
 type: spell
 

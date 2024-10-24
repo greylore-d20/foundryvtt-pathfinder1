@@ -690,11 +690,11 @@ items:
           duration:
             units: spec
             value: 1 min./level
+          effect: cloud spreads in 20-ft. radius from you, 20 ft. high
           name: Use
           range:
             units: ft
             value: '20'
-          spellEffect: cloud spreads in 20-ft. radius from you, 20 ft. high
       aura:
         school: con
       cl: 1
@@ -844,15 +844,16 @@ items:
               type: attack
           duration:
             units: inst
-          effectNotes:
-            - >-
-              <b>Save Fail</b>
-              @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.3uIamlB0L1UZUwoF]{Deafened}
-              for 1 hour
           measureTemplate:
             size: '10'
             type: circle
           name: Attack
+          notes:
+            effect:
+              - >-
+                <b>Save Fail</b>
+                @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.3uIamlB0L1UZUwoF]{Deafened}
+                for 1 hour
           range:
             maxIncrements: 5
             units: ft
@@ -1426,7 +1427,9 @@ items:
         - id: PZO1110
           pages: '254'
       spellbook: primary
-      subschool: charm
+      subschool:
+        value:
+          - charm
     type: spell
   - _id: GDwx8anm6R7uZUFv
     _key: '!actors.items!AQQnEgudQaoQsLF6.GDwx8anm6R7uZUFv'
@@ -1493,7 +1496,9 @@ items:
         value: 1
       school: ill
       spellbook: primary
-      subschool: pattern
+      subschool:
+        value:
+          - pattern
     type: spell
   - _id: mvTH8dfKt1v7nlQt
     _key: '!actors.items!AQQnEgudQaoQsLF6.mvTH8dfKt1v7nlQt'
@@ -1570,7 +1575,9 @@ items:
       school: con
       spellbook: primary
       sr: false
-      subschool: creation
+      subschool:
+        value:
+          - creation
     type: spell
   - _id: u6Jin6LoLCKUo2Ne
     _key: '!actors.items!AQQnEgudQaoQsLF6.u6Jin6LoLCKUo2Ne'
@@ -1643,7 +1650,9 @@ items:
         value: 1
       school: enc
       spellbook: primary
-      subschool: compulsion
+      subschool:
+        value:
+          - compulsion
     type: spell
   - _id: eqrvxWhHw2szaoLm
     _key: '!actors.items!AQQnEgudQaoQsLF6.eqrvxWhHw2szaoLm'
@@ -1663,10 +1672,10 @@ items:
           duration:
             units: minute
             value: '1'
+          effect: Up to four lights, all within a 10-ft.-radius area
           name: Use
           range:
             units: medium
-          spellEffect: Up to four lights, all within a 10-ft.-radius area
       components:
         somatic: true
         verbal: true
@@ -1733,13 +1742,13 @@ items:
           duration:
             units: spec
             value: 1 round/level
+          effect: illusory sounds
           name: Use
           range:
             units: close
           save:
             description: Will disbelief
             type: will
-          spellEffect: illusory sounds
       components:
         material: true
         somatic: true
@@ -1784,7 +1793,9 @@ items:
       school: ill
       spellbook: primary
       sr: false
-      subschool: figment
+      subschool:
+        value:
+          - figment
     type: spell
   - _id: u8lOmOgKhhZjrDSU
     _key: '!actors.items!AQQnEgudQaoQsLF6.u8lOmOgKhhZjrDSU'
@@ -1907,10 +1918,10 @@ items:
           duration:
             units: minute
             value: '1'
+          effect: Up to four lights, all within a 10-ft.-radius area
           name: Use
           range:
             units: medium
-          spellEffect: Up to four lights, all within a 10-ft.-radius area
       components:
         somatic: true
         verbal: true
@@ -1977,13 +1988,13 @@ items:
           duration:
             units: spec
             value: 1 round/level
+          effect: illusory sounds
           name: Use
           range:
             units: close
           save:
             description: Will disbelief
             type: will
-          spellEffect: illusory sounds
       components:
         material: true
         somatic: true
@@ -2028,7 +2039,9 @@ items:
       school: ill
       spellbook: spelllike
       sr: false
-      subschool: figment
+      subschool:
+        value:
+          - figment
     type: spell
   - _id: g2gWfBXAb0VLDkIZ
     _key: '!actors.items!AQQnEgudQaoQsLF6.g2gWfBXAb0VLDkIZ'
@@ -2050,13 +2063,13 @@ items:
           duration:
             units: hour
             value: '1'
+          effect: see text
           name: Use
           range:
             units: ft
             value: '10'
           save:
             description: see text
-          spellEffect: see text
           target:
             value: see text
       components:

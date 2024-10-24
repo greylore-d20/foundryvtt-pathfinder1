@@ -10,6 +10,7 @@ export class ItemRacePF extends ItemPF {
   static system = Object.freeze({
     ...super.system,
     hasIdentifier: false,
+    hasActions: false,
   });
 
   /**
@@ -48,8 +49,8 @@ export class ItemRacePF extends ItemPF {
    */
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
-
     if (!changed.system) return;
+    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
     const actor = this.actor;
 

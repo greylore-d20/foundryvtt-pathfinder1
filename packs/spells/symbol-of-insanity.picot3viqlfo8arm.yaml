@@ -15,6 +15,7 @@ system:
           type: minute
       duration:
         units: seeText
+      effect: one symbol
       name: Use
       range:
         units: ft
@@ -22,7 +23,6 @@ system:
       save:
         description: Will negates
         type: will
-      spellEffect: one symbol
   components:
     material: true
     somatic: true
@@ -64,6 +64,8 @@ system:
   sources:
     - id: PZO1110
       pages: '356'
-  subschool: compulsion
+  subschool:
+    value:
+      - compulsion
 type: spell
 

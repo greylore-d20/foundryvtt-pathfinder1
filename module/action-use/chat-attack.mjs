@@ -101,17 +101,16 @@ export class ChatAttack {
       return;
     }
 
-    const rollData = this.rollData;
-    const enrichOptions = {
-      rollData,
-      relativeTo: this.action.actor,
-    };
-
     const content = await renderTemplate("systems/pf1/templates/chat/parts/item-notes.hbs", {
       notes: this.effectNotes,
       css: "effect-notes",
-      title: "PF1.EffectNotes",
+      header: game.i18n.localize("PF1.EffectNotes"),
     });
+
+    const enrichOptions = {
+      rollData: this.rollData,
+      relativeTo: this.action.actor,
+    };
 
     this.effectNotesHTML = await TextEditor.enrichHTML(content, enrichOptions);
   }
@@ -126,8 +125,8 @@ export class ChatAttack {
 
     /** @type {D20RollPF} */
     if (critical === true) {
-      if (this.action.data.critConfirmBonus) {
-        let critConfirm = this.action.data.critConfirmBonus;
+      if (this.action.critConfirmBonus) {
+        let critConfirm = this.action.critConfirmBonus;
         if (RollPF.parse(critConfirm).length > 1) critConfirm = `(${critConfirm})`;
         extraParts.push(`${critConfirm}[${game.i18n.localize("PF1.CriticalConfirmation")}]`);
       }
@@ -248,7 +247,7 @@ export class ChatAttack {
     data.total = totalDamage;
   }
 
-  async addEffectNotes() {
+  async addEffectNotes({ rollData } = {}) {
     this.effectNotes = [];
 
     const item = this.action.item;
@@ -258,22 +257,20 @@ export class ChatAttack {
 
     if (actor) {
       const noteSources = ["attacks.effect"];
-      if (item.type === "spell") noteSources.push("spell.effect"); // Spell specific notes
+      if (item.type === "spell") noteSources.push("spellEffect"); // Spell specific notes
 
       for (const source of noteSources) {
-        actor.getContextNotes(source).forEach((ns) => {
-          for (const note of ns.notes) this.effectNotes.push(...note.split(/[\n\r]+/));
-        });
+        this.effectNotes.push(...(await actor.getContextNotesParsed(source, { rollData })));
       }
     }
 
     // Add item notes
     if (item.system.effectNotes?.length) {
-      this.effectNotes.push(...item.system.effectNotes);
+      this.effectNotes.push(...item.system.effectNotes.map((text) => ({ text })));
     }
     // Add action notes
-    if (this.action.data.effectNotes?.length) {
-      this.effectNotes.push(...this.action.data.effectNotes);
+    if (this.action.notes.effect.length) {
+      this.effectNotes.push(...this.action.notes.effect.map((text) => ({ text })));
     }
 
     // Misfire
@@ -286,10 +283,35 @@ export class ChatAttack {
           pf1.utils.getDistanceSystem() === "metric" ? pf1.config.measureUnitsShort.m : pf1.config.measureUnitsShort.ft;
         label += ` (${radius} ${unit})`;
       }
-      this.effectNotes.push(label);
+      this.effectNotes.push({ text: label });
     }
 
     await this.setEffectNotesHTML();
+  }
+
+  _createInlineRoll(roll, d20 = false, critical = false) {
+    const el = roll.toAnchor();
+    el.classList.add("inline-dsn-hidden");
+    if (d20) {
+      if (critical && roll.armorAsDR) el.classList.add("defense-dc");
+      if (roll.isNat20) el.classList.add("natural-20", "success");
+      if (roll.isNat1) el.classList.add("natural-1", "failure");
+      if (!critical && roll.isCrit) el.classList.add("critical-threat");
+    }
+    return el;
+  }
+
+  /**
+   * Generate inline rolls
+   */
+  _createInlineRolls() {
+    if (this.attack) this.attack.inlineRoll = this._createInlineRoll(this.attack, true);
+    if (this.critConfirm) this.critConfirm.inlineRoll = this._createInlineRoll(this.critConfirm, true, true);
+
+    for (const row of this.damageRows) {
+      if (row.normal) row.normal.inlineRoll = this._createInlineRoll(row.normal);
+      if (row.crit) row.crit.inlineRoll = this._createInlineRoll(row.crit);
+    }
   }
 
   finalize() {
@@ -306,6 +328,8 @@ export class ChatAttack {
     for (let a = 0; a < this.critDamage.rolls.length; a++) {
       this.damageRows[a].crit = this.critDamage.rolls[a];
     }
+
+    this._createInlineRolls();
 
     return this;
   }

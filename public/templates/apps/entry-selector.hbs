@@ -2,15 +2,21 @@
   <table>
     {{#if (gt fields.length 1)}}
       <thead>
-      {{#each fields}}
-        <th>{{localize this}}</th>
-      {{/each}}
-      <th class="entry-control"></th>
+      <tr data-drop="true" data-index="0">
+        <th class="drag-control"></th>
+        {{#each fields}}
+          <th>{{localize this}}</th>
+        {{/each}}
+        <th class="entry-control"></th>
+      </tr>
       </thead>
     {{/if}}
     <tbody>
     {{#each entries as |entry index|}}
-      <tr class="entry" data-index="{{index}}">
+      <tr class="entry" data-drop="true" data-index="{{index}}">
+        <td class="drag-control" data-drag="true">
+          <i class="fas fa-bars"></i>
+        </td>
         {{#if @root.isFlat}}
           <td>
             <input type="text" class="textarea" data-index="{{index}}"

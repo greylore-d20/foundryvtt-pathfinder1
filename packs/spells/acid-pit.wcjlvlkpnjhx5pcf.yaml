@@ -15,6 +15,7 @@ system:
       duration:
         units: spec
         value: 1 round + 1 round/level
+      effect: 10-ft.-by-10-ft. hole, 10 ft. deep/2 levels
       measureTemplate:
         color: '#44cc28'
         size: '10'
@@ -25,7 +26,6 @@ system:
       save:
         description: Reflex negates; see text
         type: ref
-      spellEffect: 10-ft.-by-10-ft. hole, 10 ft. deep/2 levels
   components:
     focus: true
     material: true
@@ -66,6 +66,8 @@ system:
     - id: PZO1115
       pages: '204'
   sr: false
-  subschool: creation
+  subschool:
+    value:
+      - creation
 type: spell
 

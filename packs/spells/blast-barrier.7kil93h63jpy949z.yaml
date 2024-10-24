@@ -15,17 +15,18 @@ system:
       duration:
         units: spec
         value: concentration, up to 1 round/2 levels
-      effectNotes:
-        - >-
-          [[/d 2d6[slashing] + (min(floor(@cl / 3),6))d6[sonic] #Explosion
-          Damage]]
+      effect: 1-ft.-thick wall up to 10 ft. high by 20 ft. wide
       name: Use
+      notes:
+        effect:
+          - >-
+            [[/d 2d6[slashing] + (min(floor(@cl / 3),6))d6[sonic] #Explosion
+            Damage]]
       range:
         units: close
       save:
         description: Reflex half (see below)
         type: ref
-      spellEffect: 1-ft.-thick wall up to 10 ft. high by 20 ft. wide
   components:
     material: true
     somatic: true

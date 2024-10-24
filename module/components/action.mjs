@@ -1,55 +1,371 @@
-import { calculateRange, keepUpdateArray } from "@utils";
+import { calculateRange } from "@utils";
 import { getHighestChanges } from "@actor/utils/apply-changes.mjs";
 import { RollPF } from "../dice/roll.mjs";
 import { DamageRoll } from "../dice/damage-roll.mjs";
-import { D20RollPF } from "../dice/d20roll.mjs";
+
+import { DocumentLikeModel } from "@models/abstract/document-like-model.mjs";
+import { CompactingMixin } from "@models/abstract/compacting-mixin.mjs";
+import { DamagePartModel } from "@models/action/damage-part-model.mjs";
+import { ExtraAttackModel } from "@models/action/extra-attack-mode.mjs";
+
+import { IDField } from "@datafields/id-field.mjs";
 
 /**
  * Action pseudo-document
  */
-export class ItemAction {
-  /**
-   * @internal
-   * @type {pf1.applications.component.ItemActionSheet}
-   */
-  _sheet = null;
-  /** @type {pf1.documents.item.ItemPF} */
-  parent = null;
-  /** @type {Record<number,Application>} */
-  apps = {};
-
+export class ItemAction extends CompactingMixin(DocumentLikeModel) {
   static FALLBACK_IMAGE = "systems/pf1/icons/skills/gray_04.jpg";
 
-  constructor(data, parent) {
-    this.data = foundry.utils.mergeObject(ItemAction.defaultData, data);
+  constructor(data, options) {
+    if (options instanceof Item) {
+      foundry.utils.logCompatibilityWarning(
+        "ItemAction constructor's second parameter as parent is deprecated. Please wrap it in options object like with datamodels.",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        }
+      );
+      options = { parent: options };
+    }
 
-    this.parent = parent;
+    super(data, options);
+  }
 
-    this.prepareData();
+  _configure(options) {
+    super._configure(options);
+
+    // Following prevent these definitions being lost on model reset()
+    Object.defineProperties(this, {
+      // Apps
+      apps: {
+        value: {},
+        writable: false,
+        enumerable: false,
+      },
+      // Sheet cache
+      _sheet: {
+        value: null,
+        writable: true,
+        enumerable: false,
+      },
+      // Conditionals collection cache to avoid conflicts with stored array
+      _conditionals: {
+        value: new Collection(),
+        writable: false,
+        enumerable: false,
+      },
+    });
+  }
+
+  static defineSchema() {
+    const fields = foundry.data.fields;
+    const blankToNull = { nullable: true, blank: false };
+    return {
+      ...super.defineSchema({ name: () => game.i18n.localize("PF1.Action") }),
+      img: new fields.FilePathField({ categories: ["IMAGE"], initial: null, blank: false }),
+      description: new fields.HTMLField(),
+      tag: new fields.StringField({ blank: false, nullable: true }), // TODO: slug field
+      activation: new fields.SchemaField({
+        cost: new fields.NumberField({ initial: 1, nullable: true }),
+        type: new fields.StringField({ initial: "nonaction" }), // pf1.config.abilityActivationTypes
+        unchained: new fields.SchemaField({
+          cost: new fields.NumberField({ initial: 1, nullable: true }),
+          type: new fields.StringField({ initial: "nonaction" }), // pf1.config.abilityActivationTypes_unchained
+        }),
+      }),
+      duration: new fields.SchemaField({
+        value: new fields.StringField(),
+        units: new fields.StringField(),
+        dismiss: new fields.BooleanField({ initial: false }),
+      }),
+      // Refactor into just .target string?
+      target: new fields.SchemaField({
+        value: new fields.StringField(),
+      }),
+      range: new fields.SchemaField({
+        value: new fields.StringField({ ...blankToNull }),
+        units: new fields.StringField({ ...blankToNull }),
+        maxIncrements: new fields.NumberField({ integer: true, nullable: false, initial: 1 }),
+        minValue: new fields.StringField({ ...blankToNull }),
+        minUnits: new fields.StringField({ ...blankToNull }),
+      }),
+      uses: new fields.SchemaField({
+        autoDeductChargesCost: new fields.StringField(),
+        perAttack: new fields.BooleanField({ initial: false }),
+        self: new fields.SchemaField({
+          value: new fields.NumberField({ integer: true, min: 0, nullable: false, initial: 0 }),
+          maxFormula: new fields.StringField(),
+          per: new fields.StringField(),
+        }),
+      }),
+      measureTemplate: new fields.SchemaField({
+        type: new fields.StringField(),
+        size: new fields.StringField(), // Formula field
+        color: new fields.ColorField(),
+        texture: new fields.FilePathField({ categories: ["IMAGE", "VIDEO"], initial: null, blank: false }),
+      }),
+      bab: new fields.StringField(), // Formula
+      attackName: new fields.StringField(),
+      actionType: new fields.StringField({ initial: "other" }), // pf1.config.itemActionTypes
+      attackBonus: new fields.StringField(), // Formula
+      critConfirmBonus: new fields.StringField(), // Formula,
+      damage: new fields.SchemaField({
+        parts: new fields.ArrayField(new fields.EmbeddedDataField(DamagePartModel)),
+        critParts: new fields.ArrayField(new fields.EmbeddedDataField(DamagePartModel)),
+        nonCritParts: new fields.ArrayField(new fields.EmbeddedDataField(DamagePartModel)),
+      }),
+      extraAttacks: new fields.SchemaField({
+        type: new fields.StringField(), // pf1.config.extraAttacks
+        manual: new fields.ArrayField(new fields.EmbeddedDataField(ExtraAttackModel)),
+        formula: new fields.SchemaField({
+          count: new fields.StringField(), // Formula
+          bonus: new fields.StringField(), // Formula
+          label: new fields.StringField(),
+        }),
+      }),
+      ability: new fields.SchemaField({
+        attack: new fields.StringField(), // ability key
+        damage: new fields.StringField(), // ability key
+        max: new fields.NumberField({ integer: true, nullable: true }),
+        damageMult: new fields.NumberField({ initial: null }),
+        critRange: new fields.NumberField({ initial: 20, nullable: true }), // null => 0
+        critMult: new fields.NumberField({ initial: 2, nullable: true }), // null => 1
+      }),
+      save: new fields.SchemaField({
+        dc: new fields.StringField(), // Formula,
+        type: new fields.StringField(), // pf1.config.savingThrows
+        description: new fields.StringField(),
+        harmless: new fields.BooleanField({ initial: false }),
+      }),
+      notes: new fields.SchemaField({
+        effect: new fields.ArrayField(new fields.StringField()),
+        footer: new fields.ArrayField(new fields.StringField()),
+      }),
+      soundEffect: new fields.StringField(),
+      powerAttack: new fields.SchemaField({
+        multiplier: new fields.NumberField({ min: 0, initial: null, nullable: true }),
+        damageBonus: new fields.NumberField({ min: 0, initial: 2, integer: true }),
+        critMultiplier: new fields.NumberField({ min: 1, initial: 1, integer: true }),
+      }),
+      naturalAttack: new fields.SchemaField({
+        primary: new fields.BooleanField({ initial: true }),
+        secondary: new fields.SchemaField({
+          attackBonus: new fields.StringField(), // Formula,
+          damageMult: new fields.NumberField({ initial: 0.5 }),
+        }),
+      }),
+      held: new fields.StringField(), // pf1.config.abilityDamageHeldMultipliers
+      nonlethal: new fields.BooleanField({ initial: false }),
+      splash: new fields.BooleanField({ initial: false }),
+      touch: new fields.BooleanField({ initial: false }),
+      ammo: new fields.SchemaField({
+        type: new fields.StringField(), // pf1.config.ammoTypes
+        cost: new fields.NumberField({ integer: true, min: 0, initial: 1 }),
+      }),
+      effect: new fields.StringField(),
+      area: new fields.StringField(),
+      conditionals: new fields.ArrayField(new fields.ObjectField()), // TODO
+      enh: new fields.SchemaField({
+        value: new fields.NumberField({ integer: true, min: 0, initial: null, nullable: true }),
+      }),
+      material: new fields.SchemaField({
+        normal: new fields.SchemaField({
+          value: new fields.StringField(),
+          custom: new fields.BooleanField({ initial: false }),
+        }),
+        addon: new fields.SetField(new fields.StringField({ nullable: false, blank: false })),
+      }),
+      // Trinary alignments to allow inheriting from item and to explicitly disabling alignments
+      alignments: new fields.SchemaField({
+        lawful: new fields.BooleanField({ nullable: true, initial: null }),
+        chaotic: new fields.BooleanField({ nullable: true, initial: null }),
+        good: new fields.BooleanField({ nullable: true, initial: null }),
+        evil: new fields.BooleanField({ nullable: true, initial: null }),
+      }),
+    };
+  }
+
+  static migrateData(source) {
+    if (typeof source !== "object") return;
+
+    // Added with v?
+    // .unchainedAction.activation to .activation.unchained
+    if (source.unchainedAction?.activation) {
+      source.activation ??= {};
+      source.activation.unchained = source.unchainedAction.activation;
+    }
+
+    if (source.enh !== undefined) {
+      if (typeof source.enh !== "object") {
+        source.enh = { value: source.enh ?? null };
+      }
+      // Set to null if disabled.
+      if (source.enh.override === false) {
+        source.enh.value = null;
+      }
+      // Reset odd values to null, too.
+      else if (source.enh.value !== null && typeof source.enh.value !== "number") {
+        source.enh.value = null;
+      }
+    }
+
+    if (source.uses?.autoDeductCharges === false) {
+      source.uses.autoDeductChargesCost = "0";
+    } else if (source.uses?.autoDeductCharges === true) {
+      source.uses.autoDeductChargesCost = "1";
+    }
+
+    // Added with v9
+    if (source.damage) {
+      for (const part of ["parts", "critParts", "nonCritParts"]) {
+        const category = source.damage[part];
+        if (!category || category.length == 0) continue;
+
+        category.forEach((damage, index) => {
+          if (Array.isArray(damage)) {
+            const [formula, type] = damage;
+            category[index] = { formula, type };
+          }
+        });
+      }
+    }
+
+    // Added with v10
+    source.actionType ||= "other";
+    source.area ||= source.spellArea;
+
+    // Migrate unlimited to empty selection, as the two are identical in meaning
+    if (source.uses?.self?.per === "unlimited") {
+      delete source.uses.self.per;
+    }
+
+    const mt = source.measureTemplate;
+    if (mt) {
+      mt.color ||= mt.customColor;
+      mt.texture ||= mt.customTexture;
+    }
+
+    // Added with v11
+    if (source.range?.maxIncrements === null || source.range?.maxIncrements < 1) source.range.maxIncrements = 1;
+    if (source.spellEffect && !source.effect) source.effect = source.spellEffect;
+    if (source.naturalAttack?.primaryAttack !== undefined && source.naturalAttack?.primary === undefined) {
+      source.naturalAttack.primary = source.naturalAttack?.primaryAttack;
+    }
+    source.notes ??= {};
+    if (source.effectNotes && !source.notes.effect) source.notes.effect = source.effectNotes;
+    if (source.attackNotes && !source.notes.footer) source.notes.footer = source.attackNotes;
+
+    if (source.range?.units === "none") delete source.range.units;
+
+    //if (data.ability?.critMult === null) data.ability.critMult = 1;
+    //if (data.ability?.critRange === null) data.ability.critRange = 0;
+
+    return super.migrateData(source);
+  }
+
+  static get defaultData() {
+    foundry.utils.logCompatibilityWarning("ItemAction.defaultData has been deprecated with no replacement.", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+
+    return new this().toObject(undefined, false);
+  }
+
+  /**
+   * @deprecated
+   * @returns {this}
+   */
+  get data() {
+    foundry.utils.logCompatibilityWarning(
+      "ItemAction.data has been deprecated. Use the data directly on the action instead.",
+      {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      }
+    );
+
+    return this;
+  }
+
+  /**
+   * Data preparation
+   *
+   * @internal
+   */
+  prepareData() {
+    // Default action type to other if undefined.
+    // Optimally this would be in constructor only, but item action handling can cause that to be lost
+    this.actionType ||= "other";
+
+    this.img ||= this.item?.img || this.constructor.FALLBACK_IMAGE;
+
+    this.tag ||= pf1.utils.createTag(this.name);
+
+    // DEPRECATIONS
+    if (this.naturalAttack) {
+      Object.defineProperty(this.naturalAttack, "primaryAttack", {
+        get() {
+          foundry.utils.logCompatibilityWarning(
+            "ItemAction.naturalAttack.primaryAttack is deprecated in favor of ItemAction.naturalAttack.primary",
+            {
+              since: "PF1 vNEXT",
+              until: "PF1 vNEXT+1",
+            }
+          );
+          return this.primary;
+        },
+      });
+    }
+
+    // Prepare ammo
+    const ammoType = this.ammo?.type;
+    this.ammo.type = ammoType === "none" ? null : ammoType || this.item?.system.ammo?.type || null;
+
+    if (this.ammo.type) this.ammo.cost ??= 1;
+    else this.ammo.cost = 0; // Force zero if no type defined
+
+    // Override activation
+    if (game.settings.get("pf1", "unchainedActionEconomy")) {
+      this.activation = this.activation.unchained;
+    }
+
+    this._prepareConditionals();
+
+    // Nothing more if there's no parent. Temporary Action?
+    if (!this.item) return;
+
+    const rollData = this.getRollData();
+
+    // Prepare max personal charges
+    if (this.uses.self?.per) {
+      const maxFormula = this.uses.self.per === "single" ? "1" : this.uses.self.maxFormula;
+      const maxUses = RollPF.safeRollSync(maxFormula, rollData).total ?? 0;
+      this.uses.self.max = maxUses;
+    }
+
+    // Remove enhancement bonus override, if wrong type
+    if (this.enh?.value != null && !["weapon", "attack"].includes(this.item.type)) {
+      this.enh.value = null;
+    }
+
+    // Initialize default damageMult if missing (for things that can't inherit it from item)
+    if (!Number.isFinite(this.ability?.damageMult)) {
+      let canHold = this.item.isPhysical || this.item.isQuasiPhysical || false;
+      if (!this.hasAttack) canHold = false;
+      if (!canHold) this.ability.damageMult = 1;
+    }
   }
 
   /** @type {string|null} - Normal material */
   get normalMaterial() {
-    return this.data.material?.normal.value || this.item.normalMaterial;
+    return this.material.normal.value || this.item.normalMaterial || null;
   }
 
   /** @type {string[]} - Addon materials */
   get addonMaterial() {
-    const addons = this.data.material?.addon || this.item.addonMaterial || [];
+    const addons = this.material.addon || this.item.addonMaterial || [];
     return addons.filter((o) => !!o);
-  }
-
-  /**
-   * The action's alignment attributes, or `null` if the action has no alignment attributes
-   *
-   * @type {string|null}
-   */
-  get alignments() {
-    return this.data.alignments ?? null;
-  }
-
-  get description() {
-    return this.data.description;
   }
 
   /**
@@ -58,51 +374,42 @@ export class ItemAction {
    * @type {boolean}
    */
   get isCombatManeuver() {
-    return ["mcman", "rcman"].includes(this.data.actionType);
-  }
-
-  /**
-   * General activation accessor that removes determining which action economy is in use.
-   *
-   * @type {string} - Activation type.
-   */
-  get activation() {
-    return (
-      (game.settings.get("pf1", "unchainedActionEconomy") ? this.data.activation.unchained : this.data.activation) ?? {}
-    );
+    return ["mcman", "rcman"].includes(this.actionType);
   }
 
   /**
    * Creates an action.
    *
    * @param {object[]} data - Data to initialize the action(s) with.
-   * @param {object} context - An object containing context information.
+   * @param {object} context - An object containing update context information.
    * @param {ItemPF} [context.parent] - The parent entity to create the action within.
-   * @returns The resulting actions, or an empty array if nothing was created.
+   * @throws {Error} - If the action has no parent
+   * @returns {ItemAction[]} - The resulting actions
    */
   static async create(data, context = {}) {
-    const { parent } = context;
+    const { parent, ...updateContext } = context;
 
-    if (parent instanceof pf1.documents.item.ItemPF) {
-      // Prepare data
-      data = data.map((dataObj) => foundry.utils.mergeObject(this.defaultData, dataObj));
-      const newActionData = foundry.utils.deepClone(parent.system.actions || []);
-      newActionData.push(...data);
+    if (!(parent instanceof Item)) throw new Error("No parent declared");
 
-      // Update parent
-      await parent.update({ "system.actions": newActionData });
-      // Return results
-      return data.map((o) => parent.actions.get(o._id));
-    }
+    // Prepare new data
+    data = data.map((dataObj) => new this(dataObj).toObject());
 
-    return [];
+    // Update parent
+    const actions = parent.toObject().system.actions || [];
+    actions.push(...data);
+    await parent.update({ "system.actions": actions }, updateContext);
+
+    // Return resulting actions
+    return data.map((o) => parent.actions.get(o._id));
   }
 
   static get defaultDamageType() {
-    return {
-      values: [],
-      custom: "",
-    };
+    foundry.utils.logCompatibilityWarning("ItemAction.defaultDamageType is deprecated with no replacement.", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+
+    return { values: [], custom: "" };
   }
 
   /** @type {ItemPF|undefined} - Parent item */
@@ -112,27 +419,12 @@ export class ItemAction {
 
   /** @type {ActorPF|undefined} - Parent actor of the parent item. */
   get actor() {
-    return this.parent.actor;
+    return this.parent?.actor;
   }
 
   /** @type {string} - Action ID */
   get id() {
-    return this.data._id;
-  }
-
-  /** @type {string} - Image with fallback handling. */
-  get img() {
-    return this.data.img || this.item?.img || this.constructor.FALLBACK_IMAGE;
-  }
-
-  /** @type {string} - Name */
-  get name() {
-    return this.data.name;
-  }
-
-  /** @type {string} - Tag */
-  get tag() {
-    return this.data.tag || pf1.utils.createTag(this.name);
+    return this._id;
   }
 
   /**
@@ -149,7 +441,7 @@ export class ItemAction {
     if (!item.canUse) return false;
 
     if (this.isSelfCharged) {
-      if ((this.data.uses.self?.value ?? 0) <= 0) return false;
+      if ((this.uses.self?.value ?? 0) <= 0) return false;
     }
 
     if (item.isPhysical) {
@@ -164,7 +456,7 @@ export class ItemAction {
       }
     }
 
-    const ammo = this.ammoType;
+    const ammo = this.ammo.type;
     if (ammo) {
       // Check if actor has any relevant ammo, regardless if they're set to default
       if (
@@ -180,13 +472,13 @@ export class ItemAction {
 
   /** @type {boolean} - Is some type of attack action. */
   get hasAttack() {
-    return ["mwak", "rwak", "twak", "msak", "rsak", "mcman", "rcman"].includes(this.data.actionType);
+    return ["mwak", "rwak", "twak", "msak", "rsak", "mcman", "rcman"].includes(this.actionType);
   }
 
   /** @type {boolean} - Has multiple attacks */
   get hasMultiAttack() {
     if (!this.hasAttack) return false;
-    const exAtk = this.data.extraAttacks ?? {};
+    const exAtk = this.extraAttacks ?? {};
     return exAtk.manual?.length > 0 || !!exAtk.type;
   }
 
@@ -197,12 +489,12 @@ export class ItemAction {
 
   /** @type {boolean} - Does parent item have charges */
   get isCharged() {
-    return this.item.isCharged;
+    return this.item.isCharged ?? false;
   }
 
   /** @type {boolean} - Action has charges of its own */
   get isSelfCharged() {
-    return !!this.data.uses?.self?.per;
+    return !!this.uses?.self?.per;
   }
 
   /**
@@ -218,7 +510,7 @@ export class ItemAction {
     const isSpell = this.item.type === "spell";
     const isSpellpointSpell = isSpell && this.item.useSpellPoints();
 
-    let formula = !isSpellpointSpell ? this.data.uses.autoDeductChargesCost : this.data.uses.spellPointCost;
+    let formula = !isSpellpointSpell ? this.uses.autoDeductChargesCost : this.uses.spellPointCost;
     if (!formula) {
       formula = this.item.getDefaultChargeFormula();
     } else if (typeof formula !== "string") {
@@ -249,7 +541,7 @@ export class ItemAction {
     const isSpell = this.item.type === "spell";
     const isSpellpointSpell = isSpell && this.item.useSpellPoints();
 
-    let formula = !isSpellpointSpell ? this.data.uses.autoDeductChargesCost : this.data.uses.spellPointCost;
+    let formula = !isSpellpointSpell ? this.uses.autoDeductChargesCost : this.uses.spellPointCost;
     if (!formula) {
       formula = this.item.getDefaultChargeFormula();
     } else if (typeof formula !== "string") {
@@ -271,7 +563,7 @@ export class ItemAction {
   /**
    * @type {number} The action's first increment range (in system configured units)
    */
-  get range() {
+  get rangeIncrement() {
     return this.getRange({ type: "single" });
   }
 
@@ -294,9 +586,9 @@ export class ItemAction {
    * @returns {number|null} The given range, in system configured units, or `null` if no range is applicable.
    */
   getRange({ type = "single", rollData = null } = {}) {
-    const baseRange = this.data.range.units;
-    const range = type === "min" ? this.data.range.minValue : this.data.range.value;
-    let rangeType = type === "min" ? this.data.range.minUnits : baseRange;
+    const baseRange = this.range.units;
+    const range = type === "min" ? this.range.minValue : this.range.value;
+    let rangeType = type === "min" ? this.range.minUnits : baseRange;
 
     // Special case of ignoring min range for invalid range types
     if (type === "min" && !["reach", "ft", "mi", "seeText"].includes(baseRange)) return 0;
@@ -312,12 +604,12 @@ export class ItemAction {
     const singleIncrementRange = calculateRange(range, rangeType, rollData)[0];
 
     if (["single", "min"].includes(type)) return singleIncrementRange;
-    return singleIncrementRange * this.data.range.maxIncrements;
+    return singleIncrementRange * this.range.maxIncrements;
   }
 
   /** @type {boolean} - Has measured template */
   get hasTemplate() {
-    const { type, size } = this.data.measureTemplate;
+    const { type, size } = this.measureTemplate;
     return !!type && !!size;
   }
 
@@ -327,7 +619,7 @@ export class ItemAction {
    * @type {boolean}
    */
   get hasDamage() {
-    return !!this.data.damage.parts?.length;
+    return !!this.damage.parts?.length;
   }
 
   /**
@@ -337,7 +629,7 @@ export class ItemAction {
    */
   get critRange() {
     if (this.item.isBroken || this.isCombatManeuver) return 20;
-    return this.data.ability?.critRange || 20;
+    return this.ability?.critRange || 20;
   }
 
   /**
@@ -346,9 +638,9 @@ export class ItemAction {
    * @type {number} Misfire threshold. Zero if action does not misfire.
    */
   get misfire() {
-    const misfire = this.data.ammo?.misfire ?? null;
+    const misfire = this.ammo?.misfire ?? null;
     if (Number.isFinite(misfire)) return misfire;
-    return this.item?.system.ammo?.misfire ?? 0;
+    return this.item.system.ammo?.misfire ?? 0;
   }
 
   /**
@@ -371,7 +663,7 @@ export class ItemAction {
     mult = 1;
     if (this.item.subType === "natural") {
       // Primary
-      if (rollData.action.naturalAttack?.primaryAttack) {
+      if (rollData.action.naturalAttack?.primary) {
         const ablDmgMult = rollData.action.ability?.damageMult ?? 1;
         // Primary attack gets +50% damage like with two-handing if ability score multiplier is 1.5x or higher
         if (ablDmgMult >= 1.5) mult = 1.5;
@@ -394,8 +686,8 @@ export class ItemAction {
    * @type {boolean}
    */
   get hasRange() {
-    const units = this.data.range?.units;
-    if (units === "none") return false;
+    const units = this.range?.units;
+    if (!units) return false;
     return !!units;
   }
 
@@ -407,11 +699,11 @@ export class ItemAction {
    * @returns {boolean}
    */
   get isHealing() {
-    return this.data.actionType === "heal" && this.hasDamage;
+    return this.actionType === "heal" && this.hasDamage;
   }
 
   get hasEffect() {
-    return this.hasDamage || (this.data.effectNotes != null && this.data.effectNotes.length > 0);
+    return this.hasDamage || this.notes.effect.length > 0;
   }
 
   /**
@@ -420,7 +712,7 @@ export class ItemAction {
    * @type {boolean}
    */
   get hasSave() {
-    return !!this.data.save?.type;
+    return !!this.save?.type;
   }
 
   /**
@@ -440,7 +732,7 @@ export class ItemAction {
         let formula = spellbook.baseDCFormula;
 
         const data = rollData.action;
-        if (data.save.dc.length > 0) formula += ` + ${data.save.dc}`;
+        if (data.save.dc) formula += ` + ${data.save.dc}`;
 
         const dcSchoolBonus = rollData.attributes.spells?.school?.[this.item.system.school]?.dc ?? 0;
         const universalDCBonus = rollData.attributes?.spells?.school?.all?.dc ?? 0;
@@ -448,35 +740,45 @@ export class ItemAction {
         return RollPF.safeRollSync(formula, rollData).total + dcBonus + dcSchoolBonus + universalDCBonus;
       } else {
         // Assume standard base formula for spells with minimum required abilty score
-        const level = this.item?.system.level ?? 1;
+        const level = this.item.system.level ?? 1;
         const minAbl = Math.floor(level / 2);
         return 10 + level + minAbl + dcBonus;
       }
     } else {
-      const dcFormula = this.data.save.dc?.toString() || "0";
+      const dcFormula = this.save.dc?.toString() || "0";
       result = RollPF.safeRollSync(dcFormula, rollData).total + dcBonus;
       return result;
     }
   }
 
-  /** @type {boolean} - Is sound effect defined? */
+  /**
+   * @deprecated
+   * @type {boolean} - Is sound effect defined?
+   */
   get hasSound() {
-    return !!this.data.soundEffect;
+    foundry.utils.logCompatibilityWarning(
+      "ItemAction.hasSound is deprecated with no replacement. Test !!action.soundEffect instead.",
+      {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      }
+    );
+    return !!this.soundEffect;
   }
 
   /** @type {number|null} - Effective enhancement bonus */
   get enhancementBonus() {
-    return this.data.enh?.value ?? this.item.system.enh;
+    return this.enh?.value ?? this.item.system.enh;
   }
 
   /** @type {boolean} - Is ranged action */
   get isRanged() {
-    return ["rwak", "twak", "rsak", "rcman"].includes(this.data.actionType);
+    return ["rwak", "twak", "rsak", "rcman"].includes(this.actionType);
   }
 
   /** @type {boolean} - Is spell action? */
   get isSpell() {
-    return ["rsak", "msak"].includes(this.data.actionType);
+    return ["rsak", "msak"].includes(this.actionType);
   }
 
   /**
@@ -486,7 +788,7 @@ export class ItemAction {
    */
   get damageSources() {
     // Build damage context
-    const contexts = [pf1.const.actionTypeToContext[this.data.actionType] ?? "damage"];
+    const contexts = [pf1.const.actionTypeToContext[this.actionType] ?? "damage"];
     if (this.isRanged) contexts.push("rdamage");
     else contexts.push("mdamage");
     if (this.item.subType === "natural") contexts.push("ndamage");
@@ -500,7 +802,7 @@ export class ItemAction {
    * @type {ItemChange[]} All relevant Changes for this action's damage.
    */
   get allDamageSources() {
-    const conds = this.data.conditionals
+    const conds = this.conditionals
       .filter((c) => c.default)
       .filter((c) => c.modifiers.find((m) => m.target === "damage"));
     const rollData = this.getRollData();
@@ -564,14 +866,16 @@ export class ItemAction {
    * @returns {object}
    */
   getRollData() {
-    const result = foundry.utils.deepClone(this.item.getRollData());
+    const item = this.item;
+    const result = item?.getRollData() ?? {};
 
-    result.action = foundry.utils.deepClone(this.data);
+    result.action = pf1.utils.deepClone(this);
     result.dc = this.hasSave ? this.getDC(result) : 0;
 
-    if (this.item.type === "spell") {
+    if (item?.type === "spell") {
       // Add per school CL bonus
-      result.cl += result.attributes?.spells?.school?.[this.item.system.school]?.cl ?? 0;
+      // TOOD: Move to item roll data generation?
+      result.cl += result.attributes?.spells?.school?.[item.system.school]?.cl ?? 0;
     }
 
     // Determine size bonus
@@ -594,171 +898,17 @@ export class ItemAction {
     return result;
   }
 
-  static get defaultData() {
-    return {
-      _id: foundry.utils.randomID(16),
-      name: game.i18n.localize("PF1.Action"),
-      img: "",
-      description: "",
-      tag: "",
-      activation: {
-        cost: 1,
-        type: "nonaction",
-        unchained: {
-          cost: 1,
-          type: "nonaction",
-        },
-      },
-      duration: {
-        value: null,
-        units: "",
-      },
-      target: {
-        value: "",
-      },
-      range: {
-        value: null,
-        units: "",
-        maxIncrements: 1,
-        minValue: null,
-        minUnits: "",
-      },
-      uses: {
-        autoDeductChargesCost: "",
-        self: {
-          value: 0,
-          maxFormula: "",
-          per: "",
-        },
-      },
-      measureTemplate: {
-        type: "",
-        size: "",
-        color: "",
-        texture: "",
-      },
-      attackName: "",
-      actionType: "other",
-      attackBonus: "",
-      critConfirmBonus: "",
-      damage: {
-        parts: [],
-        critParts: [],
-        nonCritParts: [],
-      },
-      extraAttacks: {
-        type: "",
-        manual: [],
-        formula: {
-          count: "",
-          bonus: "",
-          label: "",
-        },
-      },
-      ability: {
-        attack: "",
-        damage: "",
-        damageMult: null,
-        critRange: 20,
-        critMult: 2,
-      },
-      save: {
-        dc: "",
-        type: "",
-        description: "",
-      },
-      effectNotes: [],
-      attackNotes: [],
-      soundEffect: "",
-      powerAttack: {
-        multiplier: null,
-        damageBonus: 2,
-        critMultiplier: 1,
-      },
-      naturalAttack: {
-        primaryAttack: true,
-        secondary: {
-          attackBonus: "-5",
-          damageMult: 0.5,
-        },
-      },
-      held: "",
-      nonlethal: false,
-      splash: false,
-      touch: false,
-      ammo: {
-        type: "",
-        cost: 1,
-      },
-      spellEffect: "",
-      area: "",
-      conditionals: [],
-      enh: {
-        value: null,
-      },
-      material: {
-        normal: {},
-        addon: [],
-      },
-      alignments: {
-        lawful: null,
-        chaotic: null,
-        good: null,
-        evil: null,
-      },
-    };
-  }
-
   /**
-   * Data preparation
+   * Replace conditionals array with collection
    *
    * @internal
    */
-  prepareData() {
-    // Default action type to other if undefined.
-    // Optimally this would be in constructor only, but item action handling can cause that to be lost
-    this.data.actionType ||= "other";
+  _prepareConditionals() {
+    const collection = this._conditionals;
+    const prior = new Collection(collection.entries());
+    collection.clear(); // TODO: Remove specific entries after the loop instead of full clear here
 
-    const rollData = this.getRollData();
-
-    // Update conditionals
-    if (this.data.conditionals instanceof Array) {
-      this.conditionals = this._prepareConditionals(this.data.conditionals);
-    }
-
-    // Prepare max personal charges
-    if (this.data.uses.self?.per) {
-      const maxFormula = this.data.uses.self.per === "single" ? "1" : this.data.uses.self.maxFormula;
-      const maxUses = RollPF.safeRollSync(maxFormula, rollData).total ?? 0;
-      foundry.utils.setProperty(this.data, "uses.self.max", maxUses);
-    }
-
-    // Remove enhancement bonus override, if wrong type
-    if (this.data.enh?.value != null && !["weapon", "attack"].includes(this.item.type)) {
-      foundry.utils.setProperty(this.data, "enh.value", null);
-    }
-
-    // Initialize default damageMult if missing (for things that can't inherit it from item)
-    if (!Number.isFinite(this.data.ability?.damageMult)) {
-      let canHold = this.item?.isPhysical || this.item?.isQuasiPhysical || false;
-      if (!this.hasAttack) canHold = false;
-      if (!canHold) foundry.utils.setProperty(this.data, "ability.damageMult", 1);
-    }
-    if (this.data.naturalAttack?.secondary?.damageMult === undefined) {
-      foundry.utils.setProperty(this.data, "naturalAttack.secondary.damageMult", 0.5);
-    }
-  }
-
-  /**
-   * @internal
-   *
-   * @param {Array} conditionals
-   * @returns {Collection<string,ItemConditional>}
-   */
-  _prepareConditionals(conditionals) {
-    const prior = this.conditionals;
-    const collection = new Collection();
-    for (const o of conditionals) {
+    for (const o of this.conditionals) {
       let conditional = null;
       if (prior && prior.has(o._id)) {
         conditional = prior.get(o._id);
@@ -767,7 +917,8 @@ export class ItemAction {
       } else conditional = new pf1.components.ItemConditional(o, this);
       collection.set(o._id || conditional.data._id, conditional);
     }
-    return collection;
+
+    this.conditionals = collection;
   }
 
   /**
@@ -776,7 +927,7 @@ export class ItemAction {
    * @returns {Item} - Updated parent item document.
    */
   async delete() {
-    const actions = foundry.utils.deepClone(this.item.system.actions);
+    const actions = this.item.toObject().system.actions;
     actions.findSplice((a) => a._id == this.id);
 
     // Pre-emptively close applications
@@ -793,37 +944,20 @@ export class ItemAction {
   /**
    * Update the action
    *
+   * TODO: BROKEN
+   *
    * @param {object} updateData - Update data
    * @param {object} context - Update context
    */
   async update(updateData, context = {}) {
     updateData = foundry.utils.expandObject(updateData);
-    const idx = this.item.system.actions.findIndex((action) => action._id === this.id);
-    if (idx < 0) throw new Error(`Action ${this.id} not found on item.`);
-    const prevData = this.item.toObject().system.actions[idx];
-    const newUpdateData = foundry.utils.mergeObject(prevData, updateData, { performDeletions: true });
 
-    // Make sure this action has a name, even if it's removed
-    newUpdateData["name"] ||= this.name;
+    delete updateData._id; // Prevent ID drift
+    this.updateSource(updateData);
 
-    // Make sure stuff remains an array
-    {
-      const keepPaths = [
-        "extraAttacks.manual",
-        "damage.parts",
-        "damage.critParts",
-        "damage.nonCritParts",
-        "attackNotes",
-        "effectNotes",
-        "conditionals",
-      ];
+    const updates = this.item.actions.map((a) => a.toObject());
 
-      for (const path of keepPaths) {
-        keepUpdateArray(this.data, newUpdateData, path);
-      }
-    }
-
-    await this.item.update({ "system.actions": { [idx]: newUpdateData } }, context);
+    await this.item.update({ "system.actions": updates }, context);
   }
 
   /* -------------------------------------------- */
@@ -850,12 +984,13 @@ export class ItemAction {
    * @returns {Record<string, string>} This action's labels
    */
   getLabels({ rollData } = {}) {
-    const actionData = this.data;
     const labels = {};
     rollData ??= this.getRollData();
 
+    const hasActor = !!this.actor;
+
     // Activation method
-    if (actionData.activation) {
+    if (this.activation) {
       const activation = this.activation;
       if (activation) {
         const isUnchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
@@ -880,34 +1015,119 @@ export class ItemAction {
       }
     }
 
+    // Duration
+    // Set duration label
+    const duration = this.duration;
+    switch (duration?.units) {
+      case "spec":
+        labels.duration = duration.value;
+        break;
+      case "seeText":
+      case "inst":
+      case "perm":
+        labels.duration = pf1.config.timePeriods[duration.units];
+        break;
+      case "turn": {
+        const unit = pf1.config.timePeriods[duration.units];
+        labels.duration = game.i18n.format("PF1.Time.Format", { value: 1, unit });
+        break;
+      }
+      case "round":
+      case "minute":
+      case "hour":
+      case "day":
+      case "month":
+      case "year":
+        if (duration.value) {
+          const unit = pf1.config.timePeriods[duration.units];
+          labels.durationFormula = duration.value;
+          labels.variableDuration = /@\w/.test(duration.value);
+          const roll = new RollPF(duration.value, rollData);
+          let value;
+          try {
+            if (roll.isDeterministic) {
+              roll.evaluateSync();
+              value = roll.total;
+            } else {
+              let formula = pf1.utils.formula.unflair(duration.value);
+              formula = RollPF.replaceFormulaData(formula, rollData);
+              value = pf1.utils.formula.compress(pf1.utils.formula.simplify(formula));
+            }
+            labels.duration = game.i18n.format("PF1.Time.Format", { value, unit });
+          } catch (err) {
+            console.error("Error in duration formula:", { formula: duration.value, rollData, roll }, roll.err, this);
+          }
+        }
+        break;
+    }
+
+    // Dismissable, but only if special duration isn't used
+    // TODO: Better i18n support
+    if (labels.duration && duration.dismiss && duration.units !== "spec") {
+      labels.duration += " " + game.i18n.localize("PF1.DismissableMark");
+    }
+
     // Difficulty Class
     if (this.hasSave) {
       const totalDC = rollData.dc + (rollData.dcBonus ?? 0);
       labels.save = game.i18n.format("PF1.DCThreshold", { threshold: totalDC });
     }
 
+    // Range
     if (this.hasRange) {
-      const sourceUnits = actionData.range.units;
-      const rangeLabel = pf1.config.distanceUnits[sourceUnits];
-      if (sourceUnits === "spec") {
-        // Special can not be displayed reasonably
-      } else if (["personal", "touch", "melee", "reach"].includes(sourceUnits)) {
-        labels.range = rangeLabel;
+      const rangeUnit = this.range.units;
+      const rangeValue = this.range.value;
+      const rangeLabel = pf1.config.distanceUnits[rangeUnit];
+      labels.range = rangeLabel;
+      if (rangeUnit === "spec") {
+        labels.range = rangeValue || labels.range;
+      } else if (["personal", "touch", "melee", "reach"].includes(rangeUnit)) {
+        // Display as is
       } else {
         const range = this.getRange({ type: "single", rollData });
         if (range > 0) {
           const usystem = pf1.utils.getDistanceSystem();
           const rangeUnit = usystem === "metric" ? "m" : "ft";
-          labels.range = `${range} ${rangeUnit}`;
+          const lrange = new Intl.NumberFormat(undefined).format(range);
+          labels.range = `${lrange} ${rangeUnit}`;
         }
-        if (["close", "medium", "long"].includes(sourceUnits)) {
+        if (["close", "medium", "long"].includes(rangeUnit)) {
           labels.range += ` (${rangeLabel})`;
+        }
+      }
+
+      // Special formatting when no actor present
+      if (!hasActor) {
+        const units = pf1.utils.getDistanceSystem();
+        switch (rangeUnit) {
+          case "close":
+            labels.range = `${rangeLabel} (${game.i18n.localize(
+              units == "metric" ? "PF1.SpellRangeShortMetric" : "PF1.SpellRangeShort"
+            )})`;
+            break;
+          case "medium":
+            labels.range = `${rangeLabel} (${game.i18n.localize(
+              units == "metric" ? "PF1.SpellRangeMediumMetric" : "PF1.SpellRangeMedium"
+            )})`;
+            break;
+          case "long":
+            labels.range = `${rangeLabel} (${game.i18n.localize(
+              units == "metric" ? "PF1.SpellRangeLongMetric" : "PF1.SpellRangeLong"
+            )})`;
+            break;
         }
       }
     }
 
+    // Targets
+    const targets = this.target?.value;
+    if (targets) labels.targets = targets;
+
+    // Set area label
+    if (this?.area) labels.area = this.area;
+
     // Action type
-    labels.actionType = pf1.config.itemActionTypes[actionData.actionType];
+    labels.actionType = pf1.config.itemActionTypes[this.actionType];
 
     return labels;
   }
@@ -928,7 +1148,7 @@ export class ItemAction {
     const isNatural = this.item.subType === "natural";
     if (isNatural) contexts.push("nattack");
 
-    switch (this.data.actionType) {
+    switch (this.actionType) {
       case "twak":
         contexts.push("tattack");
         if (!isNatural) contexts.push("wattack");
@@ -953,17 +1173,28 @@ export class ItemAction {
    * @param {object} [options.data] - Roll data
    * @param {Array<string>} [options.extraParts] - Additional attack parts
    * @param {string} [options.bonus] - Additional attack bonus
-   * @param {boolean} [options.primaryAttack=true] - Treat as primary natural attack
+   * @param {boolean} [options.primary=true] - Treat as primary natural attack
    * @returns {D20RollPF}
    */
-  async rollAttack({ data = null, extraParts = [], bonus = null, primaryAttack = true } = {}) {
+  async rollAttack({ data = null, extraParts = [], bonus = null, primary = true, ...options } = {}) {
+    if (typeof options.primaryAttack === "boolean") {
+      foundry.utils.logCompatibilityWarning(
+        "ItemAttack.rollAttack()'s `primaryAttack` option is deprecated in favor of `primary`",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        }
+      );
+
+      primary = options.primaryAttack;
+    }
     const rollData = data ?? this.getRollData();
     const itemData = rollData.item;
     const actionData = rollData.action;
 
     const config = {};
 
-    itemData.primaryAttack = primaryAttack;
+    itemData.primaryAttack = primary;
 
     // Add misc bonuses/penalties
     itemData.proficiencyPenalty = -4;
@@ -987,7 +1218,7 @@ export class ItemAction {
     const changes = this.attackSources;
 
     // Add masterwork bonus to changes (if applicable)
-    if (["mwak", "rwak", "twak", "mcman", "rcman"].includes(this.data.actionType) && this.item.system.masterwork) {
+    if (["mwak", "rwak", "twak", "mcman", "rcman"].includes(this.actionType) && this.item.system.masterwork) {
       changes.push(
         new pf1.components.ItemChange({
           formula: "1",
@@ -1036,7 +1267,7 @@ export class ItemAction {
 
     // Add secondary natural attack penalty
     const isNatural = this.item.subType === "natural";
-    const isNaturalSecondary = isNatural && primaryAttack === false;
+    const isNaturalSecondary = isNatural && primary === false;
     config.secondaryPenalty = isNaturalSecondary ? -5 : 0;
 
     // Add bonus
@@ -1052,7 +1283,7 @@ export class ItemAction {
       critical: this.critRange,
     };
 
-    if (this.ammoType && this.ammoCost > 0) {
+    if (this.ammo.type && this.ammo.cost > 0) {
       const misfire = this.misfire;
       if (misfire > 0) rollOptions.misfire = misfire;
     }
@@ -1132,7 +1363,7 @@ export class ItemAction {
       throw new Error("You may not make a Damage Roll with this Action.");
     }
 
-    const isNatural = this.item?.subType === "natural";
+    const isNatural = this.item.subType === "natural";
 
     // Determine critical multiplier
     rollData.critMult = 1;
@@ -1148,7 +1379,7 @@ export class ItemAction {
     const parts = [];
     const addParts = (property, type) => {
       parts.push(
-        ...(actionData.damage[property]?.map((damage) => ({
+        ...(this.damage[property]?.map((damage) => ({
           base: damage.formula,
           extra: [],
           damageType: damage.type,
@@ -1162,6 +1393,7 @@ export class ItemAction {
         isExtra ? parts[0].extra.push(base) : parts.push({ base, extra: [], damageType, type });
       });
     };
+
     addParts("parts", "normal");
     if (critical) addParts("critParts", "crit");
     else addParts("nonCritParts", "nonCrit");
@@ -1298,7 +1530,7 @@ export class ItemAction {
       if (this.hasAttack) {
         result["attack_0"] = `${game.i18n.localize("PF1.Attack")} 1`;
 
-        const exAtk = this.data.extraAttacks;
+        const exAtk = this.extraAttacks;
         if (exAtk?.manual?.length) {
           exAtk.manual.forEach((part, index) => {
             result[`attack_${index + 1}`] = part.name;
@@ -1311,13 +1543,15 @@ export class ItemAction {
     // Add subtargets affecting effects
     if (target === "effect") {
       if (this.hasSave) result["dc"] = game.i18n.localize("PF1.DC");
-      if (this.item?.type === "spell") result["cl"] = game.i18n.localize("PF1.CasterLevelAbbr");
     }
     // Add misc subtargets
     if (target === "misc") {
       // Add charges subTarget with specific label
-      if (this.isCharged && this.type !== "spell") result["charges"] = game.i18n.localize("PF1.ChargeCost");
+      if (this.isCharged) result["charges"] = game.i18n.localize("PF1.ChargeCost");
     }
+
+    this.item.getConditionalTargets?.(target, result);
+
     return result;
   }
 
@@ -1375,9 +1609,9 @@ export class ItemAction {
   getAttacks({ full = true, rollData, resolve = false, conditionals = false, bonuses = false } = {}) {
     rollData ||= this.getRollData();
 
-    const actionData = this.data;
+    const exAtkCfg = pf1.config.extraAttacks[this.extraAttacks?.type] ?? {};
 
-    const exAtkCfg = pf1.config.extraAttacks[actionData.extraAttacks?.type] ?? {};
+    const bonusToAll = exAtkCfg.modToAll;
 
     /**
      * Counter for unnamed or other numbered attacks, to be incremented with each usage.
@@ -1390,8 +1624,10 @@ export class ItemAction {
       let label = name;
       while (unnamedAttackNames.has(label) || !label) {
         unnamedAttack += 1;
-        if (template) label = template.replace("{0}", unnamedAttack);
-        else label = game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: unnamedAttack });
+        if (template) {
+          if (game.i18n.has(template)) label = game.i18n.format(template, { 0: unnamedAttack });
+          else label = template.replace("{0}", unnamedAttack);
+        } else label = game.i18n.format("PF1.ExtraAttacks.Formula.LabelDefault", { 0: unnamedAttack });
       }
       unnamedAttackNames.add(label);
       return label;
@@ -1399,9 +1635,24 @@ export class ItemAction {
 
     rollData.attackCount = 0;
 
+    // Replace roll data that won't be available after
+    const replaceSpecificRollData = (formula, data) => {
+      return formula.replace(/@\w+\b/, (m) => {
+        const p = m.slice(1);
+        if (p in data) return data[p];
+        return m;
+      });
+    };
+
+    const _rollData = {
+      attackCount: 0,
+      attackSetCount: 0,
+      formulaicAttack: 0,
+    };
+
     const flavor = game.i18n.localize(exAtkCfg.flavor || "");
-    const formula = flavor ? `(${exAtkCfg.bonus || "0"})[${flavor}]` : exAtkCfg.bonus;
-    const attacks = [{ bonus: formula, label: getUniqueName(actionData.attackName) }];
+    const formula = `(${exAtkCfg.bonus || "0"} + ${bonusToAll || "0"})` + (flavor ? `[${flavor}]` : "");
+    const attacks = [{ bonus: replaceSpecificRollData(formula, _rollData), label: getUniqueName(this.attackName) }];
 
     // Extra attacks
     if (full) {
@@ -1410,38 +1661,40 @@ export class ItemAction {
 
       let attackCount = 0;
 
-      const parseAttacks = (countFormula, bonusFormula, label, bonusLabel) => {
-        const exAtkCount = RollPF.safeRoll(countFormula, rollData)?.total ?? 0;
+      const parseAttacks = async (countFormula, bonusFormula = "0", label, bonusLabel) => {
+        if (!countFormula || countFormula == "0") return;
+
+        const exAtkCount =
+          RollPF.safeRollSync(countFormula, rollData, undefined, undefined, { minized: true })?.total ?? 0;
         if (exAtkCount <= 0) return;
 
         try {
           for (let i = 0; i < exAtkCount; i++) {
-            rollData.attackCount = attackCount += 1;
-            rollData.formulaicAttack = i + 1; // Add and update attack counter
-            const bonus = RollPF.safeRollSync(
-              bonusFormula || "0",
-              rollData,
-              { formula: bonusFormula, action: this },
-              undefined,
-              {
-                minimize: true,
-              }
-            ).total;
+            const _rollData = {
+              attackCount: (attackCount += 1),
+              attackSetCount: i,
+              formulaicAttack: i + 1, // Add and update attack counter
+            };
+
+            let formula = bonusFormula;
+            if (bonusToAll) formula += ` + ${bonusToAll}`;
+            formula = replaceSpecificRollData(formula, _rollData);
+
+            const alabel = game.i18n.has(label) ? game.i18n.format(label, { 0: i + 1 }) : label?.replace("{0}", i + 1);
 
             attacks.push({
-              bonus: bonusLabel ? `(${bonus})[${bonusLabel}]` : bonus,
+              bonus: bonusLabel ? `(${formula})[${bonusLabel}]` : `(${formula})`,
+              formula,
+              flavor: bonusLabel,
               // Continue counting if similar to initial attack name
               // If formulaic attacks have a non-default name, number them with their own counter; otherwise, continue unnamed attack numbering
-              label: getUniqueName(label?.replace("{0}", i + 1), label),
+              label: getUniqueName(alabel, label),
+              rollData: _rollData,
             });
           }
         } catch (err) {
           console.error(err);
         }
-
-        // Cleanup roll data
-        delete rollData.attackCount;
-        delete rollData.formulaicAttack;
       };
 
       if (exAtkCfg.iteratives && !unchainedEconomy) {
@@ -1454,11 +1707,13 @@ export class ItemAction {
       }
 
       // Add attacks defined by configuration
-      if (exAtkCfg.count) parseAttacks(exAtkCfg.count, exAtkCfg.bonus, null, flavor);
+      if (exAtkCfg.count) {
+        parseAttacks(exAtkCfg.count, exAtkCfg.bonus, exAtkCfg.attackName, flavor);
+      }
 
       // Add manually entered explicit extra attacks
       if (exAtkCfg.manual) {
-        const extraAttacks = actionData.extraAttacks?.manual ?? [];
+        const extraAttacks = this.extraAttacks?.manual ?? [];
         for (const { name, formula } of extraAttacks) {
           if (name) unnamedAttackNames.add(name);
           attacks.push({
@@ -1471,11 +1726,8 @@ export class ItemAction {
 
       // Add custom extra attack formula
       if (exAtkCfg.formula) {
-        parseAttacks(
-          actionData.extraAttacks.formula?.count,
-          actionData.extraAttacks.formula?.bonus,
-          actionData.extraAttacks.formula?.label
-        );
+        const formulaCfg = this.extraAttacks.formula ?? {};
+        parseAttacks(formulaCfg.count, formulaCfg.bonus, formulaCfg.label);
       }
     }
 
@@ -1484,7 +1736,7 @@ export class ItemAction {
       const condBonuses = new Array(attacks.length).fill(0);
       if (conditionals) {
         // Conditional modifiers
-        actionData.conditionals
+        this.conditionals
           .filter((c) => c.default && c.modifiers.find((sc) => sc.target === "attack"))
           .forEach((c) => {
             c.modifiers.forEach((cc) => {
@@ -1526,37 +1778,135 @@ export class ItemAction {
   async use(options = {}) {
     options.actionId = this.id;
 
+    // TODO: ItemPF.use() and this.use() relation needs to be flipped.
+
     return this.item.use(options);
   }
 
   /**
    * Effective ammo type.
    *
+   * @deprecated
    * @type {string|null} - Ammo type string or null if this doesn't use ammo.
    */
   get ammoType() {
-    const type = this.data.ammo?.type;
-    if (type === "none") return null;
-    return type || this.item.system.ammo?.type || null;
+    foundry.utils.logCompatibilityWarning("ItemAction.ammoType is deprecated in favor of ItemAction.ammo.type", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+    return this.ammo.type;
   }
 
   /**
    * Effective per-attack ammo cost.
    *
+   * @deprecated
    * @type {number} - Number of ammo each attack consumes. Defaults to 1 if using ammo, 0 if not.
    */
   get ammoCost() {
-    if (this.ammoType) return this.data.ammo?.cost ?? 1;
-    return 0;
+    foundry.utils.logCompatibilityWarning("ItemAction.ammoCost is deprecated in favor of ItemAction.ammo.cost", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+
+    return this.ammo.cost;
+  }
+
+  /**
+   * Prune data
+   *
+   * @internal
+   * @param {object} data - Raw data (e.g. product of {@link toObject()})
+   */
+  static pruneData(data) {
+    // Aggressive data size reduction
+
+    if (!data.img) delete data.img;
+    if (!data.tag) delete data.tag;
+    if (!data.bab) delete data.bab;
+    if (!data.attackName) delete data.attackName;
+    if (!data.attackBonus) delete data.attackBonus;
+    if (!data.critConfirmBonus) delete data.critConfirmBonus;
+    if (!data.measureTemplate?.type) delete data.measureTemplate;
+    if (!data.extraAttacks?.type) delete data.extraAttacks;
+    if (!data.uses?.self?.per) delete data.uses?.self;
+    if (data.save && !data.save.type) {
+      // Preserve description even if there's no save (TODO: Maybe cull it anyway?)
+      if (!data.save.description) delete data.save.description;
+      // RAW preserving harmless=true here is pointless if there's no save.
+      if (data.save.harmless === false) delete data.save.harmless;
+      if (data.save.harmless !== true && !data.save.description) delete data.save;
+      else {
+        delete data.save.type;
+        delete data.save.dc;
+      }
+    }
+    if (!data.duration?.units) delete data.duration;
+    if (data.duration?.dismiss === false) delete data.duration.dismiss;
+    if (!data.target?.value) delete data.target;
+    if (!data.uses?.autoDeductChargesCost) delete data.uses?.autoDeductChargesCost;
+    if (data.uses?.perAttack === false) delete data.uses.perAttack;
+
+    if (data.ability?.max === null) delete data.ability.max;
+
+    if (!data.area) delete data.area;
+    if (!data.effect) delete data.effect;
+    if (data.notes?.effect) {
+      data.notes.effect = data.notes.effect.filter((n) => !!n);
+      if (data.notes.effect.length === 0) delete data.notes.effect;
+    }
+    if (data.notes?.footer) {
+      data.notes.footer = data.notes.footer.filter((n) => !!n);
+      if (data.notes.footer.length === 0) delete data.notes.footer;
+    }
+
+    if (!data.range?.units) delete data.range;
+    else {
+      if (!data.range?.minUnits) delete data.range?.minValue;
+      if (data.range?.maxIncrements === 1) delete data.range?.maxIncrements;
+    }
+
+    if (data.damage) {
+      if (data.damage.parts?.length == 0) delete data.damage.parts;
+      if (data.damage.critParts?.length == 0) delete data.damage.critParts;
+      if (data.damage.nonCritParts?.length == 0) delete data.damage.nonCritParts;
+      if (Object.keys(data.damage).length == 0) delete data.damage;
+    }
+
+    if (data.material) {
+      if (!data.material.normal?.value) delete data.material?.normal;
+      if (!data.material.addon?.length == 0) delete data.material?.addon;
+      if (Object.keys(data.material).length == 0) delete data.material;
+    }
+
+    // Diff based cleanup (don't do this for everything, to avoid defaults changing causing problems)
+    const defaults = new this().toObject(true, false);
+    const diff = foundry.utils.diffObject(defaults, data);
+    if (!diff.naturalAttack) delete data.naturalAttack;
+    if (!diff.alignments) delete data.alignments;
+
+    // Prune child models
+    // HACK: .toObject() only clones _source and thus never calls .toObject() on the child models
+    if (data.damage) {
+      for (const parts of Object.values(data.damage)) {
+        for (const part of parts) {
+          DamagePartModel.pruneData(part);
+        }
+      }
+    }
+
+    if (data.extraAttacks?.manual?.length) {
+      for (const exAtk of data.extraAttacks.manual) {
+        ExtraAttackModel.pruneData(exAtk);
+      }
+    }
   }
 
   /**
    * @type {pf1.applications.component.ItemActionSheet} - Returns current sheet for this action or creates one if it doesn't exist.
    */
   get sheet() {
-    if (!this._sheet) {
-      this._sheet = new pf1.applications.component.ItemActionSheet(this);
-    }
+    this._sheet ??= new pf1.applications.component.ItemActionSheet(this);
     return this._sheet;
   }
 
@@ -1567,6 +1917,37 @@ export class ItemAction {
    * @param {object} [context={}] - Optional context
    */
   render(force = false, context = {}) {
+    // TODO: Support AppV2
     Object.values(this.apps).forEach((app) => app.render(force, context));
+  }
+
+  /* DEPRECATIONS */
+
+  /** @deprecated */
+  get spellEffect() {
+    foundry.utils.logCompatibilityWarning("ItemAction.spellEffect is deprecated in favor of ItemAction.effect", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+
+    return this.effect;
+  }
+
+  /** @deprecated */
+  get attackNotes() {
+    foundry.utils.logCompatibilityWarning("ItemAction.attackNotes is deprecated in favor of ItemAction.notes.footer", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+    return this.notes?.footer;
+  }
+
+  /** @deprecated */
+  get effectNotes() {
+    foundry.utils.logCompatibilityWarning("ItemAction.effectNotes is deprecated in favor of ItemAction.notes.effect", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+    return this.notes?.effect;
   }
 }

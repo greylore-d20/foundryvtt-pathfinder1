@@ -11,24 +11,33 @@ import { getSkipActionPrompt } from "@documents/settings.mjs";
  * Override and extend the basic :class:`Item` implementation
  */
 export class ItemPF extends ItemBasePF {
-  constructor(...args) {
-    super(...args);
+  /**
+   * Configure item before data preparation.
+   *
+   * @override
+   * @param {object} options
+   */
+  _configure(options = {}) {
+    super._configure(options);
 
     /**
      * An object containing links to other items.
      *
      * @type {Record<string, ItemPF>}
      */
-    this.links ??= {};
+    this.links = {};
 
-    if (Array.isArray(this.system.actions)) {
+    if (this.hasActions) {
       /**
        * A {@link Collection} of {@link ItemAction}s.
        *
-       * @type {Collection<ItemAction>}
+       * @type {Collection<string, ItemAction>}
        */
-      this.actions ??= new Collection();
+      this.actions = new Collection();
     }
+
+    /** @type {Collection<string, pf1.components.ItemScriptCall>} */
+    this.scriptCalls = new Collection();
   }
 
   /**
@@ -51,6 +60,10 @@ export class ItemPF extends ItemBasePF {
      * Whether this item has changes and change flags.
      */
     hasChanges: true,
+    /**
+     * Whether this item has actions.
+     */
+    hasActions: true,
   });
 
   /**
@@ -79,6 +92,17 @@ export class ItemPF extends ItemBasePF {
 
     if (Object.keys(updates).length) this.updateSource(updates);
   }
+
+  /**
+   * Adjust temporary item before creation
+   *
+   * @abstract
+   * @protected
+   * @param {ItemPF} [item] - Temporary document
+   * @param {object} [data] - Creation data
+   * @param {boolean} [override=false] - Override values even if defined
+   */
+  static _adjustNewItem(item, data, override = false) {}
 
   /**
    * Meant to be overridden.
@@ -123,9 +147,8 @@ export class ItemPF extends ItemBasePF {
    */
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
-
-    // No system data changes
     if (!changed.system) return;
+    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
     this._preUpdateNumericValueGuard(changed.system);
 
@@ -213,11 +236,7 @@ export class ItemPF extends ItemBasePF {
     return ["quantity", "level"];
   }
 
-  /**
-   * Whether this item is physical.
-   *
-   * @type {boolean}
-   */
+  /** @type {boolean} - Whether this item is physical. */
   static get isPhysical() {
     return this.system.isPhysical;
   }
@@ -234,6 +253,15 @@ export class ItemPF extends ItemBasePF {
   /** {@inheritDoc ItemPF.isPhysical:getter} */
   get hasChanges() {
     return this.constructor.hasChanges;
+  }
+
+  static get hasActions() {
+    return this.system.hasChanges;
+  }
+
+  /** {@inheritDoc ItemPF.hasActions:getter} */
+  get hasActions() {
+    return this.constructor.hasActions;
   }
 
   /**
@@ -527,7 +555,7 @@ export class ItemPF extends ItemBasePF {
     let changedActions = false;
     for (const actionData of actions) {
       const action = this.actions.get(actionData._id);
-      const max = action.data.uses?.self?.max ?? 0;
+      const max = action.uses?.self?.max ?? 0;
       if (!(max > 0)) continue;
 
       const uses = actionData.uses?.self;
@@ -576,11 +604,6 @@ export class ItemPF extends ItemBasePF {
     return super.uuid;
   }
 
-  testUserPermission(user, permission, { exact = false } = {}) {
-    if (this.isEmbedded) return this.parent.testUserPermission(user, permission, { exact });
-    return super.testUserPermission(user, permission, { exact });
-  }
-
   get fullDescription() {
     return this.system.description.value;
   }
@@ -594,11 +617,84 @@ export class ItemPF extends ItemBasePF {
    * @param {object} [options.rollData] - Roll data for transforming description
    * @param {boolean} [options.header] - Include header if such exists.
    * @param {boolean} [options.body] - Include main description body if such exists.
+   * @param {boolean} [options.isolated] - Passed to {@link getDescriptionData}
    * @returns {string} - Full description.
    */
-  getDescription({ chatcard = false, data = {}, rollData, header = true, body = true } = {}) {
+  async getDescription({ chatcard = false, data = {}, rollData, header = true, body = true, isolated = false } = {}) {
     if (body) return this.system.description.value;
     return "";
+  }
+
+  /**
+   * Description Data
+   *
+   * @param {object} options - Additional options
+   * @param {object} [options.rollData] - Roll data instance
+   * @param {boolean} [options.isolated] - Include extra data to reflect it not being so easily available in context.
+   * @returns {object} - Description context data
+   */
+  async getDescriptionData({ rollData, isolated = false } = {}) {
+    const context = {};
+
+    const action = this.defaultAction;
+    rollData ??= action?.getRollData() ?? this.getRollData();
+    context.rollData = rollData;
+    context.labels = action?.getLabels({ rollData }) ?? this.getLabels({ rollData });
+
+    const fullInfo = game.user.isGM ? true : this.system.identified ?? true;
+
+    // Attack data, for attacks and weapons primarily
+    if (!action) return context;
+
+    if (action?.hasAttack) {
+      context.action = {};
+      if (action.hasDamage) {
+        const firstDamage = action.damage?.parts?.[0]?.formula;
+        // Spoof sizeRoll() to work based on weapon size insteead of actor size
+        const sizeKey = pf1.config.sizeChart[this.system.size || "med"] || "M";
+        const sizeIndex = Object.values(pf1.config.sizeChart).indexOf(sizeKey);
+        context.action.damage = pf1.utils.formula.simplify(firstDamage, {
+          ...rollData,
+          size: sizeIndex,
+        });
+        const critMult = action?.ability?.critMult || 1;
+        if (critMult > 1) {
+          const critRange = action.critRange || 20;
+          if (critRange === 20) context.action.critical = `×${critMult}`;
+          else context.action.critical = `${critRange}-20/×${critMult}`;
+        }
+        context.action.size = Object.values(pf1.config.actorSizes)[sizeIndex] || pf1.config.actorSizes.med;
+
+        const getTypes = (t) =>
+          [
+            ...(t.type?.values.map((dt) => pf1.registry.damageTypes.get(dt)?.name || dt) ?? []),
+            ...(t.type?.custom.split(";") ?? []),
+          ].filter((t) => !!t);
+
+        const types = fullInfo ? action.damage?.parts?.map(getTypes).flat() : getTypes(action.damage?.parts?.[0]);
+
+        context.action.type = types.join(", ");
+      }
+
+      // Range
+      if (["melee", "reach"].includes(action.range?.units)) context.action.range = "–";
+      else if (["ft"].includes(action.range?.units)) {
+        context.action.range = action.range;
+        context.action.unit =
+          pf1.utils.getDistanceSystem() === "metric" ? pf1.config.measureUnitsShort.m : pf1.config.measureUnitsShort.ft;
+      }
+
+      if (action.ammo.type && action.ammo.cost) {
+        const misfire = action.misfire;
+        const capacity = this.system.ammo?.capacity ?? 0;
+        context.action.ammo = {
+          misfire: misfire > 1 ? `1–${misfire}` : misfire > 0 ? misfire : null,
+          capacity: capacity > 0 ? capacity : "–",
+          enabled: misfire > 0 || capacity > 0,
+        };
+      }
+    }
+    return context;
   }
 
   /**
@@ -619,7 +715,7 @@ export class ItemPF extends ItemBasePF {
    * @type {string[]}
    */
   get actionTypes() {
-    const actionTypes = this.actions?.map((action) => action.data.actionType).filter(Boolean) ?? [];
+    const actionTypes = this.actions?.map((action) => action.actionType).filter(Boolean) ?? [];
     return [...new Set(actionTypes)];
   }
 
@@ -759,10 +855,14 @@ export class ItemPF extends ItemBasePF {
    */
   getLabels({ actionId, rollData } = {}) {
     const action = actionId ? this.actions.get(actionId) : this.defaultAction;
-    return {
-      activation: pf1.config.abilityActivationTypes.passive, // Default passive if no action is present
-      ...(action?.getLabels({ rollData }) ?? {}),
-    };
+    const labels = action?.getLabels({ rollData }) ?? {};
+    labels.activation ||= pf1.config.abilityActivationTypes.passive; // Default passive if no action is present
+    if (!action) labels.noAction = true;
+    if (!action || action.activation.type === "passive") labels.isPassive = true;
+    labels.hasEffect = Boolean(
+      labels.range || labels.area || labels.target || labels.effect || labels.duration || labels.savingThrow
+    );
+    return labels;
   }
 
   /**
@@ -820,14 +920,15 @@ export class ItemPF extends ItemBasePF {
 
     const prior = this.actions;
     const collection = new Collection();
-    for (const o of actions) {
+    for (const actionData of actions) {
       let action = null;
-      if (prior && prior.has(o._id)) {
-        action = prior.get(o._id);
-        action.data = foundry.utils.mergeObject(ItemAction.defaultData, o);
-        action.prepareData();
-      } else action = new pf1.components.ItemAction(o, this);
-      collection.set(o._id || action.data._id, action);
+      if (prior && prior.has(actionData._id)) {
+        action = prior.get(actionData._id);
+        action.updateSource(actionData, { recursive: false });
+      } else {
+        action = new pf1.components.ItemAction(actionData, { parent: this });
+      }
+      collection.set(action.id, action);
     }
 
     /** @type {Map<string, pf1.components.ItemAction>} */
@@ -848,24 +949,25 @@ export class ItemPF extends ItemBasePF {
    * @internal
    */
   _prepareScriptCalls() {
-    const scriptCalls = this.system.scriptCalls;
-    if (!scriptCalls) return;
+    if (!this.scriptCalls) return;
 
-    // TODO: Remove constant re-creation of the collection to retain the reference.
-    const prior = this.scriptCalls;
-    const collection = new Collection();
+    const prior = new Collection(this.scriptCalls.entries());
+    this.scriptCalls.clear(); // TODO: Remove specific entries after the loop instead of full clear here
+
+    const scriptCalls = this.system.scriptCalls;
+    if (!scriptCalls?.length) return;
+
     for (const s of scriptCalls) {
       const sid = s._id;
-      let scriptCall = prior?.get(sid);
-      if (scriptCall) scriptCall.data = s;
-      else scriptCall = new pf1.components.ItemScriptCall(s, this);
-      scriptCall.prepareData();
-
-      collection.set(sid, scriptCall);
+      let script = null;
+      if (prior && prior.has(sid)) {
+        script = prior.get(sid);
+        const updateData = { ...s };
+        script.updateSource(updateData, { recursive: false });
+        script.prepareData();
+      } else script = new pf1.components.ItemScriptCall(s, { parent: this });
+      this.scriptCalls.set(sid, script);
     }
-
-    /** @type {Collection<string,pf1.components.ItemScriptCall>} */
-    this.scriptCalls = collection;
   }
 
   /**
@@ -1238,10 +1340,6 @@ export class ItemPF extends ItemBasePF {
       }
     }
 
-    // Render the chat card template
-    const templateType = ["consumable"].includes(this.type) ? this.type : "item";
-    const template = `systems/pf1/templates/chat/${templateType}-card.hbs`;
-
     // Determine metadata
     pfFlags.metadata = {};
     pfFlags.metadata.item = this.id;
@@ -1261,6 +1359,7 @@ export class ItemPF extends ItemBasePF {
       altChatData
     );
 
+    const template = `systems/pf1/templates/chat/items/item-card.hbs`;
     if (Hooks.call("pf1DisplayCard", this, { template, templateData, chatData }) === false) return;
 
     // Create the chat message
@@ -1291,21 +1390,20 @@ export class ItemPF extends ItemBasePF {
    *                                      defaults to {@link ItemPF.defaultAction}
    * @returns {ChatData} The chat data for this item (+action)
    */
-  async getChatData({ chatcard = false, actionId = null, rollData = {} } = {}) {
+  async getChatData({ chatcard = false, actionId = null, rollData = {}, extended = false } = {}) {
     /** @type {ChatData} */
     const data = {};
     const action = actionId ? this.actions.get(actionId) : this.defaultAction;
 
     rollData ??= action ? action.getRollData() : this.getRollData();
-    const itemData = rollData.item ?? this.system;
-    const actionData = rollData.action ?? action?.data ?? {};
+    const actionData = rollData.action ?? action ?? {};
 
     const labels = this.getLabels({ actionId, rollData });
 
     // Rich text descriptions
-    data.identifiedDescription = this.getDescription({ chatcard, rollData });
+    data.identifiedDescription = await this.getDescription({ chatcard, rollData, isolated: extended });
 
-    data.unidentifiedDescription = itemData.description.unidentified;
+    data.unidentifiedDescription = this.system.description.unidentified;
     data.description = this.showUnidentifiedData ? data.unidentifiedDescription : data.identifiedDescription;
     data.actionDescription = actionData.description;
 
@@ -1351,7 +1449,7 @@ export class ItemPF extends ItemBasePF {
       }
 
       // Enhancement Bonus
-      const enhBonus = actionData.enh?.value ?? itemData.enh ?? 0;
+      const enhBonus = actionData.enh?.value ?? rollData.item.enh ?? 0;
       if (enhBonus > 0) {
         props.push(game.i18n.format("PF1.EnhancementInline", { bonus: enhBonus }));
       }
@@ -1406,7 +1504,7 @@ export class ItemPF extends ItemBasePF {
    * @param {TokenDocument} [token] Token this action is for, if any.
    * @param {UseOptions} [options={}] Additional use options
    * @throws {Error} - On some invalid inputs.
-   * @returns {Promise<SharedActionData | void | ChatMessage>}
+   * @returns {Promise<ActionUse | SharedActionData | void>} - Action use, shared data, or nothing.
    */
   async use({
     actionId = "",
@@ -1502,26 +1600,39 @@ export class ItemPF extends ItemBasePF {
 
       if (shared.hideChat !== true && chatMessage) {
         shared.descriptionOnly = true;
-        shared.chatCard = await this.displayCard({ rollMode });
+        Object.defineProperty(shared, "chatCard", {
+          get() {
+            foundry.utils.logCompatibilityWarning("shared.chatCard is deprecated in favor of shared.message", {
+              since: "PF1 vNEXT",
+              until: "PF1 vNEXT+1",
+            });
+
+            return this.message;
+          },
+        });
+        shared.message = await this.displayCard({ rollMode });
       }
+
+      await this.executeScriptCalls("postUse", {}, shared);
 
       return shared;
     }
 
     /** @type {ItemAction | undefined} */
     let action;
-    if (this.system.actions.length > 0) {
-      if (actionId) {
-        action = this.actions.get(actionId);
-        if (!action) throw new Error(`Could not find action by ID "${actionId}"`);
-      } else if (this.system.actions.length > 1 && skipDialog !== true) {
-        return pf1.applications.ActionSelector.open(this, { ev, chatMessage, dice, rollMode, token });
-      } else {
-        action = this.defaultAction;
-      }
+    if (actionId) {
+      action = this.actions.get(actionId);
+      if (!action) throw new Error(`Could not find action by ID "${actionId}"`);
+    } else if (this.system.actions.length > 1 && skipDialog !== true) {
+      const actionId = await pf1.applications.ActionSelector.open({ document: this });
+      action = this.actions.get(actionId);
     } else {
-      console.error("This item does not have an action associated with it.");
-      return;
+      action = this.defaultAction;
+    }
+
+    if (!action) {
+      console.debug(`PF1 | Cancelled use of "${this.name}"`);
+      return null; // No action chosen
     }
 
     // Prevent reassigning the ActionUse's action
@@ -1530,7 +1641,7 @@ export class ItemPF extends ItemBasePF {
     });
 
     if (shared.useOptions.ammo) {
-      if (action.data.usesAmmo) {
+      if (action.usesAmmo) {
         await this.setFlag("pf1", "defaultAmmo", shared.useOptions.ammo);
       } else {
         console.error("Attempted to set ammo for action that does not use ammo");
@@ -1542,6 +1653,15 @@ export class ItemPF extends ItemBasePF {
 
     return new ActionUse(shared).process({ skipDialog });
   }
+
+  /**
+   * Item specific conditional targets.
+   *
+   * @abstract
+   * @param {string} target - Conditional target
+   * @param {Record<string, string>} result - Result key to label mapping.
+   */
+  getConditionalTargets(target, result) {}
 
   /**
    * Finds, filters and alters changes relevant to a context, and returns the result (as an array)
@@ -1819,86 +1939,120 @@ export class ItemPF extends ItemBasePF {
   /**
    * Test if specified link can be created.
    *
-   * @param {string} linkType - The type of link.
-   * @param {string} dataType - Either "compendium", "data" or "world".
-   * @param {object} targetItem - The target item to link to.
-   * @param {string} itemLink - The link identifier for the item.
+   * @internal
+   * @param {string} type - The type of link.
+   * @param {Item} item - The target item to link to.
+   * @param {string} uuid - The link identifier for the item.
    * @returns {boolean} Whether a link to the item is possible here.
    */
-  canCreateItemLink(linkType, dataType, targetItem, itemLink) {
-    const actor = this.actor;
-    const sameActor = actor && targetItem.actor && targetItem.actor.id === actor.id;
+  async _canCreateItemLink(type, item) {
+    if (!(item instanceof Item)) throw new Error("Item must be instance of Item document");
 
-    // Link happens between items on same actor?
-    const linkOnActor = ["children", "charges", "ammunition"].includes(linkType);
-    if (linkOnActor && !actor) return false;
+    if (!["charges", "children", "supplements", "classAssociations"].includes(type))
+      throw new Error(`Invalid link type: "${type}"`);
 
     // Don't create link to self
-    if (itemLink === this.id) return false;
+    if (item === this) return false;
+
+    const sameActor = this.actor && item.actor === this.actor;
+
+    // Link happens between items on same actor?
+    const linkOnActor = ["children", "charges"].includes(type);
+    if (linkOnActor && !sameActor) {
+      ui.notifications.warn("PF1.Warning.LinkOwnerMismatch", { localize: true });
+      return false;
+    }
 
     // Don't re-create existing links
-    const links = this.system.links?.[linkType] || [];
-    if (links.some((o) => o.id === itemLink || o.uuid === itemLink)) return false;
+    const links = this.system.links?.[type] || [];
+    for (const link of links) {
+      // Use slow matching method to ensure old style links aren't ignored
+      const ti = await fromUuid(link.uuid, { relative: this.actor });
+      if (ti === item) {
+        ui.notifications.warn("PF1.Warning.NoMultiLink", { localize: true });
+        return false;
+      }
+    }
 
-    const targetLinks = targetItem.system.links?.[linkType] ?? [];
-    if (linkOnActor && sameActor) {
-      if (linkType === "charges") {
-        // Prevent the closing of charge link loops
-        if (targetLinks.length > 0) {
-          ui.notifications.warn(
-            game.i18n.format("PF1.Warning.CannotCreateChargeLink", { source: this.name, target: targetItem.name })
-          );
-          return false;
-        } else if (targetItem.links.charges != null) {
-          // Prevent the linking of one item to multiple resource pools
+    switch (type) {
+      // Charge link requirements
+      case "charges": {
+        // Prevent item from inheriting charges from multiple sources
+        if (item.links?.charges) {
           ui.notifications.warn(
             game.i18n.format("PF1.Warning.CannotCreateChargeLink2", {
               source: this.name,
-              target: targetItem.name,
-              deeptarget: targetItem.links.charges.name,
+              target: item.name,
+              deeptarget: item.links.charges.name,
             })
           );
           return false;
         }
+        // Target is already sharing charges itself
+        const targetLinks = item.system.links?.charges ?? [];
+        if (targetLinks.length > 0) {
+          ui.notifications.warn(
+            game.i18n.format("PF1.Warning.CannotCreateChargeLink", { source: this.name, target: item.name })
+          );
+          return false;
+        }
+        if (this.links?.charges) {
+          ui.notifications.warn(
+            game.i18n.format("PF1.Warning.CannotCreateChargeLink2", {
+              source: item.name,
+              target: this.name,
+              deeptarget: this.links.charges.name,
+            })
+          );
+          return false;
+        }
+        return true;
       }
-      return true;
-    }
-
-    // Allow class association links only from compendiums
-    if (linkType === "classAssociations" && dataType === "compendium") return true;
-    if (linkType === "supplements") {
-      // Allow supplement links only if not from an actor
-      if (!targetItem.actor) return true;
-      else ui.notifications.error(game.i18n.localize("PF1.LinkErrorNoActorSource"));
+      // Class association link requirements
+      case "classAssociations":
+        // Item must not be on actor and must be in compendium
+        if (item.actor) {
+          ui.notifications.error("PF1.Warning.LinkOnlyUnowned", { localize: true });
+          return false;
+        }
+        if (!item.pack) {
+          ui.notifications.error("PF1.Warning.LinkOnlyCompendium", { localize: true });
+          return false;
+        }
+        return true;
+      case "supplements": {
+        // Must NOT be on actor
+        if (!item.actor) return true;
+        else ui.notifications.error("PF1.Warning.LinkOnlyUnowned", { localize: true });
+      }
     }
 
     return false;
   }
 
   /**
-   * @param {string} category - The type of link.
+   * @internal
+   * @param {string} type - The type of link.
    * @param {string} sourceType - Either "compendium", "data" or "world".
-   * @param {object} targetItem - The target item to link to.
+   * @param {object} item - The target item to link to.
    * @param {string} uuid - The link identifier for the item.
    * @param {object} extraData - Additional data
    * @returns {Array} An array to insert into this item's link data.
    */
-  generateInitialLinkData(category, sourceType, targetItem, uuid, extraData = {}) {
+  _generateLinkData(type, item, uuid) {
     const result = {
-      name: targetItem.name,
+      name: item.name,
       uuid,
     };
 
-    if (category === "classAssociations") {
-      result.level = 1;
-    }
-
     // Remove name for various links
-    switch (category) {
+    switch (type) {
       case "classAssociations":
+        result.level = 1;
+      // eslint-disable-next-line no-fallthrough
       case "supplements":
         // System packs are assumed static
-        if (game.packs.get(targetItem.pack)?.metadata.packageType === "system") {
+        if (game.packs.get(item.pack)?.metadata.packageType === "system") {
           delete result.name;
         }
         break;
@@ -1909,63 +2063,50 @@ export class ItemPF extends ItemBasePF {
         break;
     }
 
-    // Merge in extra data
-    foundry.utils.mergeObject(result, extraData);
-
     return result;
   }
 
   /**
    * Creates a link to another item.
    *
-   * @param {string} category - The type of link.
-   * e.g. "children", "charges", "classAssociations" or "ammunition".
-   * @param {string} sourceType - Either "compendium", "data" or "world".
-   * @param {object} targetItem - The target item to link to.
-   * @param {string} uuid - The link identifier for the item.
-   * e.g. UUID for items external to the actor, and item ID for same actor items.
+   * @param {"children"|"charges"|"supplement"|"classAssociatons"} type - The type of link.
+   * @param {Item} item - The target item to link into this.
+   * @param {string} uuid - UUID for the new item.
    * @param {object} [extraData] - Additional data to store int he link
-   * @returns {boolean} Whether a link was created.
+   * @returns {boolean} - Whether a link was created.
    */
-  async createItemLink(category, sourceType, targetItem, uuid, extraData) {
-    if (this.canCreateItemLink(category, sourceType, targetItem, uuid)) {
-      const links = this.toObject().system.links?.[category] ?? [];
-      const linkData = this.generateInitialLinkData(category, sourceType, targetItem, uuid, extraData);
-      links.push(linkData);
-      const itemUpdate = { _id: this.id, [`system.links.${category}`]: links };
+  async createItemLink(type, item, extraData) {
+    if (!(await this._canCreateItemLink(type, item))) return false;
 
-      // Clear value, maxFormula and per from link target to avoid odd behaviour
-      const itemUpdates = [];
-      if (category === "charges") {
-        itemUpdates.push({
-          _id: targetItem.id,
-          system: { uses: { "-=value": null, "-=maxFormula": null, "-=per": null, "-=rechargeFormula": null } },
-        });
-      }
+    const links = this.toObject().system.links?.[type] ?? [];
 
-      if (this.actor && itemUpdates.length > 0) {
-        await this.actor.updateEmbeddedDocuments("Item", [itemUpdate, ...itemUpdates]);
-      } else {
-        await this.update(itemUpdate);
-      }
+    const uuid = this.actor ? item.getRelativeUUID(this.actor) : item.uuid;
 
-      // Call link creation hook
-      Hooks.callAll("pf1CreateItemLink", this, linkData, category);
+    const linkData = this._generateLinkData(type, item, uuid);
+    if (extraData) foundry.utils.mergeObject(linkData, extraData);
+    links.push(linkData);
 
-      return true;
-    } else if (category === "children" && sourceType !== "data") {
-      const itemData = targetItem.toObject();
+    const itemUpdate = { _id: this.id, [`system.links.${type}`]: links };
 
-      // Default to spell-like tab until a selector is designed in the Links tab or elsewhere
-      if (itemData.type === "spell") itemData.system.spellbook = "spelllike";
-
-      const [newItem] = await this.actor.createEmbeddedDocuments("Item", [itemData]);
-
-      const itemUuid = newItem.getRelativeUUID(this.actor);
-      await this.createItemLink("children", "data", newItem, itemUuid);
+    // Clear value, maxFormula and per from link target to avoid odd behaviour
+    const itemUpdates = [];
+    if (type === "charges") {
+      itemUpdates.push({
+        _id: item.id,
+        system: { uses: { "-=value": null, "-=maxFormula": null, "-=per": null, "-=rechargeFormula": null } },
+      });
     }
 
-    return false;
+    if (this.actor && itemUpdates.length > 0) {
+      await this.actor.updateEmbeddedDocuments("Item", [itemUpdate, ...itemUpdates]);
+    } else {
+      await this.update(itemUpdate);
+    }
+
+    // Call link creation hook
+    Hooks.callAll("pf1CreateItemLink", this, linkData, type);
+
+    return true;
   }
 
   /**
@@ -2257,10 +2398,9 @@ export class ItemPF extends ItemBasePF {
     const sources = [];
 
     const actorData = this.actor?.system,
-      itemData = this.system,
-      actionData = action.data;
+      itemData = this.system;
 
-    if (!actorData || !actionData) return sources;
+    if (!actorData) return sources;
     rollData ??= action.getRollData();
 
     const describePart = (value, name, modifier, sort = 0) => {
@@ -2284,20 +2424,20 @@ export class ItemPF extends ItemBasePF {
     effectiveChanges.forEach((ic) => {
       let value = ic.value;
       // BAB override
-      if (actionData.bab && ic._id === "_bab") {
+      if (action.bab && ic._id === "_bab") {
         value = RollPF.safeRollSync(ic.formula, rollData).total || 0;
       }
       describePart(value, ic.flavor, ic.type, -800);
     });
 
-    if (actionData.ability.attack) {
-      const ablMod = actorData.abilities?.[actionData.ability.attack]?.mod ?? 0;
-      describePart(ablMod, pf1.config.abilities[actionData.ability.attack], "untyped", -50);
+    if (action.ability.attack) {
+      const ablMod = actorData.abilities?.[action.ability.attack]?.mod ?? 0;
+      describePart(ablMod, pf1.config.abilities[action.ability.attack], "untyped", -50);
     }
 
     // Attack bonus formula
     // TODO: Don't pre-eval
-    const bonusRoll = RollPF.safeRollSync(actionData.attackBonus || "0", rollData, undefined, undefined, {
+    const bonusRoll = RollPF.safeRollSync(action.attackBonus || "0", rollData, undefined, undefined, {
       minimuze: true,
     });
     if (bonusRoll.total != 0)
@@ -2329,14 +2469,14 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Add secondary natural attack penalty
-    if (actionData.naturalAttack.primaryAttack !== true && itemData.subType === "natural") {
-      const attackBonus = actionData.naturalAttack?.secondary?.attackBonus || "-5";
+    if (action.naturalAttack.primary !== true && itemData.subType === "natural") {
+      const attackBonus = action.naturalAttack?.secondary?.attackBonus || "-5";
       const secondaryModifier = RollPF.safeRollSync(`${attackBonus}`, rollData).total ?? 0;
       describePart(secondaryModifier, game.i18n.localize("PF1.SecondaryAttack"), "untyped", -400);
     }
 
     // Conditional modifiers
-    actionData.conditionals
+    action.conditionals
       .filter((c) => c.default && c.modifiers.find((sc) => sc.target === "attack"))
       .forEach((c) => {
         c.modifiers.forEach((cc) => {

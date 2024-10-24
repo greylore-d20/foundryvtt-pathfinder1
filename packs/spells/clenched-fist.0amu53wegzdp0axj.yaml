@@ -1,7 +1,7 @@
 _id: 0amu53wegzdp0axj
 _key: '!items!0amu53wegzdp0axj'
 folder: NE0tEwSvcr71GnPC
-img: systems/pf1/icons/misc/magic-swirl.png
+img: icons/skills/melee/unarmed-punch-fist-blue.webp
 name: Clenched Fist
 system:
   actions:
@@ -14,10 +14,10 @@ system:
       duration:
         units: round
         value: '@cl'
+      effect: 10-ft. hand
       name: Use
       range:
         units: medium
-      spellEffect: 10-ft. hand
     - _id: aZCrEsL6CUaeBo3f
       ability:
         attack: int
@@ -26,9 +26,7 @@ system:
         type: nonaction
         unchained:
           type: nonaction
-      attackBonus: 11[Hand's Strength] - 1[Large]
-      attackNotes:
-        - Stunned for 1 round on failed Fortitude save.
+      attackBonus: 11[Hand's Strength] - 1[Large] - @sizeBonus[Caster Sizebonus]
       bab: '@cl'
       damage:
         parts:
@@ -38,9 +36,46 @@ system:
               values:
                 - untyped
       name: Strike
+      notes:
+        footer:
+          - Stunned for 1 round on failed Fortitude save.
       save:
         description: Fortitude partial; see text
         type: fort
+      uses:
+        autoDeductChargesCost: '0'
+    - _id: 2VnCu7SSsfNmfWon
+      ability:
+        critMult: null
+        critRange: null
+      actionType: mcman
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
+      attackBonus: 11[Hand's Strength] + 1[Large] - @sizeBonus[Caster Sizebonus]
+      bab: '@cl'
+      duration:
+        units: inst
+      name: Bull Rush
+      range:
+        units: melee
+      target:
+        value: One Creature
+      uses:
+        autoDeductChargesCost: '0'
+    - _id: b8NB6v1YNJQ0JtrE
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: inst
+      name: Redirect Fist
+      range:
+        units: unlimited
+      target:
+        value: One Creature
       uses:
         autoDeductChargesCost: '0'
   components:
@@ -64,9 +99,10 @@ system:
       DC) or be stunned for 1 round. Directing the spell to a new target is a
       move action.</p><p>The <em>clenched fist</em> can also interpose itself as
       <em>interposing hand</em> does, or it can bull rush an opponent as
-      <em>forceful hand</em> does. Its CMB for bull rush checks uses your caster
-      level in place of its base attack bonus, with a +11 bonus for its Strength
-      score and a +1 bonus for being Large.</p>
+      @UUID[Compendium.pf1.spells.Item.aoov6nqfm195txdb]{forceful hand} does.
+      Its CMB for bull rush checks uses your caster level in place of its base
+      attack bonus, with a +11 bonus for its Strength score and a +1 bonus for
+      being Large.</p>
   descriptors:
     value:
       - force

@@ -16,11 +16,6 @@
         "Name": "Show Token Tooltip as Player"
       },
 
-      "ForceShowItem": {
-        "Name": "Force Show Item",
-        "Hint": "Whether to show the item to chat when using a macro for it"
-      },
-
       "StickyTokenTooltip": {
         "Name": "Sticky Token Tooltip",
         "Hint": "Keep token tooltip open even after hovering out of token."
@@ -902,9 +897,7 @@
     "Spellcasting": {
       "Progression": {
         "Label": "Progression",
-        "HighHint": "Spell levels go up to 9.",
-        "MediumHint": "Spell levels go up to 6.",
-        "LowHint": "Spell levels go up to 4."
+        "Hint": "High goes up to level 9.<br>Medium goes up to level 6.<br>Low goes up to level 4."
       },
       "Type": {
         "Label": "Spell Type",
@@ -1258,6 +1251,7 @@
       "NoApplicableActorFoundForAction": "No applicable actor found for action '{name}'",
       "CouldNotFindActorByName": "Could not find actor by name '{name}'",
       "FeatDisabled": "This feat is disabled",
+      "CommandParse": "Failed to parse chat command.",
       "NoMacroID": "No macro with id '{id}' was found",
       "EmptySkillTag": "Skill tag cannot be empty",
       "SkillTagAlreadyExists": "Skill tag '{tag}' already exists"
@@ -1274,8 +1268,12 @@
       "NoActionInItem": "Item \"{item}\" has no action \"{action}\"",
       "InvalidUUID": "Invalid UUID \"{uuid}\"",
       "ImmuneToCondition": "{name} is immune to {condition} condition.",
-      "CannotCreateChargeLink": "Could not create a Charge type link between {source} and {target}, because {target} has Charge type links of its own",
-      "CannotCreateChargeLink2": "Could not create a Charge type link between {source} and {target}, because {target} is already linked to {deeptarget}",
+      "CannotCreateChargeLink": "Could not make {target} inherit Charges from {source}, because {target} is sharing its charges already.",
+      "CannotCreateChargeLink2": "Could not make {target} inherit Charges from {source}, because {target} is already inheriting from {deeptarget}",
+      "LinkOwnerMismatch": "Can not create link on item with different owner.",
+      "LinkOnlyUnowned": "Can not link owned items.",
+      "LinkOnlyCompendium": "Can not link items outside of compendiums.",
+      "NoMultiLink": "Can not link same item multiple times.",
       "NoCombatantFound": "No combatant found",
       "FormulaMustBeDeterministic": "Formula must be deterministic (no die rolls or other random elements).",
       "InvalidInput": "Invalid value"
@@ -1300,6 +1298,7 @@
     "CLNotes": "Caster Level Notes",
     "CLSchoolNotes": "CL Notes ({school})",
     "DCSchoolNotes": "DC Notes ({school})",
+    "SourceNote": "Source: {source}",
 
     "NonApplicable": "N/A",
 
@@ -1955,7 +1954,6 @@
     "AttackAlignmentOverride": "Alignment Traits Override",
     "BaseWeaponDamage": "Base Weapon Damage",
     "BaseWeaponCritical": "Base Weapon Critical",
-    "SpellPreparationType": "Spell Preparation Type",
     "Preparation": "Preparation",
     "CastsLeft": "Casts Left",
     "Harmless": "Harmless",
@@ -1971,12 +1969,12 @@
     "SubDomain": "Subdomain",
     "CastingTime": "Casting Time",
     "Components": "Components",
-    "SpellRangeShort": "(25 ft. + 5 ft./2 levels)",
-    "SpellRangeMedium": "(100 ft. + 10 ft./level)",
-    "SpellRangeLong": "(400 ft. + 40 ft./level)",
-    "SpellRangeShortMetric": "(7.5 m + 1.5 m/2 levels)",
-    "SpellRangeMediumMetric": "(30 m + 3 m/level)",
-    "SpellRangeLongMetric": "(120 m + 12 m/level)",
+    "SpellRangeShort": "25 ft. + 5 ft./2 levels",
+    "SpellRangeMedium": "100 ft. + 10 ft./level",
+    "SpellRangeLong": "400 ft. + 40 ft./level",
+    "SpellRangeShortMetric": "7.5 m + 1.5 m/2 levels",
+    "SpellRangeMediumMetric": "30 m + 3 m/level",
+    "SpellRangeLongMetric": "120 m + 12 m/level",
 
     "Aura": {
       "Single": "Aura",
@@ -2049,6 +2047,7 @@
       "Flurry": "Flurry of Blows (Chained)",
       "UnFlurry": "Flurry of Blows (Unchained)",
       "FlurryFlavor": "Flurry",
+      "FlurryAttack": "Flurry #{0}",
       "Custom": "Custom",
       "Add": "Add Extra Attack",
       "ModifierFormula": "Attack Modifier Formula",
@@ -2506,20 +2505,20 @@
         "AddChange": "Add Change",
         "Invalid": "Invalid",
         "Operator": {
-          "Add": "Add",
+          "Add": "Adjust",
           "AddVerb": "Adjust",
-          "AddHint": "Add to target property",
+          "AddHint": "Adjust target property by formula",
           "Set": "Set",
           "SetVerb": "Set",
-          "SetHint": "Set target property to match",
+          "SetHint": "Set target property to formula",
           "InvalidHint": "Unknown operator."
         },
         "Help": {
           "Link": "Information on Changes",
           "Value": "Value",
-          "ValueHint": "Must be deterministic with no random elements such as dice.",
+          "ValueHint": "Must be deterministic with no random elements such as dice rolls.",
           "Roll": "Roll",
-          "RollHint": "Supports random elements such as dice."
+          "RollHint": "Supports random elements such as dice rolls."
         },
         "AsType": "As",
         "CopyId": "Copy change ID"
@@ -2760,7 +2759,10 @@
     },
 
     "Help": {
-      "Label": "Documentation"
+      "Label": "Documentation",
+      "GoForward": "Click to go forward",
+      "GoBack": "Click to go back",
+      "GoHome": "Click to go to home"
     },
 
     "EnrichedText": {
@@ -2769,6 +2771,9 @@
       "Toggle": "Toggle {value}",
       "Browse": "Browse {value}",
       "AsSpeaker": "Act as Speaker",
+      "AsCard": "Generate Chat Card",
+      "Direct": "Apply Directly",
+      "Subject": "Subject: {name}",
       "Roll": "Roll",
       "Error": "Error",
       "Condition": {

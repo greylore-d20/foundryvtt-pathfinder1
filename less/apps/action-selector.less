@@ -1,32 +1,62 @@
-.pf1.action-selector {
+.pf1-v2.action-selector {
+  h2 {
+    margin-bottom: 0.5rem;
+    border: none;
+    font-size: var(--font-size-24);
+    text-shadow: none;
+  }
+
   .actions {
     display: flex;
     flex-flow: row wrap;
-    gap: 0.4em;
+    gap: 0.25rem;
 
     .action {
-      padding: 0.2em;
+      padding: 0.25rem;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
-
-      &:hover {
-        background: rgba(155, 155, 155, 0.2);
-        span.name {
-          text-shadow: 0 0 10px red;
-        }
-      }
+      border: 1px solid transparent;
 
       img {
-        width: 96px;
-        height: 96px;
+        width: 76px;
+        height: 76px;
         object-fit: cover;
+        border: none;
       }
 
       span {
         text-align: center;
-        width: 80px;
+        width: 76px;
+      }
+    }
+  }
+}
+
+.theme-light {
+  .pf1-v2.action-selector {
+    h2 {
+      color: var(--color-dark-1);
+    }
+
+    .actions {
+      .action:hover {
+        border-color: var(--color-warm-2);
+      }
+    }
+  }
+}
+
+.theme-dark {
+  .pf1-v2.action-selector {
+    h2 {
+      color: var(--color-light-1);
+    }
+
+    .actions {
+      .action:hover {
+        border-color: var(--color-warm-1);
       }
     }
   }

@@ -13,10 +13,10 @@ system:
           type: action
       duration:
         units: inst
+      effect: up to 2 gallons of water/level
       name: Use
       range:
         units: close
-      spellEffect: up to 2 gallons of water/level
   components:
     somatic: true
     verbal: true
@@ -51,7 +51,9 @@ system:
     - id: PZO1110
       pages: '262'
   sr: false
-  subschool: creation
+  subschool:
+    value:
+      - creation
   uses:
     autoDeductChargesCost: '0'
 type: spell

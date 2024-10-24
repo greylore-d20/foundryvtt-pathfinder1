@@ -15,13 +15,13 @@ system:
       duration:
         units: minute
         value: 10 * @cl
+      effect: one illusory portal
       name: Use
       range:
         units: close
       save:
         description: Will negates (see text)
         type: will
-      spellEffect: one illusory portal
   components:
     somatic: true
     verbal: true
@@ -78,6 +78,8 @@ system:
     - id: PZO1132
       pages: '177'
   sr: false
-  subschool: phantasm
+  subschool:
+    value:
+      - phantasm
 type: spell
 

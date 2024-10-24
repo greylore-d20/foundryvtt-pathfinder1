@@ -67,14 +67,28 @@ export class Registry extends foundry.utils.Collection {
 
     // Allow modules to register their own content
     Hooks.callAll(`pf1Register${this.name}`, this);
+
+    this.setup();
   }
 
   /**
-   * Prepares the data of all entries in the registry.
+   * Post-registry initialization entry preparation
+   *
+   * @abstract
+   * @protected
    */
-  setup() {
+  setup() {}
+
+  /**
+   * Localize registry and all their entries.
+   *
+   * Called in `i18nInit`.
+   *
+   * @protected
+   */
+  localize() {
     for (const element of this) {
-      element.prepareData();
+      element.localize();
     }
   }
 
@@ -185,12 +199,29 @@ export class RegistryEntry extends foundry.abstract.DataModel {
   }
 
   /**
-   * Prepares the data of the registry entry.
+   * @internal
+   * @override
    */
-  prepareData() {
-    this.reset();
+  _initialize() {
+    super._initialize();
 
-    // Localize fields marked for localization
+    this.prepareData();
+  }
+
+  /**
+   * Prepares the data of the registry entry.
+   *
+   * @abstract
+   * @protected
+   */
+  prepareData() {}
+
+  /**
+   * Localize fields
+   *
+   * @protected
+   */
+  localize() {
     for (const [name, field] of Object.entries(this.constructor.schema.fields)) {
       if (field instanceof fields.StringField && field.options.localize === true)
         this[name] = game.i18n.localize(this[name]);

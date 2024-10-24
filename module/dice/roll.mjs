@@ -1,31 +1,10 @@
 export class RollPF extends Roll {
   get totalHalved() {
+    foundry.utils.logCompatibilityWarning("RollPF.totalHalved is deprecated with no replacement", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
     return Math.floor(this.total / 2);
-  }
-
-  /**
-   * Return an Array of the individual DiceTerm instances contained within this Roll.
-   * Override to recognize dice in SizeRollTerm.
-   *
-   * @override
-   * @returns {DiceTerm[]}
-   */
-  get dice() {
-    return (
-      this.terms
-        .reduce((dice, t) => {
-          if (t instanceof foundry.dice.terms.DiceTerm) dice.push(t);
-          else if (t instanceof foundry.dice.terms.PoolTerm) dice = dice.concat(t.dice);
-          else if (t.inheritDice) dice = dice.concat(t.dice);
-          return dice;
-        }, [])
-        // Append dice from parenthesis and similar eliminated rolls.
-        .concat(this._dice)
-    );
-  }
-
-  get flavor() {
-    return this.options?.flavor;
   }
 
   /**
@@ -63,12 +42,13 @@ export class RollPF extends Roll {
    *
    * {@inheritDoc safeRoll}
    *
-   * @param formula
-   * @param rollData
-   * @param context
-   * @param root0
-   * @param root0.suppressError
-   * @param evalOpts
+   * @param formula - Formula to evaluate
+   * @param rollData - Roll data
+   * @param context - Context data to log if error occurs
+   * @param options - Additional options
+   * @param options.suppressError - If true, no error will be printed
+   * @param evalOpts - Options to pass to Roll.evaluate()
+   * @returns {RollPF} - Evaluated roll
    */
   static safeRollSync(formula, rollData = {}, context, { suppressError = false } = {}, evalOpts = {}) {
     let roll;
@@ -84,69 +64,6 @@ export class RollPF extends Roll {
       else if (CONFIG.debug.roll) console.error(roll.err);
     }
     return roll;
-  }
-
-  /**
-   * @override
-   */
-  static simplifyTerms(terms) {
-    // Simplify terms by combining with pending strings
-    let simplified = terms.reduce((terms, term) => {
-      const prior = terms[terms.length - 1];
-      const isOperator = term instanceof OperatorTerm;
-
-      // Combine a non-operator term with prior StringTerm
-      if (!isOperator && prior instanceof foundry.dice.terms.StringTerm) {
-        prior.term += term.total;
-        foundry.utils.mergeObject(prior.options, term.options);
-        return terms;
-      }
-
-      // Attach string terms as flavor texts to numeric terms, if appropriate
-      const priorNumeric = prior instanceof foundry.dice.terms.NumericTerm;
-      if (prior && priorNumeric && term instanceof foundry.dice.terms.StringTerm && term.term.match(/\[(.+)\]/)) {
-        prior.options.flavor = RegExp.$1;
-        return terms;
-      }
-
-      // Custom handling
-      if (prior && term instanceof foundry.dice.terms.StringTerm) {
-        const flavor = /^\[(?<flavor>.+)\]$/.exec(term.term)?.groups.flavor;
-        if (flavor) {
-          // Attach string terms as flavor texts to function terms, if appropriate
-          if (prior instanceof pf1.dice.terms.base.FunctionTerm) {
-            prior.options.flavor = flavor;
-            return terms;
-          }
-        }
-      }
-
-      // Combine StringTerm with a prior non-operator term
-      const priorOperator = prior instanceof foundry.dice.terms.OperatorTerm;
-      if (prior && !priorOperator && term instanceof foundry.dice.terms.StringTerm) {
-        term.term = String(prior.total) + term.term;
-        foundry.utils.mergeObject(term.options, prior.options);
-        terms[terms.length - 1] = term;
-        return terms;
-      }
-
-      // Otherwise continue
-      terms.push(term);
-      return terms;
-    }, []);
-
-    // Convert remaining String terms to a RollTerm which can be evaluated
-    simplified = simplified.map((term) => {
-      if (!(term instanceof foundry.dice.terms.StringTerm)) return term;
-      const t = this._classifyStringTerm(term.formula, { intermediate: false });
-      t.options = foundry.utils.mergeObject(term.options, t.options, { inplace: false });
-      return t;
-    });
-
-    // Eliminate leading or trailing arithmetic
-    if (simplified[0] instanceof foundry.dice.terms.OperatorTerm && simplified[0].operator !== "-") simplified.shift();
-    if (simplified.at(-1) instanceof foundry.dice.terms.OperatorTerm) simplified.pop();
-    return simplified;
   }
 
   static cleanFlavor(flavor) {
@@ -176,6 +93,7 @@ export class RollPF extends Roll {
     const parts = this.dice.filter((d) => d.results.some((r) => r.active)).map(this.constructor.getTermTooltipData);
     const numericParts = this.terms.reduce((cur, t, idx, arr) => {
       if (t instanceof foundry.dice.terms.DiceTerm) return cur; // Ignore dice already handled above
+      if (t instanceof foundry.dice.terms.FunctionTerm && t.dice.length) return cur; // Ignore function terms with dice
 
       const ttdata = this.constructor.getTermTooltipData(t);
       if (!ttdata) return cur;
@@ -194,11 +112,7 @@ export class RollPF extends Roll {
 
       return cur;
     }, []);
-    return renderTemplate("systems/pf1/templates/dice/tooltip.hbs", { parts, numericParts });
-  }
 
-  static parse(formula, data) {
-    // TODO: transform func()dX and a?b:c to something compatible
-    return super.parse(formula, data);
+    return renderTemplate("systems/pf1/templates/dice/tooltip.hbs", { parts, numericParts });
   }
 }

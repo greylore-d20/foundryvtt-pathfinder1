@@ -1,55 +1,3 @@
-import { customRolls } from "./documents/chat-message.mjs";
-import { RollPF } from "./dice/roll.mjs";
-
-// Add inline support for extra /commands
-{
-  const origParse = ChatLog.parse;
-  ChatLog.parse = function (message) {
-    const match = message.match(/^\/(\w+)(?: +([^#]+))(?:#(.+))?/),
-      type = match?.[1]?.toUpperCase();
-    if (["HEAL", "H", "DAMAGE", "D"].includes(type)) {
-      match[2] = match[0].slice(1);
-      return ["custom", match];
-    } else return origParse.call(this, message);
-  };
-
-  const origClick = TextEditor._onClickInlineRoll;
-  TextEditor._onClickInlineRoll = function (event) {
-    event.preventDefault();
-    const a = event.currentTarget;
-    if (!a.classList.contains("custom")) return origClick.call(this, event);
-
-    const chatMessage = `/${a.dataset.formula}`;
-    const speaker = ChatMessage.implementation.getSpeaker();
-    const actor = ChatMessage.implementation.getSpeakerActor(speaker);
-    let rollData = actor ? actor.getRollData() : {};
-
-    const sheet = a.closest(".sheet");
-    if (sheet) {
-      const app = ui.windows[sheet.dataset.appid];
-      if (["Actor", "Item"].includes(app?.document.documentName)) rollData = app.object.getRollData();
-    }
-    return customRolls(chatMessage, speaker, rollData);
-  };
-
-  // Fix for race condition
-  if ($._data($("body").get(0), "events")?.click?.find((o) => o.selector === "a.inline-roll")) {
-    $("body").off("click", "a.inline-roll", origClick);
-    $("body").on("click", "a.inline-roll", TextEditor._onClickInlineRoll);
-  }
-}
-
-// Change tooltip showing on alt
-{
-  const fn = KeyboardManager.prototype._onAlt;
-  KeyboardManager.prototype._onAlt = function (event, up, modifiers) {
-    if (!pf1.tooltip) return;
-    if (!up) pf1.tooltip.lock.new = true;
-    fn.call(this, event, up, modifiers);
-    if (!up) pf1.tooltip.lock.new = false;
-  };
-}
-
 // Document link attribute stuffing
 {
   const origFunc = TextEditor._createContentLink;
@@ -122,8 +70,8 @@ import { RollPF } from "./dice/roll.mjs";
  * Stop releasing modifiers on HTMLButtonElement. Check again on proper support of popouts. How blur is handled will have to be reevaluated
  *
  * Introduced Foundry VTT v10.291
+ * Still needed with v12.331
  */
-
 {
   const original_onFocusIn = KeyboardManager.prototype._onFocusIn;
   KeyboardManager.prototype._onFocusIn = function (event) {

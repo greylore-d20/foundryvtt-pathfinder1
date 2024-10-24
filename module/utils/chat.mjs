@@ -17,6 +17,15 @@ export function hideRollInfo(cm, jq, data) {
 }
 
 /**
+ * @typedef {object} ChatMessagePFIdentifiedInfo
+ * @property {boolean} identified - True if item was identified when rolled.
+ * @property {string} name - Name of the identified item.
+ * @property {string} description - Description of the identified item.
+ * @property {string} [actionName] - Name of the action that was used
+ * @property {string} [actionDescription] - Description of the action that was used
+ */
+
+/**
  * Generates an info block containing an item's identified info for GMs
  *
  * @remarks This HTML has to be generated in a synchronous way, as adding to a rendered chat message's content
@@ -162,14 +171,6 @@ export function alterTargetDefense(cm, jq) {
     $(el).find(".value").text(value.toString());
   });
 }
-
-/**
- * @param app
- * @param html
- * @param data
- * @param conf
- */
-export function applyAccessibilitySettings(app, html, data, conf) {}
 
 /**
  * @param {ChatMessage} cm - Chat message instance

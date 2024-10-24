@@ -18,6 +18,28 @@
       text-align: center;
       text-shadow: unset;
       font-size: var(--font-size-14);
+
+      tr {
+        &.drag-over {
+          th {
+            border-bottom-width: 3px;
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        border-top: 1px solid transparent;
+
+        &.is-dragged {
+          opacity: 0.25;
+        }
+
+        &.drag-over {
+          border-top-width: 3px;
+        }
+      }
     }
 
     :is(td, th) {
@@ -25,6 +47,11 @@
 
       &:first-child {
         padding-left: 1rem;
+      }
+
+      &.drag-control {
+        width: 2.5rem;
+        cursor: move;
       }
 
       &.entry-control {
@@ -65,16 +92,44 @@
 
 .theme-light {
   .pf1-v2.list-selector {
-    table thead {
-      color: var(--color-dark-1);
+    table {
+      thead {
+        color: var(--color-dark-1);
+
+        tr.drag-over {
+          th {
+            border-bottom-color: var(--color-warm-2);
+          }
+        }
+      }
+
+      tbody {
+        tr.drag-over {
+          border-top-color: var(--color-warm-2);
+        }
+      }
     }
   }
 }
 
 .theme-dark {
   .pf1-v2.list-selector {
-    table thead {
-      color: var(--color-light-1);
+    table {
+      thead {
+        color: var(--color-light-1);
+
+        tr.drag-over {
+          th {
+            border-bottom-color: var(--color-warm-1);
+          }
+        }
+      }
+
+      tbody {
+        tr.drag-over {
+          border-top-color: var(--color-warm-1);
+        }
+      }
     }
   }
 }

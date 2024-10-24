@@ -15,6 +15,7 @@ system:
           type: minute
       duration:
         units: seeText
+      effect: one symbol
       name: Use
       range:
         units: ft
@@ -22,7 +23,6 @@ system:
       save:
         description: Will negates
         type: will
-      spellEffect: one symbol
   components:
     material: true
     somatic: true
@@ -60,6 +60,8 @@ system:
   sources:
     - id: PZO1129
       pages: '196'
-  subschool: charm
+  subschool:
+    value:
+      - charm
 type: spell
 

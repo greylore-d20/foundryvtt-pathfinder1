@@ -17,6 +17,7 @@ system:
         dismiss: true
         units: hour
         value: '@cl'
+      effect: you plus up to one willing creature per 3 levels
       name: Use
       range:
         units: touch
@@ -24,7 +25,6 @@ system:
         description: Will negates
         harmless: true
         type: will
-      spellEffect: you plus up to one willing creature per 3 levels
   components:
     material: true
     somatic: true
@@ -70,6 +70,8 @@ system:
     - id: PZO9479
       pages: '21'
   sr: false
-  subschool: teleportation
+  subschool:
+    value:
+      - teleportation
 type: spell
 

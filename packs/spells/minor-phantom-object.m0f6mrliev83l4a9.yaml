@@ -15,6 +15,9 @@ system:
         dismiss: true
         units: minute
         value: 10 * @cl
+      effect: >-
+        illusory, unattended, nonmagical object of nonliving plant matter, up to
+        1 cu. ft./level
       name: Use
       range:
         units: ft
@@ -22,9 +25,6 @@ system:
       save:
         description: Will negates
         type: will
-      spellEffect: >-
-        illusory, unattended, nonmagical object of nonliving plant matter, up to
-        1 cu. ft./level
   components:
     somatic: true
     verbal: true
@@ -51,6 +51,8 @@ system:
   sources:
     - id: PZO1121
       pages: '39'
-  subschool: shadow
+  subschool:
+    value:
+      - shadow
 type: spell
 

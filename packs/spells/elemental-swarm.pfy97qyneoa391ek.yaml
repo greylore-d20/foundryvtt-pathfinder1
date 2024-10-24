@@ -15,12 +15,12 @@ system:
       duration:
         units: minute
         value: 10 * @cl
+      effect: >-
+        two or more summoned creatures, no two of which can be more than 30 ft.
+        apart
       name: Use
       range:
         units: medium
-      spellEffect: >-
-        two or more summoned creatures, no two of which can be more than 30 ft.
-        apart
   components:
     somatic: true
     verbal: true
@@ -59,6 +59,8 @@ system:
     - id: PZO1110
       pages: '277'
   sr: false
-  subschool: summoning
+  subschool:
+    value:
+      - summoning
 type: spell
 

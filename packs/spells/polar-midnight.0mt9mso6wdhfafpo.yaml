@@ -12,8 +12,6 @@ system:
         unchained:
           cost: 2
           type: action
-      attackNotes:
-        - '[[/r 1d6]] Dexterity damage'
       damage:
         parts:
           - formula: 5d6
@@ -24,17 +22,20 @@ system:
       duration:
         units: round
         value: '@cl'
+      effect: 30-ft. spread
       measureTemplate:
         color: '#76aab7'
         size: '30'
         type: circle
       name: Use
+      notes:
+        footer:
+          - '[[/r 1d6]] Dexterity damage'
       range:
         units: close
       save:
         description: Fortitude partial
         type: fort
-      spellEffect: 30-ft. spread
   components:
     somatic: true
     verbal: true

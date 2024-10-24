@@ -15,19 +15,20 @@ system:
       area: 20-ft.-radius burst centered on you
       damage:
         parts:
-          - formula: min(15, @cl)d6
+          - formula: (min(15, @cl))d6
             type:
               custom: ''
               values:
                 - force
       duration:
         units: inst
-      effectNotes:
-        - '@Action[Knock Prone]'
       measureTemplate:
         size: '20'
         type: circle
       name: Use
+      notes:
+        effect:
+          - '@Action[Knock Prone]'
       range:
         units: ft
         value: '20'

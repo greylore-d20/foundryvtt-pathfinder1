@@ -14,9 +14,12 @@ system:
       duration:
         units: spec
         value: 10 minutes or until discharged
-      effectNotes:
-        - ' You can make a single ranged attack with a coin as part of casting this spell.'
       name: Transmute up to 3 coins
+      notes:
+        effect:
+          - >-
+            You can make a single ranged attack with a coin as part of casting
+            this spell.
       range:
         units: touch
       target:
@@ -59,10 +62,6 @@ system:
         type: attack
         unchained:
           type: attack
-      attackNotes:
-        - >-
-          Attack counts as silver for the purpose of overcoming damage
-          reduction.
       damage:
         parts:
           - formula: sizeRoll(1, 6, @size) + min(floor(@cl / 2), 10)[CL/2]
@@ -79,6 +78,11 @@ system:
         type: custom
       img: icons/commodities/currency/coins-shield-sword-stack-silver.webp
       name: Throw Silver Coins
+      notes:
+        footer:
+          - >-
+            Attack counts as silver for the purpose of overcoming damage
+            reduction.
       range:
         units: ft
         value: '20'
@@ -125,10 +129,6 @@ system:
         unchained:
           type: attack
       attackBonus: 1[Masterwork]
-      attackNotes:
-        - >-
-          Attack counts as adamantine for the purpose of overcoming damage
-          reduction and bypassing hardness.
       damage:
         parts:
           - formula: sizeRoll(1, 10, @size) + min(floor(@cl / 2), 10)[CL/2]
@@ -145,6 +145,11 @@ system:
         type: custom
       img: icons/commodities/currency/coins-engraved-copper.webp
       name: Throw Platinum Coins
+      notes:
+        footer:
+          - >-
+            Attack counts as adamantine for the purpose of overcoming damage
+            reduction and bypassing hardness.
       range:
         units: ft
         value: '20'

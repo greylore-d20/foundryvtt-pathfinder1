@@ -6,12 +6,11 @@ import { ItemPhysicalPF } from "./item-physical.mjs";
  * Bags, backpacks, chests, etc.
  */
 export class ItemContainerPF extends ItemPhysicalPF {
-  /**
-   * @override
-   */
+  /** @override */
   static system = Object.freeze({
     ...super.system,
     hasIdentifier: true,
+    hasActions: false,
   });
 
   constructor(...args) {
@@ -29,10 +28,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
    */
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
-
-    // No system updates
     if (!changed.system) return;
-
     if (context.recursive === false || context.diff === false) return;
 
     // Ensure contained item updates adhere to reason

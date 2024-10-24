@@ -12,14 +12,33 @@
  * @property {Widget_CategorizedItemPicker~Item[]} items - All the items associated with this category.
  */
 
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+
 /**
  * Item picker widget.
  */
-export class Widget_CategorizedItemPicker extends Application {
-  constructor(options, categories, callback, selected) {
-    const classes = options.classes;
-    delete options.classes;
+export class Widget_CategorizedItemPicker extends HandlebarsApplicationMixin(ApplicationV2) {
+  static DEFAULT_OPTIONS = {
+    tag: "form",
+    classes: ["pf1-v2", "widget", "categorized-item-picker"],
+    window: {
+      minimizable: false,
+      resizable: true,
+    },
+    position: {
+      width: 480,
+      height: 480,
+    },
+    sheetConfig: false,
+  };
 
+  static PARTS = {
+    form: {
+      template: "systems/pf1/templates/widgets/categorized-item-picker.hbs",
+    },
+  };
+
+  constructor(options, categories, callback, selected) {
     super(options);
 
     /**
@@ -52,26 +71,24 @@ export class Widget_CategorizedItemPicker extends Application {
      * @type {Object<string, string>}
      */
     this._hiddenElems = {};
-
-    if (classes?.length) {
-      this.options.classes.push(...classes);
-    }
   }
 
-  get template() {
-    return "systems/pf1/templates/widgets/categorized-item-picker.hbs";
-  }
+  /* -------------------------------------------- */
 
-  getData(options) {
-    const context = super.getData(options);
-
-    context.categories = this.categories;
-    context.items = [];
+  /**
+   * @inheritDoc
+   * @internal
+   * @async
+   */
+  async _prepareContext() {
+    const categories = [];
 
     for (const cat of this.categories) {
       cat.hidden = cat.validity.item === false;
       if (cat.hidden) continue;
+      cat.active = cat.key === this.selected?.category;
 
+      const categoryItems = [];
       for (const item of cat.items) {
         if (item.validity.item === false) continue;
 
@@ -81,39 +98,40 @@ export class Widget_CategorizedItemPicker extends Application {
           item.validity.valid = false;
         }
 
-        context.items.push({
+        categoryItems.push({
           category: cat.key,
+          active: this.selected?.item === item.key,
           ...item,
         });
       }
 
       // Has any valid choices
-      cat.hasChoices = context.items.some((i) => i.category === cat.key && i.validity.valid);
-      cat.hasVisibleChoices = context.items.some((i) => i.category === cat.key && i.validity.item !== false);
+      cat.hasChoices = categoryItems.some((i) => i.validity.valid);
+      cat.hasVisibleChoices = categoryItems.some((i) => i.validity.item !== false);
+
+      if (!cat.hasVisibleChoices || !cat.hasChoices) continue;
+
+      cat.items = categoryItems;
+      categories.push(cat);
     }
 
-    context.categories = context.categories.filter((cat) => !cat.hidden && cat.hasVisibleChoices);
-
-    return context;
+    return {
+      categories,
+    };
   }
 
-  activateListeners(html) {
+  /* -------------------------------------------- */
+
+  /**
+   * Attach event listeners to the rendered application form.
+   *
+   * @param {ApplicationRenderContext} context      Prepared context data
+   * @param {RenderOptions} options                 Provided render options
+   * @protected
+   */
+  _onRender(context, options) {
     // Click an item
-    html.find(".item").click(this._onClickItem.bind(this));
-
-    // Expand/minimize category
-    html.find(".category a").click(this._onClickCategory.bind(this));
-
-    // Pre-select old category
-    if (this.selected?.category) {
-      html.find(`.category a[data-category="${this.selected.category}"]`).click();
-      if (this.selected?.item) {
-        html
-          .find(`.item[data-category="${this.selected.category}"][data-value="${this.selected.item}"]`)
-          .first()
-          .addClass("pre-select");
-      }
-    }
+    this.element.querySelectorAll(".item").forEach((el) => el.addEventListener("click", this._onClickItem.bind(this)));
 
     // Cancel widget
     window.setTimeout(() => {
@@ -123,16 +141,14 @@ export class Widget_CategorizedItemPicker extends Application {
     }, 10);
   }
 
-  static get defaultOptions() {
-    const options = super.defaultOptions;
-    return {
-      ...options,
-      width: 480,
-      height: 480,
-      classes: [...options.classes, "pf1", "categorized-item-picker"],
-    };
-  }
+  /* -------------------------------------------- */
 
+  /**
+   * Handle click on an item.
+   *
+   * @param {Event} event
+   * @private
+   */
   _onClickItem(event) {
     event.preventDefault();
     const a = event.currentTarget;
@@ -142,38 +158,36 @@ export class Widget_CategorizedItemPicker extends Application {
     this.close();
   }
 
-  _onClickCategory(event) {
-    event.preventDefault();
-    const a = event.currentTarget;
-    const html = $(this.element);
+  /* -------------------------------------------- */
 
-    // Deactivate all categories
-    html.find(".item-picker-categories").children().removeClass("active");
-
-    // Activate clicked category
-    $(a).closest(".category").addClass("active");
-
-    // Hide all items
-    html.find(".item-picker-items").children().addClass("hidden");
-
-    // Show items
-    html.find(`.item-picker-items .item[data-category="${a.dataset.category}"]`).removeClass("hidden");
-  }
-
+  /**
+   * Handle click outside the widget.
+   *
+   * @param {Event} event
+   * @private
+   */
   _onCancel(event) {
     event.preventDefault();
 
     // Don't cancel if this widget was clicked
     let node = event.target;
-    if (node === this.element[0]) return;
+    if (node === this.element) return;
     while (node.parentNode) {
-      if (node === this.element[0]) return;
+      if (node === this.element) return;
       node = node.parentNode;
     }
 
     this.close();
   }
 
+  /* -------------------------------------------- */
+
+  /**
+   * Close the widget
+   *
+   * @param args
+   * @returns {Promise<void>}
+   */
   async close(...args) {
     document.removeEventListener("click", this._cancelCallback);
     return super.close(...args);
@@ -181,5 +195,5 @@ export class Widget_CategorizedItemPicker extends Application {
 }
 
 Hooks.on("renderWidget_CategorizedItemPicker", (app, html, data) => {
-  html.find(".pre-select")[0]?.scrollIntoView({ block: "nearest" });
+  html.querySelector(".pre-select")?.scrollIntoView({ block: "nearest" });
 });

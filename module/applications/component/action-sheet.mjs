@@ -66,34 +66,33 @@ export class ItemActionSheet extends FormApplication {
     const item = this.item;
     const actor = this.actor;
 
+    const editable = this.isEditable;
+
     const context = {
       config: pf1.config,
-      editable: this.isEditable,
-      cssClass: this.isEditable ? "editable" : "locked",
+      editable,
+      cssClass: editable ? "editable" : "locked",
       user: game.user,
+      data: action.toObject(false, false),
       action,
       item,
       actor,
       img: action.img,
-      tag: pf1.utils.createTag(action.name), // Tag placeholder
+      tag: action._source.tag, // True tag
       damageTypes: pf1.registry.damageTypes.toObject(),
       rollData: action.getRollData(),
     };
 
-    context.data = foundry.utils.mergeObject(action.constructor.defaultData, foundry.utils.deepClone(action.data), {
-      inplace: false,
-    });
-
     // Action Details
     context.hasAttack = action.hasAttack;
-    context.actionType = context.data.actionType;
+    context.actionType = action.actionType;
     context.isHealing = context.actionType === "heal";
     context.hasDamage = action.hasDamage;
     context.isCombatManeuver = action.isCombatManeuver;
-    context.canCrit = action.hasAttack && action.data.ability?.critMult > 1;
+    context.canCrit = action.hasAttack && action.ability?.critMult > 1;
     // Can have crit and non-crit damage, or simply show them if they've been defined.
-    context.hasCritDamage = context.canCrit || context.data.damage?.critParts?.length > 0;
-    context.hasNonCritDamage = context.canCrit || context.data.damage?.nonCritParts?.length > 0;
+    context.hasCritDamage = context.canCrit || action.damage?.critParts?.length > 0;
+    context.hasNonCritDamage = context.canCrit || action.damage?.nonCritParts?.length > 0;
 
     context.isCharged = action.isCharged;
     context.isSelfCharged = action.isSelfCharged;
@@ -101,13 +100,13 @@ export class ItemActionSheet extends FormApplication {
     chargedUsePeriods.delete("single"); // Single is special
     context.limitedUsePeriods = { ...pf1.config.limitedUsePeriods };
     if (!item.isPhysical) delete context.limitedUsePeriods.single;
-    context.showMaxChargeFormula = chargedUsePeriods.has(context.data.uses.self.per);
+    context.showMaxChargeFormula = chargedUsePeriods.has(action.uses.self.per);
     if (action.hasRange) {
-      context.canInputRange = ["ft", "mi", "spec"].includes(context.data.range.units);
-      context.canInputMinRange = ["ft", "mi", "spec"].includes(context.data.range.minUnits);
+      context.canInputRange = ["ft", "mi", "spec"].includes(action.range.units);
+      context.canInputMinRange = ["ft", "mi", "spec"].includes(action.range.minUnits);
     }
 
-    context.canInputDuration = !["", "turn", "inst", "perm", "seeText"].includes(context.data.duration?.units || "");
+    context.canInputDuration = !["", "turn", "inst", "perm", "seeText"].includes(action.duration?.units || "");
 
     // Action Details
     context.itemName = item.name;
@@ -127,7 +126,7 @@ export class ItemActionSheet extends FormApplication {
       : pf1.config.abilityActivationTypes;
 
     // Add description
-    const description = context.data.description;
+    const description = action.description;
     context.descriptionHTML = description
       ? await TextEditor.enrichHTML(description, {
           secrets: context.owner,
@@ -137,7 +136,7 @@ export class ItemActionSheet extends FormApplication {
       : null;
 
     // Show additional ranged properties
-    context.showMaxRangeIncrements = context.data.range.units === "ft";
+    context.showMaxRangeIncrements = action.range.units === "ft";
 
     // Prepare attack specific stuff
     if (item.type === "attack") {
@@ -146,7 +145,7 @@ export class ItemActionSheet extends FormApplication {
     }
 
     context.canUseAmmo = context.isNaturalAttack !== true;
-    context.usesAmmo = !!action.ammoType;
+    context.usesAmmo = !!action.ammo.type;
     context.inheritedAmmoType = item?.system.ammo?.type;
 
     if (context.usesAmmo) {
@@ -164,13 +163,14 @@ export class ItemActionSheet extends FormApplication {
 
     // Add distance units
     context.distanceUnits = foundry.utils.deepClone(pf1.config.distanceUnits);
+    delete context.distanceUnits.none; // same as empty selection
     if (item.type !== "spell") {
       for (const d of ["close", "medium", "long"]) {
         delete context.distanceUnits[d];
       }
     }
     // Set whether to show minimum range input
-    context.minRangeAvailable = ["reach", "ft", "mi", "seeText"].includes(context.data.range.units);
+    context.minRangeAvailable = ["reach", "ft", "mi", "seeText"].includes(action.range.units);
 
     // Prepare stuff for actions with conditionals
     if (context.data.conditionals) {
@@ -217,7 +217,7 @@ export class ItemActionSheet extends FormApplication {
       ...Object.entries(pf1.config.extraAttacks).map(([key, { label }]) => [key, label]),
     ]);
 
-    context.extraAttacksConfig = { ...pf1.config.extraAttacks[action.data.extraAttacks?.type] };
+    context.extraAttacksConfig = { ...pf1.config.extraAttacks[action.extraAttacks?.type] };
     context.extraAttacksConfig.allowCustom = context.extraAttacksConfig.manual || context.extraAttacksConfig.formula;
 
     return context;
@@ -374,7 +374,7 @@ export class ItemActionSheet extends FormApplication {
       data._id = foundry.utils.randomID(16);
 
       // Append conditional
-      const conditionals = foundry.utils.deepClone(action.data.conditionals || []);
+      const conditionals = action.toObject().conditionals || [];
       conditionals.push(data);
       await this.action.update({ conditionals });
     }
@@ -388,7 +388,7 @@ export class ItemActionSheet extends FormApplication {
     switch (a.dataset.action) {
       // Add
       case "add": {
-        const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.action.data, key) ?? []);
+        const notes = foundry.utils.getProperty(this.action.toObject(), key) ?? [];
         notes.push("");
         const updateData = { [key]: notes };
         return this._updateObject(event, this._getSubmitData(updateData));
@@ -396,7 +396,7 @@ export class ItemActionSheet extends FormApplication {
       // Delete
       case "delete": {
         const index = Number(a.dataset.index);
-        const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.action.data, key));
+        const notes = foundry.utils.getProperty(this.action.toObject(), key) ?? [];
         notes.splice(index, 1);
         const updateData = { [key]: notes };
         return this._updateObject(event, this._getSubmitData(updateData));
@@ -460,7 +460,7 @@ export class ItemActionSheet extends FormApplication {
       };
 
       // Add data
-      const damage = foundry.utils.getProperty(this.action.data, k2);
+      const damage = foundry.utils.getProperty(this.action.toObject(), k2);
       const damageParts = foundry.utils.getProperty(damage, k3) ?? [];
       damageParts.push(initialData);
       const updateData = { [path]: damageParts };
@@ -469,7 +469,7 @@ export class ItemActionSheet extends FormApplication {
     // Remove a damage component
     else if (a.classList.contains("delete-damage")) {
       const li = a.closest(".damage-part");
-      const damage = foundry.utils.deepClone(foundry.utils.getProperty(this.action.data, k2));
+      const damage = foundry.utils.getProperty(this.action.toObject(), k2);
       const damageParts = foundry.utils.getProperty(damage, k3) ?? [];
       if (damageParts.length) {
         damageParts.splice(Number(li.dataset.damagePart), 1);
@@ -484,13 +484,20 @@ export class ItemActionSheet extends FormApplication {
     const clickedElement = event.currentTarget;
 
     // Check for normal damage part
-    const damageIndex = clickedElement.closest(".damage-part")?.dataset.damagePart;
+    const damageIndex = Number(clickedElement.closest(".damage-part")?.dataset.damagePart);
     const damagePart = clickedElement.closest(".damage")?.dataset.key;
-    if (damageIndex != null && damagePart != null) {
+    if (damageIndex >= 0 && damagePart) {
       const app = new pf1.applications.DamageTypeSelector(
         this.action,
         `${damagePart}.${damageIndex}.type`,
-        foundry.utils.getProperty(this.action.data, damagePart)[damageIndex].type
+        foundry.utils.getProperty(this.action, damagePart)[damageIndex].type,
+        {
+          updateCallback: (update) => {
+            const damageArray = foundry.utils.getProperty(this.action.toObject(), damagePart) ?? [];
+            damageArray[damageIndex].type = update;
+            this.action.update({ [damagePart]: damageArray });
+          },
+        }
       );
       return app.render(true);
     }
@@ -501,7 +508,11 @@ export class ItemActionSheet extends FormApplication {
     if (conditionalElement && modifierElement) {
       const conditional = this.action.conditionals.get(conditionalElement.dataset.conditional);
       const modifier = conditional.modifiers.get(modifierElement.dataset.modifier);
-      const app = new pf1.applications.DamageTypeSelector(modifier, "damageType", modifier.data.damageType);
+      const app = new pf1.applications.DamageTypeSelector(modifier, "damageType", modifier.data.damageType, {
+        updateCallback: (update) => {
+          modifier.update({ damageType: update });
+        },
+      });
       return app.render(true);
     }
   }
@@ -510,7 +521,7 @@ export class ItemActionSheet extends FormApplication {
     event.preventDefault();
     const a = event.currentTarget;
 
-    const manualExtraAttacks = foundry.utils.deepClone(this.action.data.extraAttacks?.manual ?? []);
+    const manualExtraAttacks = this.action.toObject().extraAttacks?.manual ?? [];
 
     // Add new attack component
     if (a.classList.contains("add-attack")) {
@@ -535,7 +546,7 @@ export class ItemActionSheet extends FormApplication {
    */
   _onEditImage(event) {
     const attr = event.currentTarget.dataset.edit;
-    const current = foundry.utils.getProperty(this.action.data, attr);
+    const current = foundry.utils.getProperty(this.action, attr);
     const fp = new FilePicker({
       type: "image",
       current,
@@ -581,8 +592,10 @@ export class ItemActionSheet extends FormApplication {
   }
 
   async _updateObject(event, formData) {
+    const oldData = this.action.toObject(true, false);
+
     // Handle conditionals array
-    const conditionalData = foundry.utils.deepClone(this.action.data.conditionals);
+    const conditionalData = oldData.conditionals ?? [];
     Object.entries(formData)
       .filter((o) => o[0].startsWith("conditionals"))
       .forEach((o) => {
@@ -591,16 +604,14 @@ export class ItemActionSheet extends FormApplication {
         if ((reResult = o[0].match(/^conditionals.([0-9]+).modifiers.([0-9]+).(.+)$/))) {
           const conditionalIdx = parseInt(reResult[1]);
           const modifierIdx = parseInt(reResult[2]);
-          const conditional =
-            conditionalData[conditionalIdx] ?? foundry.utils.deepClone(this.action.data.conditionals[conditionalIdx]);
+          const conditional = conditionalData[conditionalIdx] ?? oldData.conditionals[conditionalIdx];
           const path = reResult[3];
           foundry.utils.setProperty(conditional.modifiers[modifierIdx], path, o[1]);
         }
         // Handle conditional
         else if ((reResult = o[0].match(/^conditionals.([0-9]+).(.+)$/))) {
           const conditionalIdx = parseInt(reResult[1]);
-          const conditional =
-            conditionalData[conditionalIdx] ?? foundry.utils.deepClone(this.action.data.conditionals[conditionalIdx]);
+          const conditional = conditionalData[conditionalIdx] ?? oldData.conditionals[conditionalIdx];
           const path = reResult[2];
           foundry.utils.setProperty(conditional, path, o[1]);
         }
@@ -608,6 +619,18 @@ export class ItemActionSheet extends FormApplication {
     formData["conditionals"] = conditionalData;
 
     formData = foundry.utils.expandObject(formData);
+
+    // Merge partial damage data to preserve overall data
+    if (formData.damage) {
+      for (const [key, array] of Object.entries(formData.damage)) {
+        if (Array.isArray(array)) continue;
+        const damage = oldData.damage[key] ?? [];
+        for (const [idx, data] of Object.entries(array)) {
+          damage[idx] = foundry.utils.mergeObject(damage[Number(idx)] ?? {}, data);
+        }
+        formData.damage[key] = damage;
+      }
+    }
 
     // Adjust Material Addons object to array
     const material = formData.material;
@@ -639,10 +662,13 @@ export class ItemActionSheet extends FormApplication {
     return this.action.update(formData);
   }
 
-  async close(options) {
+  async close(options = {}) {
     delete this.item.apps[this.appId];
     delete this.action.apps[this.appId];
     if (this.action._sheet === this) this.action._sheet = null;
+
+    if (options.force && this._state <= Application.RENDER_STATES.NONE) return; // HACK: already closed, would error without
+
     return super.close(options);
   }
 }

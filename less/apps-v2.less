@@ -21,3 +21,27 @@
     display: flex;
   }
 }
+
+.theme-dark {
+  .pf1-v2 {
+    table {
+      thead {
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+
+      tr:nth-child(even) {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+}
+
+@keyframes pf1-constant-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

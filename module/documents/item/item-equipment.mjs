@@ -15,12 +15,12 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
    */
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
-
     if (!changed.system) return;
+    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
     // Set equipment subtype and slot
     const type = changed.system?.subType;
-    if (type !== undefined && type !== this.subType) {
+    if (type !== undefined && type !== this.system.subType) {
       // Set subtype
       const subtype = changed.system?.equipmentSubtype ?? this.system.equipmentSubtype ?? "";
       const subtypes = Object.keys(pf1.config.equipmentTypes[type] ?? {}).filter((o) => !o.startsWith("_"));

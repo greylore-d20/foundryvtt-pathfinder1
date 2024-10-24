@@ -1252,6 +1252,53 @@ export const durationEndEvents = {
 /* -------------------------------------------- */
 
 /**
+ * Caster types.
+ *
+ * Keys match options in {@link casterProgression}
+ */
+export const caster = {
+  /**
+   * Preparation types.
+   */
+  type: {
+    prepared: {
+      label: "PF1.SpellPrepPrepared",
+      spontaneous: false,
+      prepared: true,
+    },
+    spontaneous: {
+      label: "PF1.SpellPrepSpontaneous",
+      spontaneous: true,
+      prepared: false,
+    },
+    hybrid: {
+      label: "PF1.Arcanist",
+      spontaneous: true,
+      prepared: true,
+    },
+    prestige: {
+      label: "PF1.RedMantisAssassin",
+      spontaneous: true,
+      prepared: false,
+    },
+  },
+  /**
+   * Progression choices.
+   */
+  progression: {
+    high: {
+      label: "PF1.High",
+    },
+    med: {
+      label: "PF1.Medium",
+    },
+    low: {
+      label: "PF1.Low",
+    },
+  },
+};
+
+/**
  * This Object determines spells gained and cast per level
  */
 export const casterProgression = {
@@ -2160,24 +2207,27 @@ export const extraAttacks = {
     formula: true,
   },
   // Chained Monk's Flurry of Blows
-  // Requires BAB override
-  // TODO: Make attack handling allow flurries to use normal iteratives.
+  // Requires BAB override and class association
   flurry: {
     label: "PF1.ExtraAttacks.Flurry",
-    count: "min(3, ceil(@bab / 5) - 1) + ceil(@class.level / 7)",
-    bonus: "-(floor(@attackCount / 2) * 5 + @fullAttack * 2)",
+    count: "ceil(@class.level / 7)",
+    bonus: "-(@attackSetCount * 5)",
+    attackName: "PF1.ExtraAttacks.FlurryAttack",
     flavor: "PF1.ExtraAttacks.FlurryFlavor",
-    iteratives: false,
+    modToAll: "-(@fullAttack * 2)",
+    iteratives: true,
     manual: false,
     formula: false,
   },
   // Unchained Monk's Flurry of Blows
+  // Requires class association
   unflurry: {
     label: "PF1.ExtraAttacks.UnFlurry",
-    count: "min(3, ceil(@bab / 5) - 1) + floor((@class.level + 9) / 10)",
-    bonus: "max(0, @attackCount - floor((@class.level + 9) / 10)) * -5",
+    count: "floor((@class.level + 9) / 10)",
+    //bonus: "0",
     flavor: "PF1.ExtraAttacks.FlurryFlavor",
-    iteratives: false,
+    attackName: "PF1.ExtraAttacks.FlurryAttack",
+    iteratives: true,
     manual: false,
     formula: false,
   },
@@ -3072,23 +3122,6 @@ export const sheetSections = {
     },
   },
 };
-
-/** @type {Record<string,string>} - Class ID to name mappings */
-export const classNames = {};
-
-// Update classNames with pack contents, leave any other mapping filling to modules and content owners
-Hooks.once("ready", async () => {
-  const index = await game.packs.get("pf1.classes").getIndex({ fields: ["system.tag", "system.subType"] });
-
-  index.forEach((e) => {
-    if (e.system?.subType && !["base", "npc"].includes(e.system?.subType)) return;
-
-    const tag = e.system?.tag;
-    if (!tag) return;
-
-    pf1.config.classNames[tag] = e.name;
-  });
-});
 
 // Prepare sheet sections with data available later
 // ... allowing module modification also.

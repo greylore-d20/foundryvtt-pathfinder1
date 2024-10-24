@@ -26,12 +26,5 @@
 {{/if}}
 
 {{#each properties}}
-<div class="flexcol property-group gm-sensitive general-notes {{css}}">
-  <label>{{header}}</label>
-  <div class="flexrow tag-list">
-    {{#each value}}
-    <span class="tag">{{{this}}}</span>
-    {{/each}}
-  </div>
-</div>
+{{> "systems/pf1/templates/chat/parts/item-notes.hbs" css=css cssExtra="general-notes" header=header notes=value}}
 {{/each}}

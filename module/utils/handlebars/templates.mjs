@@ -68,8 +68,6 @@ const templatePaths = /** @type {const} */ ([
   "systems/pf1/templates/apps/vision-sharing.hbs",
   "systems/pf1/templates/apps/help-browser.hbs",
   "systems/pf1/templates/apps/action-select.hbs",
-  "systems/pf1/templates/apps/item-select.hbs",
-  "systems/pf1/templates/apps/actor-select.hbs",
 
   // Item Action Partials
   "systems/pf1/templates/apps/item-action/action.hbs",
@@ -94,13 +92,12 @@ const templatePaths = /** @type {const} */ ([
 
   "systems/pf1/templates/chat/parts/item-notes.hbs",
 
+  // Item description headers
+  "systems/pf1/templates/items/headers/spell-header.hbs",
+
   // Internal Rendering Partials
-  "systems/pf1/templates/internal/spell-description.hbs",
   "systems/pf1/templates/internal/token-config_vision.hbs",
   "systems/pf1/templates/internal/damage-type-visual.hbs",
-
-  // Tooltip
-  "systems/pf1/templates/hud/tooltip.hbs",
 
   "systems/pf1/templates/hud/quick-actions.hbs",
 

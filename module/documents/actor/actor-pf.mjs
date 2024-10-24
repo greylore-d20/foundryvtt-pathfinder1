@@ -2,7 +2,6 @@ import { ActorBasePF } from "./actor-base.mjs";
 import { fractionalToString, enrichHTMLUnrolled, openJournal } from "@utils";
 import {
   applyChanges,
-  addDefaultChanges,
   getChangeFlat,
   getSourceInfo,
   setSourceInfoByName,
@@ -724,6 +723,9 @@ export class ActorPF extends ActorBasePF {
 
     book.isSchool = book.kind !== "divine";
 
+    book.hasProgressionChoices =
+      Object.keys(pf1.config.casterProgression.castsPerDay[book.spellPreparationMode] ?? {}).length > 1;
+
     // Set spellbook label
     book.label = book.name || game.i18n.localize(`PF1.SpellBook${bookId.capitalize()}`);
 
@@ -897,10 +899,9 @@ export class ActorPF extends ActorBasePF {
     if (useAuto) {
       let casterType = book.casterType;
       // Set caster type to sane default if configuration not found.
-      if (pf1.config.casterProgression.castsPerDay[mode.raw]?.[casterType] === undefined) {
+      if (!pf1.config.casterProgression.castsPerDay[mode.raw]?.[casterType]) {
         const keys = Object.keys(pf1.config.casterProgression.castsPerDay[mode.raw]);
-        if (mode.isPrestige) book.casterType = casterType = keys[0];
-        else book.casterType = casterType = keys.at(-1);
+        book.casterType = casterType = keys[0];
       }
 
       const castsForLevels =
@@ -1242,6 +1243,9 @@ export class ActorPF extends ActorBasePF {
     // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
     this._rollData = null;
 
+    // Setup links
+    this.prepareItemLinks();
+
     // Update dependant data and resources
     this.items.forEach((item) => {
       item._prepareDependentData(false);
@@ -1260,9 +1264,6 @@ export class ActorPF extends ActorBasePF {
 
     // Prepare CMB total
     this.prepareCMB();
-
-    // Setup links
-    this.prepareItemLinks();
 
     this._prepareOverlandSpeeds();
 
@@ -1790,6 +1791,10 @@ export class ActorPF extends ActorBasePF {
       for (const type of Object.keys(links)) {
         for (const link of links[type]) {
           // HACK: fromUuid[Sync]() causes recursive synth actor initialization at world launch, so we do this instead
+          if (!link.uuid) {
+            console.error(`"${item.name}" on "${this.name}" has invalid "${type}" link`, { link, item });
+            continue;
+          }
           const linkData = foundry.utils.parseUuid(link.uuid, { relative: this });
           const linkedItem = this.items.get(linkData?.id);
           if (!linkedItem) continue; // Ignore items not on current actor
@@ -2132,10 +2137,8 @@ export class ActorPF extends ActorBasePF {
    */
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
-
-    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
-
     if (!changed.system) return; // No system updates.
+    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
     const oldData = this.system;
 
@@ -2197,12 +2200,24 @@ export class ActorPF extends ActorBasePF {
       changed.system.attributes.energyDrain = Math.abs(energyDrain);
     }
 
-    // Backwards compatibility
-    const conditions = changed.system.attributes?.conditions;
-
     // Never allow updates to the new condtions location
     if (changed.system.conditions !== undefined) {
       delete changed.system.conditions;
+    }
+
+    // Adjust spellbook data
+    const books = changed.system.attributes?.spells?.spellbooks;
+    if (books) {
+      const cbooks = this.system.attributes?.spells?.spellbooks;
+      for (const [bookId, bookData] of Object.entries(books)) {
+        const prepMode = bookData.spellPreparationMode;
+        if (prepMode !== cbooks[bookId].spellPreparationMode) {
+          const prog = bookData.casterType || cbooks[bookId].casterType;
+          const progs = pf1.config.casterProgression.castsPerDay[prepMode] ?? {};
+          // Reset invalid progression to first choice
+          if (!progs[prog]) bookData.casterType = Object.keys(progs)[0];
+        }
+      }
     }
   }
 
@@ -2519,6 +2534,7 @@ export class ActorPF extends ActorBasePF {
 
   updateItemResources(item, { warnOnDuplicate = true } = {}) {
     if (item.type === "spell") return false;
+    if (item.links?.charges) return false; // Don't create resource for items that are inheriting charges
     if (!item.isCharged) return false;
     if (item.isSingleUse) return false;
     if (item.isPhysical) return false;
@@ -2688,15 +2704,15 @@ export class ActorPF extends ActorBasePF {
     const skl = this.getSkillInfo(skillId);
     const haveParentSkill = !!subSkillId;
 
-    // Add contextual attack string
+    // Add context notes
     const rollData = this.getRollData();
-    const noteObjects = this.getContextNotes(`skill.${skillId}`);
-    if (haveParentSkill) noteObjects.push(...this.getContextNotes(`skill.${mainSkillId}`, false));
-    const notes = this.formatContextNotes(noteObjects, rollData);
+    const notes = await this.getContextNotesParsed(`skill.${skillId}`, { rollData });
+    if (haveParentSkill)
+      notes.push(...(await this.getContextNotesParsed(`skill.${mainSkillId}`, { rollData, all: false })));
 
     // Add untrained note
     if (skl.rt && !skl.rank) {
-      notes.push(game.i18n.localize("PF1.Untrained"));
+      notes.push({ text: game.i18n.localize("PF1.Untrained") });
     }
 
     // Gather changes
@@ -2732,7 +2748,7 @@ export class ActorPF extends ActorBasePF {
     // Add Wound Thresholds info
     if (rollData.attributes.woundThresholds?.penalty > 0) {
       const label = pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level];
-      notes.push(label);
+      notes.push({ text: label });
       parts.push(`- @attributes.woundThresholds.penalty[${label}]`);
     }
 
@@ -2840,16 +2856,17 @@ export class ActorPF extends ActorBasePF {
     else actionType = ranged ? "rcman" : "mcman";
 
     const atkData = {
-      ...pf1.components.ItemAction.defaultData,
       name: !ranged ? game.i18n.localize("PF1.Melee") : game.i18n.localize("PF1.Ranged"),
       actionType,
     };
 
     // Alter attack ability
     const atkAbl = this.system.attributes?.attack?.[`${ranged ? "ranged" : "melee"}Ability`];
+    atkData.abiliy ??= {};
     atkData.ability.attack = ability ?? (atkAbl || (ranged ? "dex" : "str"));
 
     // Alter activation type
+    atkData.activation ??= {};
     atkData.activation.type = "attack";
     atkData.activation.unchained.type = "attack";
 
@@ -2860,7 +2877,7 @@ export class ActorPF extends ActorBasePF {
         type: "attack",
         name: !maneuver ? game.i18n.localize("TYPES.Item.weapon") : game.i18n.localize("PF1.CMBAbbr"),
         system: {
-          actions: [atkData],
+          actions: [new pf1.components.ItemAction(atkData).toObject()],
         },
       },
       { parent: this }
@@ -2892,11 +2909,11 @@ export class ActorPF extends ActorBasePF {
     srcDetails(this.sourceDetails[`system.attributes.spells.spellbooks.${bookId}.cl.total`]);
 
     // Add contextual caster level string
-    const notes = this.getContextNotesParsed(`spell.cl.${bookId}`);
+    const notes = await this.getContextNotesParsed(`spell.cl.${bookId}`, { rollData });
 
     // Wound Threshold penalty
     const wT = this.getWoundThresholdData();
-    if (wT.valid) notes.push(pf1.config.woundThresholdConditions[wT.level]);
+    if (wT.valid) notes.push({ text: pf1.config.woundThresholdConditions[wT.level] });
 
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
@@ -2945,11 +2962,11 @@ export class ActorPF extends ActorBasePF {
     srcDetails(this.sourceDetails[`system.attributes.spells.spellbooks.${bookId}.concentration.total`]);
 
     // Add contextual concentration string
-    const notes = this.getContextNotesParsed(`spell.concentration.${bookId}`);
+    const notes = await this.getContextNotesParsed(`spell.concentration.${bookId}`, { rollData });
 
     // Wound Threshold penalty
     const wT = this.getWoundThresholdData();
-    if (wT.valid) notes.push(game.i18n.localize(pf1.config.woundThresholdConditions[wT.level]));
+    if (wT.valid) notes.push({ text: game.i18n.localize(pf1.config.woundThresholdConditions[wT.level]) });
     // TODO: Make the penalty show separate of the CL.total.
 
     const props = [];
@@ -3042,7 +3059,7 @@ export class ActorPF extends ActorBasePF {
    * @returns
    */
   getInitiativeContextNotes() {
-    const notes = this.getContextNotes("misc.init").reduce((arr, o) => {
+    const notes = this.getContextNotes("init").reduce((arr, o) => {
       for (const n of o.notes) arr.push(...n.split(/[\n\r]+/));
       return arr;
     }, []);
@@ -3174,8 +3191,7 @@ export class ActorPF extends ActorBasePF {
 
     // Add contextual notes
     const rollData = this.getRollData();
-    const noteObjects = this.getContextNotes(`savingThrow.${savingThrowId}`);
-    const notes = this.formatContextNotes(noteObjects, rollData);
+    const notes = await this.getContextNotesParsed(`savingThrow.${savingThrowId}`, { rollData });
 
     const parts = [];
 
@@ -3209,7 +3225,7 @@ export class ActorPF extends ActorBasePF {
     // Wound Threshold penalty
     if (rollData.attributes.woundThresholds.penalty > 0) {
       const label = pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level];
-      notes.push(label);
+      notes.push({ text: label });
       parts.push(`- @attributes.woundThresholds.penalty[${label}]`);
     }
 
@@ -3255,8 +3271,7 @@ export class ActorPF extends ActorBasePF {
 
     // Add contextual notes
     const rollData = options.rollData || this.getRollData();
-    const noteObjects = this.getContextNotes(`abilityChecks.${abilityId}`);
-    const notes = this.formatContextNotes(noteObjects, rollData);
+    const notes = await this.getContextNotesParsed(`abilityChecks.${abilityId}`, { rollData });
 
     const label = pf1.config.abilities[abilityId];
     const abl = this.system.abilities[abilityId];
@@ -3273,7 +3288,7 @@ export class ActorPF extends ActorBasePF {
     // Wound Threshold penalty
     if (rollData.attributes.woundThresholds.penalty > 0) {
       const label = pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level];
-      notes.push(label);
+      notes.push({ text: label });
       parts.push(`- @attributes.woundThresholds.penalty[${label}]`);
     }
 
@@ -3309,35 +3324,34 @@ export class ActorPF extends ActorBasePF {
       return void ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: this.name }));
     }
     const rollData = this.getRollData();
-    const damageTypes = pf1.registry.damageTypes.getLabels();
+
+    const formatTextNotes = (notes) => acNotes?.split(/[\n\r]+/).map((text) => ({ text })) ?? [];
 
     // Add contextual AC notes
-    const acNoteObjects = this.getContextNotes("misc.ac");
-    const acNotes = this.formatContextNotes(acNoteObjects, rollData);
-    if (this.system.attributes.acNotes) acNotes.push(...this.system.attributes.acNotes.split(/[\n\r]+/));
+    const acNotes = await this.getContextNotesParsed("ac", { rollData });
+    if (this.system.attributes.acNotes) acNotes.push(...formatTextNotes(this.system.attributes.acNotes));
 
     // Add contextual CMD notes
-    const cmdNoteObjects = this.getContextNotes("misc.cmd");
-    const cmdNotes = this.formatContextNotes(cmdNoteObjects, rollData);
-    if (this.system.attributes.cmdNotes) cmdNotes.push(...this.system.attributes.cmdNotes.split(/[\n\r]+/));
+    const cmdNotes = await this.getContextNotesParsed("cmd", { rollData });
+    if (this.system.attributes.cmdNotes) cmdNotes.push(...formatTextNotes(this.system.attributes.cmdNotes));
 
     // Add contextual SR notes
-    const srNoteObjects = this.getContextNotes("misc.sr");
-    const srNotes = this.formatContextNotes(srNoteObjects, rollData);
-    if (this.system.attributes.srNotes) srNotes.push(...this.system.attributes.srNotes.split(/[\n\r]+/));
+    const srNotes = await this.getContextNotesParsed("sr", { rollData });
+    if (this.system.attributes.srNotes) srNotes.push(...formatTextNotes(this.system.attributes.srNotes));
 
     // BUG: No specific saving throw notes are included
-    const saveNotesObjects = this.getContextNotes("allSavingThrows");
-    const saveNotes = this.formatContextNotes(saveNotesObjects, rollData);
-    if (this.system.attributes.saveNotes) saveNotes.push(...this.system.attributes.saveNotes.split(/[\n\r]+/));
+    const saveNotes = await this.getContextNotesParsed("allSavingThrows", { rollData });
+    if (this.system.attributes.saveNotes) saveNotes.push(...formatTextNotes(this.system.attributes.saveNotes));
 
     // Add misc data
-    const reSplit = pf1.config.re.traitSeparator;
+
     // Damage Reduction
     const drNotes = Object.values(this.parseResistances("dr"));
 
     // Energy Resistance
     const energyResistance = Object.values(this.parseResistances("eres"));
+
+    const damageTypes = pf1.registry.damageTypes.getLabels();
 
     // Damage Immunity
     if (this.system.traits.di.value.length || this.system.traits.di.custom.length) {
@@ -3355,6 +3369,7 @@ export class ActorPF extends ActorBasePF {
       ];
       energyResistance.push(...values.map((o) => game.i18n.format("PF1.VulnerableTo", { vulnerability: o })));
     }
+
     // Conditions
     const conditions = Object.entries(this.system.conditions ?? {})
       .filter(([_, enabled]) => enabled)
@@ -3366,8 +3381,8 @@ export class ActorPF extends ActorBasePF {
     const wT = this.getWoundThresholdData();
     if (wT.valid) {
       const wTlabel = pf1.config.woundThresholdConditions[wT.level];
-      acNotes.push(wTlabel);
-      cmdNotes.push(wTlabel);
+      acNotes.push({ text: wTlabel });
+      cmdNotes.push({ text: wTlabel });
     }
 
     // Get actor's token
@@ -3410,7 +3425,7 @@ export class ActorPF extends ActorBasePF {
       };
     }
 
-    rollMode ??= game.settings.get("core", "rollMode");
+    rollMode ||= game.settings.get("core", "rollMode");
 
     const chatData = {
       content: await renderTemplate("systems/pf1/templates/chat/defenses.hbs", templateData),
@@ -4107,109 +4122,102 @@ export class ActorPF extends ActorBasePF {
   /**
    * Generates an array with all the active context-sensitive notes for the given context on this actor.
    *
-   * @param {string|Handlebars.SafeString} context - The context to draw from.
-   * @param {boolean} [all=true] - Retrieve notes meant for all.
+   * @param {string} context - The context to draw from.
+   * @param {boolean} [all=true] - Retrieve notes meant for all, such as notes targeting all skills.
+   * @returns {Array<ItemContextNotes>}
    */
   getContextNotes(context, all = true) {
-    if (context.string) context = context.string;
+    if (context.string) {
+      foundry.utils.logCompatibilityWarning(
+        "ActorPF.getcontextNotes() first parameter must be a string, support for anything else is deprecated.",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        }
+      );
+      context = context.string;
+    }
+
     const result = this.allNotes;
 
-    // Attacks
-    if (context.match(/^attacks\.(.+)/)) {
-      const key = RegExp.$1;
-      for (const note of result) {
-        note.notes = note.notes.filter((o) => o.target === key).map((o) => o.text);
+    const parts = context.split(".");
+    const mainId = parts.shift();
+
+    // Special contexts that retrieve additional targets.
+    switch (mainId) {
+      // skill.*
+      case "skill": {
+        const skillKey = parts.shift();
+        const skill = this.getSkillInfo(skillKey);
+        const ability = skill.ability;
+        for (const noteSource of result) {
+          noteSource.notes = noteSource.notes
+            .filter((n) => [context, `${ability}Skills`].includes(n.target) || (all && n.target === "skills"))
+            .map((n) => n.text);
+        }
+
+        return result;
       }
+      // savingThrow.*
+      case "savingThrow": {
+        const saveKey = parts.shift();
+        for (const noteSource of result) {
+          noteSource.notes = noteSource.notes
+            .filter((n) => [saveKey, "allSavingThrows"].includes(n.target))
+            .map((n) => n.text);
+        }
 
-      return result;
-    }
+        if (this.system.attributes?.saveNotes) {
+          result.push({ notes: [this.system.attributes.saveNotes], item: null });
+        }
 
-    // Skill
-    if (context.match(/^skill\.(.+)/)) {
-      const skillKey = RegExp.$1;
-      const skill = this.getSkillInfo(skillKey);
-      const ability = skill.ability;
-      for (const noteSource of result) {
-        noteSource.notes = noteSource.notes
-          .filter((n) => [context, `${ability}Skills`].includes(n.target) || (all && n.target === "skills"))
-          .map((n) => n.text);
+        return result;
       }
+      // abilityChecks.*
+      case "abilityChecks": {
+        const ablKey = parts.shift();
+        for (const noteSource of result) {
+          noteSource.notes = noteSource.notes
+            .filter((n) => [`${ablKey}Checks`, "allChecks"].includes(n.target))
+            .map((n) => n.text);
+        }
 
-      return result;
-    }
-
-    // Saving throws
-    if (context.match(/^savingThrow\.(.+)/)) {
-      const saveKey = RegExp.$1;
-      for (const noteSource of result) {
-        noteSource.notes = noteSource.notes
-          .filter((n) => [saveKey, "allSavingThrows"].includes(n.target))
-          .map((n) => n.text);
+        return result;
       }
+      // spell.*
+      case "spell": {
+        const subId = parts.shift();
+        // spell.concentration.*
+        if (subId === "concentration") {
+          const bookId = parts.shift();
+          for (const noteSource of result) {
+            noteSource.notes = noteSource.notes.filter((n) => n.target === "concentration").map((n) => n.text);
+          }
 
-      if (this.system.attributes.saveNotes != null && this.system.attributes.saveNotes !== "") {
-        result.push({ notes: [this.system.attributes.saveNotes], item: null });
+          const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[bookId]?.concentrationNotes;
+          if (spellbookNotes?.length) {
+            result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
+          }
+
+          return result;
+        }
+        // spell.cl.*
+        if (subId == "cl") {
+          const bookId = parts.shift();
+          for (const noteSource of result) {
+            noteSource.notes = noteSource.notes.filter((n) => n.target === "cl").map((n) => n.text);
+          }
+
+          const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[bookId]?.clNotes;
+          if (spellbookNotes?.length) {
+            result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
+          }
+
+          return result;
+        }
+
+        return [];
       }
-
-      return result;
-    }
-
-    // Ability checks
-    if (context.match(/^abilityChecks\.(.+)/)) {
-      const ablKey = RegExp.$1;
-      for (const noteSource of result) {
-        noteSource.notes = noteSource.notes
-          .filter((n) => [`${ablKey}Checks`, "allChecks"].includes(n.target))
-          .map((n) => n.text);
-      }
-
-      return result;
-    }
-
-    // Misc
-    if (context.match(/^misc\.(.+)/)) {
-      const miscKey = RegExp.$1;
-      for (const noteSource of result) {
-        noteSource.notes = noteSource.notes.filter((n) => n.target === miscKey).map((n) => n.text);
-      }
-
-      return result;
-    }
-
-    if (context.match(/^spell\.concentration\.([a-z]+)$/)) {
-      const bookId = RegExp.$1;
-      for (const noteSource of result) {
-        noteSource.notes = noteSource.notes.filter((n) => n.target === "concentration").map((n) => n.text);
-      }
-
-      const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[bookId]?.concentrationNotes;
-      if (spellbookNotes?.length) {
-        result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
-      }
-
-      return result;
-    }
-
-    if (context.match(/^spell\.cl\.([a-z]+)$/)) {
-      const bookId = RegExp.$1;
-      for (const noteSource of result) {
-        noteSource.notes = noteSource.notes.filter((n) => n.target === "cl").map((n) => n.text);
-      }
-
-      const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[bookId]?.clNotes;
-      if (spellbookNotes?.length) {
-        result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
-      }
-
-      return result;
-    }
-
-    if (context.match(/^spell\.effect$/)) {
-      for (const noteSource of result) {
-        noteSource.notes = noteSource.notes.filter((n) => n.target === "spellEffect").map((n) => n.text);
-      }
-
-      return result;
     }
 
     // Otherwise return notes if they directly match context
@@ -4226,48 +4234,48 @@ export class ActorPF extends ActorBasePF {
    * @param {string} context - The context to draw notes from.
    * @param {object} [options] Additional options
    * @param {boolean} [options.roll=true] Whether to roll inline rolls or not.
-   * @returns {string[]} The resulting notes, already parsed.
+   * @param {boolean} [options.all] - Option to pass to {@link getContextNotes}
+   * @returns {Promise<Array<ParsedContextNoteEntry>>} The resulting notes, already parsed.
    */
-  getContextNotesParsed(context, { roll = true } = {}) {
-    const noteObjects = this.getContextNotes(context);
+  async getContextNotesParsed(context, { all, roll = true, rollData } = {}) {
+    rollData ??= this.getRollData();
 
-    return noteObjects.reduce((cur, o) => {
-      for (const note of o.notes) {
-        const enrichOptions = {
-          rollData: o.item != null ? o.item.getRollData() : this.getRollData(),
-          rolls: roll,
-          relativeTo: this,
-        };
-        cur.push(enrichHTMLUnrolled(note, enrichOptions));
-      }
+    const noteObjects = this.getContextNotes(context, all);
+    await this.enrichContextNotes(noteObjects, rollData, { roll });
 
-      return cur;
+    return noteObjects.reduce((all, o) => {
+      all.push(...o.enriched.map((text) => ({ text, source: o.item?.name })));
+      return all;
     }, []);
   }
 
   /**
-   * @param notes
-   * @param rollData
-   * @param root0
-   * @param root0.roll
-   * @returns {Array<string>}
+   * Enrich context notes with item specific roll data.
+   *
+   * Adds `enriched` array to each note object.
+   *
+   * @param {ItemContextNotes} notes
+   * @param {object} [rollData] - Roll data instance
+   * @param {object} [options] - Additional options
+   * @param {boolean} [options.roll=true] - Handle rolls
    */
-  formatContextNotes(notes, rollData, { roll = true } = {}) {
-    const result = [];
+  async enrichContextNotes(notes, rollData, { roll = true } = {}) {
     rollData ??= this.getRollData();
     for (const noteObj of notes) {
       rollData.item = {};
-      if (noteObj.item != null) rollData = noteObj.item.getRollData();
+      if (noteObj.item) rollData = noteObj.item.getRollData();
 
+      const enriched = [];
       for (const note of noteObj.notes) {
-        result.push(
+        enriched.push(
           ...note
             .split(/[\n\r]+/)
             .map((subnote) => enrichHTMLUnrolled(subnote, { rollData, rolls: roll, relativeTo: this }))
         );
       }
+
+      noteObj.enriched = await Promise.all(enriched);
     }
-    return result;
   }
 
   /**
@@ -4664,7 +4672,7 @@ export class ActorPF extends ActorBasePF {
         } else {
           const action = item.defaultAction;
           // Add fake charges for ammo using items
-          if (action?.ammoType) {
+          if (action?.ammo.type) {
             const ammo = item.defaultAmmo;
             if (ammo) {
               qi.isCharged = true;
@@ -5081,4 +5089,17 @@ export class ActorPF extends ActorBasePF {
  * @property {string} type - Arbitrary type
  * @property {number} value - Change value
  * @property {ItemChange} change - Parent change
+ */
+
+/**
+ * @typedef {object} ItemContextNotes
+ * @property {Item} item - Item from which the notes are from
+ * @property {Array<string>} notes - Note strings
+ * @property {Array<string>} enriched - Enriched note things
+ */
+
+/**
+ * @typedef {object} ParsedContextNoteEntry
+ * @property {string} text - Enriched note text
+ * @property {string|undefined} source - Source label if any
  */

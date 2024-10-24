@@ -15,10 +15,10 @@ system:
         dismiss: true
         units: round
         value: '@cl'
+      effect: one summoned creature
       name: Use
       range:
         units: close
-      spellEffect: one summoned creature
   components:
     somatic: true
     verbal: true
@@ -36,6 +36,8 @@ system:
     - id: PZO1117
       pages: '240'
   sr: false
-  subschool: summoning
+  subschool:
+    value:
+      - summoning
 type: spell
 

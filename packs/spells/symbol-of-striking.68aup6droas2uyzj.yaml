@@ -15,6 +15,7 @@ system:
           type: minute
       duration:
         units: seeText
+      effect: one symbol
       name: Use
       range:
         units: ft
@@ -22,7 +23,6 @@ system:
       save:
         description: Will half, see text
         type: will
-      spellEffect: one symbol
   components:
     material: true
     somatic: true
@@ -74,6 +74,8 @@ system:
   sources:
     - id: PZO1118
       pages: '245'
-  subschool: shadow
+  subschool:
+    value:
+      - shadow
 type: spell
 

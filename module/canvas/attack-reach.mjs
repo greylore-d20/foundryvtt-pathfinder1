@@ -1,5 +1,4 @@
-import { convertDistance, measureDistance } from "@utils";
-
+// TODO: Make the highlight colors configurable
 const rangeColor = {
   fill: Color.from("#FF0000"),
   border: Color.from("#FF0000").multiply(0.9),
@@ -10,15 +9,15 @@ const reachColor = {
 };
 
 class SquareHighlight {
-  constructor(origin, fillColor = 0x00ff00, borderColor = 0x000000) {
+  constructor(origin, fillColor = 0x00ff00, borderColor = 0x000000, name) {
     this.origin = origin;
     this.borderColor = borderColor;
     this.fillColor = fillColor;
     this._squares = [];
 
     this._id = foundry.utils.randomID();
-
-    canvas.interface.grid.addHighlightLayer(`AttackHighlight.${this._id}`);
+    this.name = name;
+    this.layer = canvas.interface.grid.addHighlightLayer(this.name);
   }
 
   addSquare(x, y) {
@@ -26,23 +25,21 @@ class SquareHighlight {
   }
 
   clear() {
-    const hl = canvas.interface.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
-    if (!hl) return;
-    hl.clear();
+    this.layer?.clear();
   }
 
   render() {
-    const grid = canvas.grid;
-    const gridSize = grid.size;
-    const hl = canvas.interface.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
+    const gridSize = canvas.grid.size;
 
     this.clear();
 
     // Highlight squares
+    const hlname = this.layer.name;
+    const ig = canvas.interface.grid;
     for (const s of this._squares) {
       const x = Math.floor(this.origin.x - s.x) * gridSize;
       const y = Math.floor(this.origin.y - s.y) * gridSize;
-      grid.grid.highlightGridPosition(hl, { x: x, y: y, border: this.borderColor, color: this.fillColor });
+      ig.highlightPosition(hlname, { x, y, border: this.borderColor, color: this.fillColor });
     }
   }
 }
@@ -75,6 +72,10 @@ class AttackHighlightBase {
   constructor(token, action) {
     const attack = action?.item;
     if (!action || !token || !attack) throw new Error("Invalid arguments.");
+
+    this._id = foundry.utils.randomID();
+    this.name = `AttackHighlight.${this._id}`;
+    this.layer = canvas.interface.grid.addHighlightLayer(this.name);
   }
 }
 
@@ -110,7 +111,7 @@ class GridlessHighlight extends AttackHighlightBase {
     const rollData = action.getRollData();
 
     // Determine whether reach
-    const rangeKey = action.data.range.units;
+    const rangeKey = action.range.units;
     if (!["melee", "touch", "reach", "ft", "close", "medium"].includes(rangeKey)) return;
     const isReach = rangeKey === "reach";
 
@@ -122,7 +123,7 @@ class GridlessHighlight extends AttackHighlightBase {
 
     if (rangeKey === "ft") {
       // Add range increments
-      const rangeIncrements = action.data.range.maxIncrements;
+      const rangeIncrements = action.range.maxIncrements;
       for (let a = 1; a < rangeIncrements; a++) {
         rangeMeasurements.push((a + 1) * r);
       }
@@ -132,14 +133,11 @@ class GridlessHighlight extends AttackHighlightBase {
       const tokenOffset = r === 0 ? 0 : (tw * gridSize) / 2;
       return r * canvas.dimensions.distancePixels + tokenOffset;
     });
-
-    this._id = foundry.utils.randomID();
-    canvas.interface.grid.addHighlightLayer(`AttackHighlight.${this._id}`);
   }
 
   clearHighlight() {
     if (this.isValid) {
-      const hl = canvas.interface.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
+      const hl = this.layer;
       if (!hl) return;
       hl.removeChildren();
       this.#rangeStops = undefined;
@@ -148,7 +146,7 @@ class GridlessHighlight extends AttackHighlightBase {
 
   renderHighlight() {
     if (this.isValid) {
-      const hl = canvas.interface.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
+      const hl = this.layer;
       if (!hl) return;
       hl.clear();
 
@@ -216,7 +214,7 @@ class SquareGridHighlight extends AttackHighlightBase {
     const rollData = action.getRollData();
 
     // Determine whether reach
-    const rangeKey = action.data.range.units;
+    const rangeKey = action.range.units;
     if (!["melee", "touch", "reach", "ft", "close", "medium"].includes(rangeKey)) return;
     const isReach = rangeKey === "reach";
     const isFeet = rangeKey === "ft";
@@ -237,7 +235,7 @@ class SquareGridHighlight extends AttackHighlightBase {
 
     if (isFeet) {
       // Add range increments
-      const ftDistance = convertDistance(r)[0];
+      const ftDistance = pf1.utils.convertDistance(r)[0];
       const userLimit = game.settings.get("pf1", "performance").reachLimit;
       const maxSquareRange = Math.min(
         userLimit, // arbitrary limit to enhance performance on large canvases
@@ -246,7 +244,7 @@ class SquareGridHighlight extends AttackHighlightBase {
           canvas.dimensions.height / canvas.dimensions.distancePixels
         ) + ftDistance
       );
-      const rangeIncrements = action.data.range.maxIncrements;
+      const rangeIncrements = action.range.maxIncrements;
       for (let a = 1; a < rangeIncrements; a++) {
         if ((a + 1) * ftDistance <= maxSquareRange) {
           squares.extra.push(this.#getReachSquares(token, (a + 1) * r, a * r, { useReachRule }));
@@ -255,7 +253,7 @@ class SquareGridHighlight extends AttackHighlightBase {
     }
 
     const result = {
-      normal: new SquareHighlight(origin, rangeColor.fill, rangeColor.border),
+      normal: new SquareHighlight(origin, rangeColor.fill, rangeColor.border, this.name + ".base"),
       extra: [],
     };
 
@@ -272,7 +270,7 @@ class SquareGridHighlight extends AttackHighlightBase {
         border: a % 2 === 1 ? rangeColor.border : reachColor.border,
       };
 
-      const hl = new SquareHighlight(origin, color.fill, color.border);
+      const hl = new SquareHighlight(origin, color.fill, color.border, this.name + `.${a}`);
       for (const s of squaresExtra) {
         hl.addSquare(s[0], s[1]);
       }
@@ -294,8 +292,8 @@ class SquareGridHighlight extends AttackHighlightBase {
     const result = [];
     if (canvas.grid.type !== CONST.GRID_TYPES.SQUARE) return result;
 
-    range = convertDistance(range)[0];
-    if (typeof minRange === "number") minRange = convertDistance(minRange)[0];
+    range = pf1.utils.convertDistance(range)[0];
+    if (typeof minRange === "number") minRange = pf1.utils.convertDistance(minRange)[0];
 
     // Initialize variables
     const gridDist = canvas.scene.grid.distance;
@@ -378,7 +376,7 @@ class SquareGridHighlight extends AttackHighlightBase {
         }).measurePath([p0, p1]).distance
       : null;
 
-    const reachRuleRange = convertDistance(10)[0];
+    const reachRuleRange = pf1.utils.convertDistance(10)[0];
     if (dist > range) {
       // Special rule for 10-ft. reach
       if (!(useReachRule && range === reachRuleRange)) {

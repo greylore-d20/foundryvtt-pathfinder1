@@ -100,7 +100,7 @@ export class ActionUse {
       }
     }
 
-    if (this.action.isSelfCharged && this.action.data.uses.self?.value < 1) {
+    if (this.action.isSelfCharged && this.action.uses.self?.value < 1) {
       ui.notifications.warn(
         game.i18n.format("PF1.Error.InsufficientCharges", {
           name: `${this.item.name}: ${this.action.name}`,
@@ -192,7 +192,7 @@ export class ActionUse {
 
     // Primary attack
     if (formData["primary-attack"] != null)
-      foundry.utils.setProperty(this.shared.rollData, "action.naturalAttack.primaryAttack", formData["primary-attack"]);
+      foundry.utils.setProperty(this.shared.rollData, "action.naturalAttack.primary", formData["primary-attack"]);
 
     // Use measure template
     if (formData["measure-template"] != null) this.shared.useMeasureTemplate = formData["measure-template"];
@@ -219,7 +219,7 @@ export class ActionUse {
       powerAttackBonus = Math.floor(powerAttackBonus * paMult);
 
       // Get label
-      const label = ["rwak", "twak", "rsak"].includes(this.action.data.actionType)
+      const label = ["rwak", "twak", "rsak"].includes(this.action.actionType)
         ? game.i18n.localize("PF1.DeadlyAim")
         : game.i18n.localize("PF1.PowerAttack");
 
@@ -249,7 +249,7 @@ export class ActionUse {
     }
     // Conditional defaults for fast-forwarding
     if (!this.shared.conditionals) {
-      this.shared.conditionals = this.shared.action.data.conditionals?.reduce((arr, con, i) => {
+      this.shared.conditionals = this.shared.action.conditionals?.reduce((arr, con, i) => {
         if (con.default) arr.push(i);
         return arr;
       }, []);
@@ -258,7 +258,7 @@ export class ActionUse {
     // Apply secondary attack penalties
     if (
       this.shared.rollData.item.subType === "natural" &&
-      this.shared.rollData.action?.naturalAttack.primaryAttack === false
+      this.shared.rollData.action?.naturalAttack.primary === false
     ) {
       const attackBonus = this.shared.rollData.action.naturalAttack?.secondary?.attackBonus || "-5";
       let damageMult = this.shared.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
@@ -304,14 +304,14 @@ export class ActionUse {
       .map((atk) => new ActionUseAttack(atk.label, atk.bonus));
 
     // Set default ammo usage
-    const ammoType = this.action.ammoType;
+    const ammoType = this.action.ammo.type;
     if (ammoType) {
       const ammoId = this.item.getFlag("pf1", "defaultAmmo");
       const ammos = this.getAmmo();
       if (ammoId && ammos.length) {
         const ammo = ammos.find((a) => a.id === ammoId);
         const quantity = ammo?.quantity || 0;
-        const ammoCost = action.ammoCost;
+        const ammoCost = action.ammo.cost;
         const abundant = ammo?.abundant || false;
         for (let a = 0; a < allAttacks.length; a++) {
           const atk = allAttacks[a];
@@ -327,10 +327,10 @@ export class ActionUse {
   }
 
   async autoSelectAmmo() {
-    const ammoType = this.shared.action.ammoType;
+    const ammoType = this.shared.action.ammo.type;
     if (!ammoType) return;
 
-    const ammoCost = this.action.ammoCost;
+    const ammoCost = this.action.ammo.cost;
 
     const ammoId = this.item.getFlag("pf1", "defaultAmmo");
     const item = this.item.actor?.items.get(ammoId);
@@ -358,7 +358,7 @@ export class ActionUse {
    */
   getAmmo() {
     const actor = this.actor;
-    const ammoCost = this.action.ammoCost;
+    const ammoCost = this.action.ammo.cost;
     const ammo = actor.itemTypes.loot.filter((item) => this._filterAmmo(item, ammoCost));
 
     const defaultAmmo = this.action.item.getFlag("pf1", "defaultAmmo");
@@ -390,7 +390,7 @@ export class ActionUse {
     const ammoType = item.system.extraType;
     if (!ammoType) return true;
 
-    return this.action.ammoType === ammoType;
+    return this.action.ammo.type === ammoType;
   }
 
   /**
@@ -400,7 +400,7 @@ export class ActionUse {
    * @returns {Promise}
    */
   async subtractAmmo(value = 1) {
-    if (!this.shared.action.ammoType) return;
+    if (!this.shared.action.ammo.type) return;
 
     const actor = this.item.actor;
 
@@ -440,7 +440,7 @@ export class ActionUse {
    */
   updateAmmoUsage() {
     const actor = this.actor;
-    const ammoCost = this.action.ammoCost;
+    const ammoCost = this.action.ammo.cost;
     if (ammoCost <= 0) return;
     for (const atk of this.shared.attacks) {
       const ammoId = atk.ammo?.id;
@@ -456,7 +456,7 @@ export class ActionUse {
     if (this.shared.conditionals) {
       const conditionalData = {};
       for (const i of this.shared.conditionals) {
-        const conditional = this.shared.action.data.conditionals[i];
+        const conditional = this.shared.action.conditionals[i];
         const tag = pf1.utils.createTag(conditional.name);
         for (const [i, modifier] of conditional.modifiers.entries()) {
           // Adds a formula's result to rollData to allow referencing it.
@@ -587,7 +587,7 @@ export class ActionUse {
     });
 
     // Add save info
-    this.shared.save = this.shared.action.data.save.type;
+    this.shared.save = this.shared.action.save.type;
     this.shared.saveDC = this.shared.action.getDC(this.shared.rollData);
 
     // add notes after all attack info is generated
@@ -675,7 +675,7 @@ export class ActionUse {
         // Add power attack bonus
         if (rollData.powerAttackBonus > 0) {
           // Get label
-          const label = ["rwak", "twak", "rsak"].includes(this.shared.action.data.actionType)
+          const label = ["rwak", "twak", "rsak"].includes(this.shared.action.actionType)
             ? game.i18n.localize("PF1.DeadlyAim")
             : game.i18n.localize("PF1.PowerAttack");
 
@@ -740,7 +740,10 @@ export class ActionUse {
   async addFootnotes() {
     if (!this.item) return;
 
-    const type = this.action.data.actionType;
+    const actor = this.actor;
+    const rollData = this.shared.rollData;
+
+    const type = this.action.actionType;
     const typeMap = {
       rsak: ["ranged", "rangedSpell"],
       rwak: ["ranged", "rangedWeapon"],
@@ -756,26 +759,28 @@ export class ActionUse {
     const notes = [];
     // Add actor notes for attacks
     if (this.actor && isAttack) {
-      notes.push(...this.actor.getContextNotesParsed("attacks.attack"));
-      typeMap[type]?.forEach((subTarget) => notes.push(...this.actor.getContextNotesParsed(`attacks.${subTarget}`)));
+      notes.push(...(await actor.getContextNotesParsed("attack", { rollData })));
+      for (const subTarget of typeMap[type]) {
+        notes.push(...(await actor.getContextNotesParsed(subTarget, { rollData })));
+      }
     }
     // Add item notes
     if (this.item?.system.attackNotes) {
-      notes.push(...this.item.system.attackNotes);
+      notes.push(...this.item.system.attackNotes.map((text) => ({ text })));
     }
     // Add action notes
-    if (this.action.data.attackNotes) {
-      notes.push(...this.action.data.attackNotes);
+    if (this.action.notes.footer) {
+      notes.push(...this.action.notes.footer.map((text) => ({ text })));
     }
 
     // Add CMB notes
     if (this.action.isCombatManeuver) {
-      notes.push(...(this.item?.actor?.getContextNotesParsed("misc.cmb") ?? []));
+      notes.push(...((await actor?.getContextNotesParsed("cmb", { rollData })) ?? []));
     }
 
     if (isAttack) {
       const hasCritConfirm = this.shared.attacks.some((atk) => !!atk.chatAttack?.hasCritConfirm);
-      if (hasCritConfirm) notes.push(...(this.action.actor?.getContextNotesParsed("attacks.critical") ?? []));
+      if (hasCritConfirm) notes.push(...((await actor?.getContextNotesParsed("critical", { rollData })) ?? []));
     }
 
     this.shared.templateData.footnotes = notes;
@@ -813,7 +818,7 @@ export class ActionUse {
    * @returns {Promise.<Attack_MeasureTemplateResult>} Whether an area was selected.
    */
   async promptMeasureTemplate() {
-    const mt = this.shared.action.data.measureTemplate;
+    const mt = this.shared.action.measureTemplate;
 
     // Determine size
     let dist = RollPF.safeRollSync(mt.size, this.shared.rollData).total;
@@ -901,12 +906,12 @@ export class ActionUse {
 
       for (const atk of this.shared.chatAttacks) {
         // Create PoolTerm for attack and damage rolls
-        const attackPool = new PoolTerm();
+        const attackPool = new foundry.dice.terms.PoolTerm();
         if (atk.attack) attackPool.rolls.push(atk.attack);
         attackPool.rolls.push(...(atk.damage?.rolls ?? []));
 
         // Create PoolTerm for crit confirmation and crit damage rolls
-        const critPool = new PoolTerm();
+        const critPool = new foundry.dice.terms.PoolTerm();
         if (atk.chatAttack?.hasCritConfirm) critPool.rolls.push(atk.chatAttack.critConfirm);
         critPool.rolls.push(...(atk.critDamage?.rolls ?? []));
 
@@ -932,6 +937,8 @@ export class ActionUse {
   async getMessageData() {
     if (this.shared.chatAttacks.length === 0) return;
 
+    const rollData = this.shared.rollData;
+
     // Create chat template data
     this.shared.templateData = {
       ...this.shared.templateData,
@@ -951,7 +958,7 @@ export class ActionUse {
     };
 
     // Set attack sound
-    if (this.shared.action.data.soundEffect) this.shared.chatData.sound = this.shared.action.data.soundEffect;
+    if (this.shared.action.soundEffect) this.shared.chatData.sound = this.shared.action.soundEffect;
     // Set dice sound if neither attack sound nor Dice so Nice are available
     else if (!game.settings.get("pf1", "integration").diceSoNice || !game.dice3d?.isEnabled())
       this.shared.chatData.sound = CONFIG.sounds.dice;
@@ -985,7 +992,7 @@ export class ActionUse {
 
     // Add CL notes
     if (this.item.type === "spell" && actor) {
-      const clNotes = actor.getContextNotesParsed(`spell.cl.${this.item.system.spellbook}`);
+      const clNotes = await actor.getContextNotesParsed(`spell.cl.${this.item.system.spellbook}`, { rollData });
 
       if (clNotes.length) {
         props.push({
@@ -997,7 +1004,7 @@ export class ActionUse {
       const school = this.item.system.school;
       if (school) {
         // Add DC School notes
-        const dcSchoolNotes = actor.getContextNotesParsed(`dc.school.${school}`);
+        const dcSchoolNotes = await actor.getContextNotesParsed(`dc.school.${school}`, { rollData });
         if (dcSchoolNotes.length) {
           props.push({
             header: game.i18n.format("PF1.DCSchoolNotes", { school: pf1.config.spellSchools[school] }),
@@ -1005,7 +1012,7 @@ export class ActionUse {
           });
         }
         // Add CL School notes
-        const clSchoolNotes = actor.getContextNotesParsed(`cl.school.${school}`);
+        const clSchoolNotes = await actor.getContextNotesParsed(`cl.school.${school}`, { rollData });
         if (clSchoolNotes.length) {
           props.push({
             header: game.i18n.format("PF1.CLSchoolNotes", { school: pf1.config.spellSchools[school] }),
@@ -1055,7 +1062,7 @@ export class ActionUse {
         const usystem = pf1.utils.getDistanceSystem();
         this.shared.templateData.rangeLabel = usystem === "metric" ? `${range} m` : `${range} ft.`;
 
-        const rangeUnits = this.shared.action.data.range.units;
+        const rangeUnits = this.shared.action.range.units;
         if (["melee", "touch", "reach", "close", "medium", "long"].includes(rangeUnits)) {
           this.shared.templateData.rangeLabel = pf1.config.distanceUnits[rangeUnits];
         }
@@ -1119,18 +1126,16 @@ export class ActionUse {
   async enrichNotes(notes, title, css) {
     if (notes.length === 0) return;
 
+    const content = await renderTemplate("systems/pf1/templates/chat/parts/item-notes.hbs", {
+      notes,
+      css,
+      header: game.i18n.localize(title),
+    });
+
     const enrichOptions = {
       rollData: this.shared.rollData,
       relativeTo: this.actor,
     };
-
-    const renderContext = {
-      notes,
-      css,
-      title,
-    };
-
-    const content = await renderTemplate("systems/pf1/templates/chat/parts/item-notes.hbs", renderContext);
 
     return TextEditor.enrichHTML(content, enrichOptions);
   }
@@ -1175,20 +1180,20 @@ export class ActionUse {
     }
 
     // Nonlethal
-    if (this.action.data.nonlethal) properties.push(game.i18n.localize("PF1.Nonlethal"));
+    if (this.action.nonlethal) properties.push(game.i18n.localize("PF1.Nonlethal"));
 
     // Splash
-    if (this.action.data.splash) properties.push(game.i18n.localize("PF1.Splash"));
+    if (this.action.splash) properties.push(game.i18n.localize("PF1.Splash"));
 
-    if (this.action.data.touch) properties.push(game.i18n.localize("PF1.TouchAttackShort"));
+    if (this.action.touch) properties.push(game.i18n.localize("PF1.TouchAttackShort"));
 
     // Add info for material
     let materialKey = null;
     let materialAddons = null;
-    const normalMaterialAction = this.action.data.material?.normal.value;
+    const normalMaterialAction = this.action.material?.normal.value;
     const normalMaterialItem = this.item.system.material?.normal.value;
     const baseMaterialItem = this.item.system.material?.base?.value;
-    const addonMaterialAction = this.action.data.material?.addon;
+    const addonMaterialAction = this.action.material?.addon;
     const addonMaterialItem = this.item.system.material?.addon;
 
     // Check the action data first, then the normal material, then the base material
@@ -1217,7 +1222,7 @@ export class ActionUse {
     }
 
     // Add info for alignments
-    const actionAlignments = this.action.data.alignments;
+    const actionAlignments = this.action.alignments;
     const itemAlignments = this.item.system.alignments ?? {};
     if (actionAlignments) {
       for (const alignment of Object.keys(actionAlignments)) {
@@ -1241,7 +1246,7 @@ export class ActionUse {
 
     // Add info for Power Attack to melee, Deadly Aim to ranged attacks
     if (this.shared.powerAttack) {
-      switch (this.action.data.actionType) {
+      switch (this.action.actionType) {
         case "rwak":
         case "twak":
           properties.push(game.i18n.localize("PF1.DeadlyAim"));
@@ -1267,7 +1272,7 @@ export class ActionUse {
     // Add conditionals info
     if (this.shared.conditionals?.length) {
       this.shared.conditionals.forEach((c) => {
-        properties.push(this.shared.action.data.conditionals[c].name);
+        properties.push(this.shared.action.conditionals[c].name);
       });
     }
 
@@ -1502,7 +1507,7 @@ export class ActionUse {
    *
    * @param {object} [options] - Additional options
    * @param {boolean} [options.skipDialog=false] - Skip dialog
-   * @returns {Promise<ChatMessage|SharedActionData|void>}
+   * @returns {Promise<ActionUse | SharedActionData | void>}
    */
   async process({ skipDialog = false } = {}) {
     const shared = this.shared;
@@ -1538,11 +1543,11 @@ export class ActionUse {
     await this.alterRollData(form);
 
     // Filter out attacks without ammo usage (out of ammo)
-    if (shared.action.ammoType) {
+    if (shared.action.ammo.type) {
       shared.attacks = shared.attacks.filter((o) => o.hasAmmo);
       if (shared.attacks.length === 0) {
         ui.notifications.error(game.i18n.localize("PF1.AmmoDepleted"));
-        return;
+        return { err: pf1.actionUse.ERR_REQUIREMENT, code: pf1.actionUse.ERR_REQUIREMENT.INSUFFICIENT_AMMO };
       }
     }
 
@@ -1555,7 +1560,7 @@ export class ActionUse {
     await this.prepareChargeCost();
 
     // Filter out attacks without charge usage (out of charges)
-    if (shared.rollData.chargeCost != 0 && this.shared.action.data.uses?.perAttack) {
+    if (shared.rollData.chargeCost != 0 && this.shared.action.uses?.perAttack) {
       const cost = shared.rollData.chargeCost;
       const charges = shared.item.charges;
 
@@ -1567,7 +1572,7 @@ export class ActionUse {
       shared.attacks = shared.attacks.filter((o) => o.chargeCost !== null);
       if (shared.attacks.length === 0) {
         ui.notifications.error(game.i18n.localize("PF1.ChargesDepleted"));
-        return;
+        return { err: pf1.actionUse.ERR_REQUIREMENT, code: pf1.actionUse.ERR_REQUIREMENT.INSUFFICIENT_CHARGES };
       }
     }
 
@@ -1605,11 +1610,11 @@ export class ActionUse {
     premessage_promises.push(this.handleDiceSoNice());
 
     // Subtract uses
-    const ammoCost = this.action.ammoCost;
+    const ammoCost = this.action.ammo.cost;
     if (ammoCost != 0) premessage_promises.push(this.subtractAmmo(ammoCost));
 
     let totalCost = shared.rollData?.chargeCost;
-    if (this.action.data.uses.perAttack) {
+    if (this.action.uses.perAttack) {
       totalCost = this.shared.attacks.reduce((total, atk) => total + atk.chargeCost, 0);
     }
     if (totalCost != 0) {
@@ -1618,7 +1623,7 @@ export class ActionUse {
     }
 
     if (shared.action.isSelfCharged)
-      premessage_promises.push(shared.action.update({ "uses.self.value": shared.action.data.uses.self.value - 1 }));
+      premessage_promises.push(shared.action.update({ "uses.self.value": shared.action.uses.self.value - 1 }));
 
     await Promise.all(premessage_promises);
 
@@ -1649,7 +1654,7 @@ export class ActionUse {
 
     Hooks.callAll("pf1PostActionUse", this, this.shared.message ?? null);
 
-    return result;
+    return this;
   }
 }
 

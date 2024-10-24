@@ -17,11 +17,12 @@ system:
       duration:
         units: minute
         value: 10 * @cl
-      effectNotes:
-        - '[[1d6]] Int Penalty'
-        - '[[1d6]] Wis Penalty'
-        - '[[1d6]] Cha Penalty'
       name: Use
+      notes:
+        effect:
+          - '[[1d6]] Int Penalty'
+          - '[[1d6]] Wis Penalty'
+          - '[[1d6]] Cha Penalty'
       range:
         units: touch
       target:
@@ -65,6 +66,8 @@ system:
   sources:
     - id: PZO1110
       pages: '360'
-  subschool: compulsion
+  subschool:
+    value:
+      - compulsion
 type: spell
 

@@ -16,11 +16,11 @@ system:
         dismiss: true
         units: hour
         value: '@cl'
+      effect: one quasi-real creature suitable for a mount
       name: Use
       range:
         units: ft
         value: '0'
-      spellEffect: one quasi-real creature suitable for a mount
     - _id: dLuA4LKBqawE4IRS
       actionType: save
       activation:
@@ -31,6 +31,7 @@ system:
       duration:
         units: round
         value: 1d6
+      effect: sickens creatures in a 15-foot cone of smoke and ash
       measureTemplate:
         size: '15'
         type: cone
@@ -38,7 +39,6 @@ system:
       save:
         description: Fortitude negates
         type: fort
-      spellEffect: sickens creatures in a 15-foot cone of smoke and ash
   components:
     somatic: true
     verbal: true
@@ -72,6 +72,8 @@ system:
     - id: PZO9494
       pages: '28'
   sr: false
-  subschool: creation
+  subschool:
+    value:
+      - creation
 type: spell
 

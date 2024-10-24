@@ -1,23 +1,14 @@
-<div class="pf1 chat-card damage-card {{css}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
-  <table>
-    <thead>
-      <th>
-        {{#if isHealing}}{{localize "PF1.Healing"}}{{else}}{{localize "PF1.Damage"}}{{/if}}
-      </th>
-    </thead>
-    <tbody>
-      <td>
-        <a class="inline-roll inline-dsn-hidden inline-result" data-tooltip="{{roll.formula}}" data-roll="{{json-string roll}}">
-        <i class="fas fa-dice-d20"></i> {{roll.total}}
-        </a>
-      </td>
-    </tbody>
-  </table>
+<div class="pf1 chat-card damage-card {{css}}"{{#if token}} data-token-uuid="{{token.uuid}}"{{/if}}{{#if actor}} data-actor-uuid="{{actor.uuid}}"{{/if}}>
+  <h2>{{#if isHealing}}{{localize "PF1.Healing"}}{{else}}{{localize "PF1.Damage"}}{{/if}}</h2>
 
-  <div class="card-buttons">
-    <div class="card-button-group flexrow">
-      <button type="button" data-action="applyDamage" data-value="{{value.total}}">{{localize "PF1.Apply"}}</button>
-      <button type="button" data-action="applyDamage" data-value="{{value.half}}">{{localize "PF1.ApplyHalf"}}</button>
-    </div>
+  <div class="dice-roll">
+    <h3 class="roll-total{{#if hasDetails}} has-details{{/if}}"><i class="fa-solid fa-dice-d20"></i> {{roll.total}}</h3>
+
+    {{{details}}}
+  </div>
+
+  <div class="card-buttons flexrow">
+    <button type="button" data-action="applyDamage" data-value="{{value.total}}">{{localize "PF1.Apply"}}</button>
+    <button type="button" data-action="applyDamage" data-value="{{value.half}}">{{localize "PF1.ApplyHalf"}}</button>
   </div>
 </div>

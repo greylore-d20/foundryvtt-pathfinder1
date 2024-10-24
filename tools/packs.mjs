@@ -304,6 +304,19 @@ function sanitizeActiveEffects(effects) {
   }
 }
 
+function sanitizeFolder(folder) {
+  if (!folder.description) delete folder.description;
+  if (!folder.color) delete folder.color;
+  if (!folder.folder) delete folder.folder;
+  if (utils.isEmpty(folder.flags)) delete folder.flags;
+}
+
+function sanitizeActiveEffect(ae) {
+  delete ae._stats;
+
+  return ae;
+}
+
 /**
  * Santize pack entry.
  *
@@ -337,8 +350,11 @@ function sanitizePackEntry(entry, documentType = "", { childDocument = false } =
     else sanitizeActiveEffects(entry.effects);
   }
 
-  // Ignore folders; not present on inventoryItems
-  if (entry._key?.startsWith("!folders")) return entry;
+  // Special handling for folders
+  if (entry._key?.startsWith("!folders")) {
+    sanitizeFolder(entry);
+    return entry;
+  }
 
   // Always delete system migration marker
   delete entry.flags?.pf1?.migration;
@@ -371,17 +387,36 @@ function sanitizePackEntry(entry, documentType = "", { childDocument = false } =
     "_key",
     "folder",
   ];
-  if (["Actor", "Item"].includes(documentType)) {
-    for (const key of Object.keys(entry)) {
-      if (!allowedCoreFields.includes(key)) delete entry[key];
-    }
-  }
-  if (documentType === "JournalEntry") {
-    const disallowedPageFields = ["_stats", "ownership", "video"];
-    for (const page of entry.pages) {
-      for (const key of Object.keys(page)) {
-        if (disallowedPageFields.includes(key)) delete page[key];
+
+  switch (documentType) {
+    case "Actor":
+    case "Item": {
+      for (const key of Object.keys(entry)) {
+        if (!allowedCoreFields.includes(key)) delete entry[key];
       }
+      break;
+    }
+    case "JournalEntry": {
+      const disallowedPageFields = ["_stats", "ownership", "video"];
+      for (const page of entry.pages) {
+        for (const key of Object.keys(page)) {
+          if (disallowedPageFields.includes(key)) delete page[key];
+        }
+      }
+
+      if (entry.pages?.length > 0) {
+        entry.pages = entry.pages.map((i) => sanitizePackEntry(i, "JournalEntryPage", { childDocument: true }));
+      }
+
+      break;
+    }
+    case "JournalEntryPage": {
+      if (utils.isEmpty(entry.image)) delete entry.image;
+      if (utils.isEmpty(entry.system)) delete entry.system;
+      if (entry.src === null) delete entry.src;
+      if (!entry.text?.markdown) delete entry.text?.markdown;
+      if (!entry.text?.content) delete entry.text?.content;
+      break;
     }
   }
 
@@ -406,6 +441,11 @@ function sanitizePackEntry(entry, documentType = "", { childDocument = false } =
       }
       if (entry.prototypeToken) {
         entry.prototypeToken = sanitizePackEntry(entry.prototypeToken, "Token", { childDocument: true });
+      }
+    }
+    if (["Actor", "Item"].includes(documentType)) {
+      if (entry.effects?.length > 0) {
+        entry.effects = entry.effects.map((ae) => sanitizeActiveEffect(ae));
       }
     }
     if (documentType === "Item" && entry.system.items && Object.keys(entry.system.items).length > 0) {

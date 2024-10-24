@@ -1,13 +1,7 @@
 import { HealthConfig, HealthConfigModel } from "../applications/settings/health.mjs";
 import { ExperienceConfig, ExperienceConfigModel } from "../applications/settings/experience.mjs";
-import {
-  TooltipConfig,
-  TokenTooltipWorldConfigModel,
-  TokenTooltipConfigModel,
-} from "../applications/settings/tooltip.mjs";
 import { IntegrationConfig, IntegrationModel } from "module/applications/settings/integration.mjs";
 import { PerformanceConfig, PerformanceModel } from "module/applications/settings/performance.mjs";
-import { TooltipPF } from "../applications/tooltip.mjs";
 
 export const registerSystemSettings = function () {
   /**
@@ -83,39 +77,6 @@ export const registerSystemSettings = function () {
     onChange: () => pf1.utils.refreshActors({ renderOnly: true }),
   });
 
-  // Tooltip configuration
-  game.settings.registerMenu("pf1", "tooltipConfig", {
-    name: "PF1.Application.Settings.Tooltip.Title",
-    label: "PF1.Application.Settings.Tooltip.Label",
-    hint: "PF1.Application.Settings.Tooltip.Hint",
-    restricted: false,
-    icon: "fas fa-window-maximize",
-    type: TooltipConfig,
-  });
-  game.settings.register("pf1", "tooltipConfig", {
-    scope: "client",
-    default: new TokenTooltipConfigModel(),
-    type: TokenTooltipConfigModel,
-    config: false,
-    onChange: (settings) => {
-      const worldConf = game.settings.get("pf1", "tooltipWorldConfig");
-      const enable = !worldConf.disabled && !settings.disabled;
-      TooltipPF.toggle(enable);
-    },
-  });
-
-  // Tooltip World configuration
-  game.settings.register("pf1", "tooltipWorldConfig", {
-    scope: "world",
-    default: new TokenTooltipWorldConfigModel(),
-    type: TokenTooltipWorldConfigModel,
-    config: false,
-    onChange: (settings) => {
-      TooltipPF.toggle(!settings.disable);
-      pf1.tooltip?.setPosition();
-    },
-  });
-
   game.settings.register("pf1", "integration", {
     type: IntegrationModel,
     default: new IntegrationModel(),
@@ -161,22 +122,6 @@ export const registerSystemSettings = function () {
     config: true,
     default: true,
     type: Boolean,
-  });
-
-  /**
-   * Register diagonal movement rule setting
-   */
-  game.settings.register("pf1", "diagonalMovement", {
-    name: "PF1.SETTINGS.DiagonalRule.Label",
-    hint: "PF1.SETTINGS.DiagonalRule.Hint",
-    scope: "world",
-    config: true,
-    default: "5105",
-    type: String,
-    choices: {
-      5105: "PF1.SETTINGS.DiagonalRule.Options.Core",
-      555: "PF1.SETTINGS.DiagonalRule.Options.Simple",
-    },
   });
 
   /**

@@ -1,16 +1,14 @@
 import { ActorTraitSelector } from "@app/trait-selector.mjs";
 import { DamageResistanceSelector } from "@app/damage-resistance-selector.mjs";
 import { ActorRestDialog } from "./actor-rest.mjs";
-import { CR, adjustNumberByStringCommand, openJournal, enrichHTMLUnrolledAsync, naturalSort } from "@utils";
+import { adjustNumberByStringCommand, openJournal, enrichHTMLUnrolled, naturalSort } from "@utils";
 import { PointBuyCalculator } from "@app/point-buy-calculator.mjs";
 import { Widget_ItemPicker } from "@app/item-picker.mjs";
 import { getSkipActionPrompt } from "@documents/settings.mjs";
-import { ItemPF } from "@item/item-pf.mjs";
 import { LevelUpForm } from "@app/level-up.mjs";
 import { CurrencyTransfer } from "@app/currency-transfer.mjs";
 import { RollPF } from "@dice/roll.mjs";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
-import { getItem } from "@utils/dialog.mjs";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -162,7 +160,17 @@ export class ActorSheetPF extends ActorSheet {
         },
       },
       unchainedActions: game.settings.get("pf1", "unchainedActionEconomy"),
+      choices: {},
     };
+
+    if (context.usesAnySpellbook) {
+      context.choices.casterProgression = Object.fromEntries(
+        Object.entries(pf1.config.caster.progression).map(([key, data]) => [key, data.label])
+      );
+      context.choices.casterPreparation = Object.fromEntries(
+        Object.entries(pf1.config.caster.type).map(([key, data]) => [key, data.label])
+      );
+    }
 
     Object.values(context.itemTypes).forEach((items) => items.sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)));
 
@@ -197,10 +205,10 @@ export class ActorSheetPF extends ActorSheet {
       relativeTo: this.actor,
     };
     const bio = context.system.details?.biography?.value;
-    const pBio = bio ? enrichHTMLUnrolledAsync(bio, enrichHTMLOptions) : Promise.resolve();
+    const pBio = bio ? enrichHTMLUnrolled(bio, enrichHTMLOptions) : Promise.resolve();
     pBio.then((html) => (context.biographyHTML = html));
     const notes = context.system.details?.notes?.value;
-    const pNotes = notes ? enrichHTMLUnrolledAsync(notes, enrichHTMLOptions) : Promise.resolve();
+    const pNotes = notes ? enrichHTMLUnrolled(notes, enrichHTMLOptions) : Promise.resolve();
     pNotes.then((html) => (context.notesHTML = html));
     await Promise.all([pBio, pNotes]);
 
@@ -436,7 +444,7 @@ export class ActorSheetPF extends ActorSheet {
       result.hasEffect = defaultAction.hasEffect;
       if (this._canShowRange(item)) {
         result.range = foundry.utils.mergeObject(
-          defaultAction?.data?.range ?? {},
+          defaultAction?.range ?? {},
           {
             min: defaultAction?.getRange({ type: "min", rollData }),
             max: defaultAction?.getRange({ type: "max", rollData }),
@@ -1198,7 +1206,7 @@ export class ActorSheetPF extends ActorSheet {
     if (!id) return;
 
     const context = { actor: this.actor, bonusTypes: pf1.config.bonusTypes, config: pf1.config };
-    this._getTooltipContext(id, context);
+    await this._getTooltipContext(id, context);
 
     context.sources = context.sources?.filter((list) => list.sources?.length > 0);
 
@@ -1238,7 +1246,7 @@ export class ActorSheetPF extends ActorSheet {
    * @param {object} context - Context object to store data into
    * @throws {Error} - If provided ID is invalid.
    */
-  _getTooltipContext(fullId, context) {
+  async _getTooltipContext(fullId, context) {
     const actor = this.actor,
       system = actor.system;
 
@@ -1252,10 +1260,8 @@ export class ActorSheetPF extends ActorSheet {
 
     const getSource = (path) => this.actor.sourceDetails[path];
 
-    const getNotes = (context, all = true) => {
-      const noteObjs = actor.getContextNotes(context, all);
-      return actor.formatContextNotes(noteObjs, lazy.rollData, { roll: false });
-    };
+    const getNotes = async (context, all = true) =>
+      (await actor.getContextNotesParsed(context, { all, rollData: lazy.rollData, roll: false })).map((n) => n.text);
 
     const damageTypes = (d) => {
       const values = d.values?.map((dv) => pf1.registry.damageTypes.get(dv)?.name || dv) ?? [];
@@ -1291,7 +1297,7 @@ export class ActorSheetPF extends ActorSheet {
           paths.push({ path: "@details.level.value", value: lazy.rollData.details?.level?.value ?? NaN });
         }
         const cr = lazy.rollData.details?.cr?.total ?? NaN;
-        if (cr > 0) paths.push({ path: "@details.cr.total", value: CR.fromNumber(cr) });
+        if (cr > 0) paths.push({ path: "@details.cr.total", value: pf1.utils.CR.fromNumber(cr) });
         break;
       }
       case "hit-points": {
@@ -1377,7 +1383,7 @@ export class ActorSheetPF extends ActorSheet {
         const oU = isMetricDist ? pf1.config.measureUnitsShort.km : pf1.config.measureUnitsShort.mi;
         paths.push({ path: `@attributes.speed.${mode}.overland`, value: oD, unit: oU });
 
-        notes = [...getNotes(`${mode}Speed`), ...getNotes("allSpeeds")];
+        notes = [...(await getNotes(`${mode}Speed`)), ...(await getNotes("allSpeeds"))];
         break;
       }
       case "flyManeuverability":
@@ -1402,7 +1408,7 @@ export class ActorSheetPF extends ActorSheet {
           sources: getSource(`system.attributes.ac.${detail}.total`),
         });
 
-        notes = getNotes("misc.ac");
+        notes = await getNotes("ac");
         break;
       }
       case "cmd":
@@ -1415,7 +1421,7 @@ export class ActorSheetPF extends ActorSheet {
           sources: getSource(`system.attributes.cmd.${detail}`),
         });
 
-        notes = getNotes(`misc.cmd`);
+        notes = await getNotes("cmd");
         break;
       case "save": {
         const save = system.attributes.savingThrows[detail];
@@ -1433,7 +1439,7 @@ export class ActorSheetPF extends ActorSheet {
           sources: getSource(`system.attributes.savingThrows.${detail}.total`),
         });
 
-        notes = getNotes(`savingThrow.${detail}`);
+        notes = await getNotes(`savingThrow.${detail}`);
         break;
       }
       case "sr":
@@ -1447,7 +1453,7 @@ export class ActorSheetPF extends ActorSheet {
           untyped: true,
         });
 
-        notes = getNotes("misc.sr");
+        notes = await getNotes("sr");
         break;
       case "bab": {
         const bab = system.attributes.bab;
@@ -1498,7 +1504,7 @@ export class ActorSheetPF extends ActorSheet {
           { sources: getSource("system.attributes.attack.shared") }
         );
 
-        notes = [...getNotes("attacks.attack"), ...getNotes("attacks.melee"), ...getNotes("misc.cmb")];
+        notes = [...(await getNotes("attack")), ...(await getNotes("melee")), ...(await getNotes("cmb"))];
         break;
       case "init": {
         const init = system.attributes.init;
@@ -1512,7 +1518,7 @@ export class ActorSheetPF extends ActorSheet {
           sources: getSource("system.attributes.init.total"),
         });
 
-        notes = getNotes("misc.init");
+        notes = await getNotes("init");
         break;
       }
       case "abilityScore": {
@@ -1543,7 +1549,7 @@ export class ActorSheetPF extends ActorSheet {
           }
         );
 
-        notes = getNotes(`abilityChecks.${abl}`);
+        notes = await getNotes(`abilityChecks.${abl}`);
         break;
       }
       case "acp":
@@ -1758,7 +1764,8 @@ export class ActorSheetPF extends ActorSheet {
             const attacks =
               action
                 ?.getAttacks({ full: true, resolve: true, conditionals: true, bonuses: true })
-                ?.map((atk) => atk.bonus) ?? [];
+                ?.map((atk) => atk.bonus)
+                .sort((a, b) => b - a) ?? [];
 
             if (attacks.length == 0) return;
 
@@ -1774,7 +1781,6 @@ export class ActorSheetPF extends ActorSheet {
             const action = item.defaultAction;
             if (!action?.hasDamage) return;
 
-            const actionData = action.data;
             const rollData = action.getRollData();
 
             const dmgformula = pf1.utils.formula.actionDamage(action, { strict: false });
@@ -1785,7 +1791,7 @@ export class ActorSheetPF extends ActorSheet {
 
             subHeader = game.i18n.localize("PF1.Details");
 
-            const damage = action.data.damage;
+            const damage = action.damage;
             for (const { formula, type } of damage.parts ?? []) {
               dmgSources.push({
                 name: formula,
@@ -1805,11 +1811,11 @@ export class ActorSheetPF extends ActorSheet {
 
             const held = rollData.action?.held || rollData.item?.held || "normal";
 
-            const abl = actionData.ability?.damage;
+            const abl = action.ability?.damage;
             if (abl) {
-              const max = actionData.ability?.max ?? Infinity;
+              const max = action.ability?.max ?? Infinity;
               const mod = Math.min(rollData.abilities[abl]?.mod ?? 0, max);
-              const mult = actionData.ability?.damageMult ?? pf1.config.abilityDamageHeldMultipliers[held] ?? 1;
+              const mult = action.ability?.damageMult ?? pf1.config.abilityDamageHeldMultipliers[held] ?? 1;
               dmgSources.push({
                 value: mod >= 0 ? Math.floor(mod * mult) : mod,
                 type: pf1.config.abilities[abl],
@@ -1826,32 +1832,36 @@ export class ActorSheetPF extends ActorSheet {
               })),
             });
 
-            const hasOptionalConditionals = action?.data.conditionals.find((c) => !c.default);
+            /*
+            const hasOptionalConditionals = action?.conditionals.find((c) => !c.default);
             if (hasOptionalConditionals) {
               // <span class="span3">+ {{localize "PF1.Conditionals"}}</span>
             }
+            */
 
+            /*
             if (damage.critParts?.length) {
               // <span class="span3">+ {{localize "PF1.OnCritBonusFormula"}}</span>
             }
+            */
             break;
           }
           case "range": {
             const action = item.defaultAction;
             if (!action?.hasRange) return;
 
-            const maxIncr = action.data.range?.maxIncrements ?? 1;
+            const maxIncr = action.range?.maxIncrements ?? 1;
             if (maxIncr <= 1) return;
 
             details.push({
               key: game.i18n.localize("PF1.MaximumRangeIncrements"),
-              value: action.data.range.maxIncrements,
+              value: action.range.maxIncrements,
               left: true,
             });
 
             const rollData = action.getRollData();
             const range = {
-              ...(action.data.range ?? {}),
+              ...(action.range ?? {}),
               min: action.getRange({ type: "min", rollData }),
               max: action.getRange({ type: "max", rollData }),
             };
@@ -2074,8 +2084,8 @@ export class ActorSheetPF extends ActorSheet {
 
         sources.push({ sources: skillSources }, { sources: getSource(`system.skills.${path}.mod`) });
 
-        notes = getNotes(`skill.${fullSkillId}`);
-        if (subSkillId) notes.push(...getNotes(`skill.${mainId}`, false));
+        notes = await getNotes(`skill.${fullSkillId}`);
+        if (subSkillId) notes.push(...(await getNotes(`skill.${mainId}`, false)));
         break;
       }
       case "spellbook": {
@@ -2195,7 +2205,7 @@ export class ActorSheetPF extends ActorSheet {
 
             if (action?.hasDamage) {
               const types =
-                action.data.damage?.parts
+                action.damage?.parts
                   ?.map((d) => d.type)
                   .map(damageTypes)
                   .flat() ?? [];
@@ -2251,7 +2261,7 @@ export class ActorSheetPF extends ActorSheet {
             sources.push({ sources: getSource("system.attributes.attack.general") });
             sources.push({ sources: getSource(`system.attributes.attack.${subTarget}`) });
 
-            notes = [...getNotes("attacks.attack"), ...getNotes(`attacks.${subTarget}`)];
+            notes = [...(await getNotes("attack")), ...(await getNotes(subTarget))];
 
             break;
           }
@@ -4032,10 +4042,19 @@ export class ActorSheetPF extends ActorSheet {
       .sort((a, b) => b.sort - a.sort);
 
     if (oldItems.length) {
-      item.updateSource({
-        sort: oldItems[0].sort + CONST.SORT_INTEGER_DENSITY,
-      });
+      item._source.sort = oldItems[0].sort + CONST.SORT_INTEGER_DENSITY;
     }
+  }
+
+  /**
+   * Adjust item before addition, overriding data
+   *
+   * @internal
+   * @param data
+   * @param {ItemPF} item - Temporary item document before creation
+   */
+  _adjustNewItem(item, data) {
+    item.constructor._adjustNewItem?.(item, data, true);
   }
 
   async _onDropItemCreate(itemData) {
@@ -4067,10 +4086,16 @@ export class ActorSheetPF extends ActorSheet {
             actor: this.actor,
             empty: true,
             items: classes,
-            selected: classes[0]?._id,
+            selected: classes[0]?.id, // Default to highest level class
           };
 
-          const clsId = await getItem(options);
+          // Test if there's more appropriate default class
+          if (classes.length > 1) {
+            const cls = classes.find((cls) => itemData.system?.associations?.classes?.includes(cls.name));
+            if (cls) options.selected = cls.id;
+          }
+
+          const clsId = await pf1.utils.dialog.getItem(options);
           if (clsId) {
             const cls = this.actor.items.get(clsId);
             itemData.system.class = cls.system.tag;
@@ -4097,8 +4122,9 @@ export class ActorSheetPF extends ActorSheet {
         // else continue with regular spell creation
       }
 
-      const newItem = new Item.implementation(itemData);
+      const newItem = new Item.implementation(itemData, { parent: this.actor });
       this._sortNewItem(newItem);
+      this._adjustNewItem(newItem, itemData);
 
       // Choose how to import class
       if (itemData.type === "class") {
@@ -4208,33 +4234,6 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _updateObject(event, formData) {
-    // Translate CR
-    const cr = formData["system.details.cr.base"];
-    if (typeof cr === "string") formData["system.details.cr.base"] = CR.fromString(cr);
-
-    // Update from elements with 'data-name'
-    {
-      const elems = this.element.find("*[data-name]");
-      const changedData = {};
-      for (const el of elems) {
-        const name = el.dataset.name;
-        let value;
-        if (el.nodeName === "INPUT") value = el.value;
-        else if (el.nodeName === "SELECT") value = el.options[el.selectedIndex].value;
-
-        if (el.dataset.dtype === "Number") value = Number(value);
-        else if (el.dataset.dtype === "Boolean") value = Boolean(value);
-
-        if (foundry.utils.getProperty(this.actor.system, name) !== value) {
-          changedData[name] = value;
-        }
-      }
-
-      for (const [k, v] of Object.entries(changedData)) {
-        formData[k] = v;
-      }
-    }
-
     this.searchRefresh = true;
 
     return super._updateObject(event, formData);

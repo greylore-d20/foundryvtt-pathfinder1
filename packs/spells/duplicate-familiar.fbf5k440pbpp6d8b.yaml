@@ -15,13 +15,13 @@ system:
       duration:
         units: minute
         value: 10 * @cl
+      effect: temporary duplicate of familiar touched
       name: Use
       range:
         units: touch
       save:
         description: Fortitude negates
         type: fort
-      spellEffect: temporary duplicate of familiar touched
   components:
     focus: true
     material: true
@@ -51,6 +51,8 @@ system:
     - id: PZO9454
       pages: '22'
   sr: false
-  subschool: creation
+  subschool:
+    value:
+      - creation
 type: spell
 

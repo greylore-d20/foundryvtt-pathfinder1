@@ -328,6 +328,7 @@
 {{!-- Saving Throw --}}
 <h3 class="form-header">{{localize "PF1.SavingThrow"}}</h3>
 <div class="form-group input-select">
+  {{#if data.save.type}}
   <label>{{#unless isSpell}}{{localize "PF1.DCFormula"}}{{else}}{{localize "PF1.DCOffsetFormula"}}{{/unless}}</label>
   <div class="form-fields">
     <input class="formula" type="text" name="save.dc" value="{{data.save.dc}}" placeholder="0">
@@ -335,6 +336,14 @@
       {{selectOptions config.savingThrows selected=data.save.type blank=(localize "PF1.None")}}
     </select>
   </div>
+  {{else}}
+  <label>{{localize "PF1.Type"}}</label>
+  <div class="form-fields">
+    <select name="save.type">
+      {{selectOptions config.savingThrows selected=data.save.type blank=(localize "PF1.None")}}
+    </select>
+  </div>
+  {{/if}}
 </div>
 
 <div class="form-group input-select">

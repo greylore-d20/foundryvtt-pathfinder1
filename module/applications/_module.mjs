@@ -28,7 +28,6 @@ export { ScriptEditor } from "./script-editor.mjs";
 export { SensesSelector } from "./senses-selector.mjs";
 export { SkillEditor } from "./skill-editor.mjs";
 export { ContentSourceEditor } from "./content-source-editor.mjs";
-export { TooltipPF } from "./tooltip.mjs";
 export { ActorTraitSelector } from "./trait-selector.mjs";
 export { VisionSharingSheet } from "./vision-sharing.mjs";
 export { ExperienceDistributor } from "./experience-distributor.mjs";

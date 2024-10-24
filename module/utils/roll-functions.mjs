@@ -11,12 +11,12 @@
  *   Can be a string of values "F", "D", "T", "S", "M", "L", "H", "G" or "C" for the different sizes.
  *   Can also be a number in the range of 0 to 8, where 4 is Medium.
  * @param {string|number} [initialSize="M"] - The initial size of the creature. See targetSize above.
- * @returns {Die[]|NumericTerm[]} The resulting die roll.
+ * @returns {Die[]|NumericTerm[]} The resulting roll.
  */
 export function sizeRoll(origCount, origSides, targetSize = "M", initialSize = "M") {
   // Return NaN from invalid input
   if (!Number.isFinite(origCount) || !Number.isFinite(origSides)) {
-    return [new NumericTerm({ number: NaN })];
+    return [new foundry.dice.terms.NumericTerm({ number: NaN })];
   }
 
   const _getSizeIndex = function (size) {
@@ -155,21 +155,31 @@ export const sizeReach = function (size = "M", reach = false, stature = "tall") 
 };
 
 /**
- * For use with rolls
+ * For use with roll formulas.
  *
  * @internal
- * @param {*} count
- * @param {*} sides
- * @param {*} target
- * @param {*} initial
+ * @param {number} count - Number of dice
+ * @param {number} sides - Number of sides
+ * @param {number|string} target - Target size
+ * @param {number|string} initial - Initial size
+ * @returns {number}
  */
-async function sizeRollFn(count, sides, target, initial) {
-  const rv = sizeRoll(count, sides, target, initial);
+function sizeRollFn(count, sides, target, initial) {
+  /** @type {Die[]|NumericTerm[]} */
+  const [rt] = sizeRoll(count, sides, target, initial);
 
-  const roll = await Roll.fromTerms(rv).evaluate();
-  this.rolls = [roll];
+  this.terms.push(rt.formula);
 
-  return roll.total;
+  if (rt instanceof foundry.dice.terms.Die) {
+    const roll = Roll.defaultImplementation.fromTerms([rt]);
+    roll.options.final = true;
+    this.rolls.push(roll);
+    return 0; // The roll can not be evaluated here due to lacking eval opts.
+  }
+  // NumericTerm
+  else {
+    return rt.number;
+  }
 }
 
 /**
@@ -215,12 +225,13 @@ function _if(condition, ifTrue) {
  * lookup(@cl, 0, 3, 2, 1)
  * ```
  *
- * @param {*} condition
- * @param {*} fallback
+ * @param {number} condition
+ * @param {number} fallback
  * @param  {...any} results
  * @returns
  */
 function lookup(condition, fallback, ...results) {
+  // TODO: mark die terms disabled that are not in the end result
   return results[condition - 1] ?? fallback;
 }
 
@@ -244,6 +255,7 @@ function lookup(condition, fallback, ...results) {
 export const functions = {
   sizeRoll: sizeRollFn,
   sizeReach,
+  lookup,
   ifelse,
   if: _if,
   eq: (a, b) => (a === b ? 1 : 0),

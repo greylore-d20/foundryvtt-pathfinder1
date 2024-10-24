@@ -14,9 +14,10 @@ system:
       duration:
         units: minute
         value: '@cl'
-      effectNotes:
-        - '[[min(8, (1d4 + floor(@cl / 3)))]] Images'
       name: Use
+      notes:
+        effect:
+          - '[[min(8, (1d4 + floor(@cl / 3)))]] Images'
       range:
         units: personal
       target:
@@ -66,6 +67,8 @@ system:
     - id: PZO1110
       pages: '314'
   sr: false
-  subschool: figment
+  subschool:
+    value:
+      - figment
 type: spell
 

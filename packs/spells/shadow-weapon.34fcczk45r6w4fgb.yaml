@@ -15,6 +15,7 @@ system:
       duration:
         units: minute
         value: '@cl'
+      effect: one shadow weapon
       name: Use
       range:
         units: ft
@@ -22,7 +23,6 @@ system:
       save:
         description: Will disbelief (if interacted with)
         type: will
-      spellEffect: one shadow weapon
   components:
     somatic: true
     verbal: true
@@ -60,6 +60,8 @@ system:
   sources:
     - id: PZO1117
       pages: '237'
-  subschool: shadow
+  subschool:
+    value:
+      - shadow
 type: spell
 

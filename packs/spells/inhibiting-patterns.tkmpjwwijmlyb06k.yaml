@@ -16,13 +16,13 @@ system:
         dismiss: true
         units: spec
         value: concentration + 1 round/level
+      effect: one cylinder (10-ft. radius, 40-ft. high)/3 levels
       name: Use
       range:
         units: medium
       save:
         description: Will negates
         type: will
-      spellEffect: one cylinder (10-ft. radius, 40-ft. high)/3 levels
   components:
     material: true
     somatic: true
@@ -59,6 +59,8 @@ system:
   sources:
     - id: PZO92109
       pages: '42'
-  subschool: pattern
+  subschool:
+    value:
+      - pattern
 type: spell
 

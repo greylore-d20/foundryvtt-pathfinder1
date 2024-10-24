@@ -1,1 +1,1 @@
-export * as fn from "./functions/_module.mjs";
+export { FunctionTermPF } from "./function-term.mjs";

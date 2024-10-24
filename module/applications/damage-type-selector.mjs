@@ -1,9 +1,37 @@
-export class DamageTypeSelector extends FormApplication {
-  /**
-   * @internal
-   * @type {string}
-   */
-  path;
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+
+export class DamageTypeSelector extends HandlebarsApplicationMixin(ApplicationV2) {
+  static DEFAULT_OPTIONS = {
+    tag: "form",
+    form: {
+      handler: DamageTypeSelector._updateObject,
+      closeOnSubmit: true,
+    },
+    classes: ["pf1-v2", "damage-type-selector"],
+    window: {
+      title: "PF1.DamageType",
+      minimizable: true,
+      resizable: false,
+    },
+    position: {
+      width: 720,
+    },
+    actions: {
+      toggleDamageType: DamageTypeSelector._toggleDamageType,
+    },
+    sheetConfig: false,
+  };
+
+  static PARTS = {
+    form: {
+      template: "systems/pf1/templates/apps/damage-type-selector.hbs",
+      scrollable: [".damage-type-categories", ".damage-modifiers"],
+    },
+    footer: {
+      template: "templates/generic/form-footer.hbs",
+    },
+  };
+
   /**
    * @internal
    * @type {DamageTypes}
@@ -14,44 +42,53 @@ export class DamageTypeSelector extends FormApplication {
    * @param {object} object - Parent object
    * @param {string} path - Path to damage data in object
    * @param {DamageTypes} data - Damage data
-   * @param {object} options - Application options
+   * @param {object} options - Options
+   * @param {Function} options.updateCallback - Update callback
    */
   constructor(object, path, data, options = {}) {
-    super(object, options);
-    this.path = path;
+    options.object = object;
+    options.path = path;
+    super(options);
     this.damage = foundry.utils.deepClone(data) || { values: [] };
   }
 
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      width: 720,
-      height: 590,
-      template: "systems/pf1/templates/apps/damage-type-selector.hbs",
-      scrollY: [".damage-type-categories", ".damage-modifiers"],
-      closeOnSubmit: true,
-    });
+  /* -------------------------------------------- */
+
+  /**
+   * Initialize the configuration for this application. Override the default ID to be unique to this
+   * entry selector instance based on document and attribute that is being edited.
+   *
+   * @override
+   * @param {ApplicationConfiguration} options    The provided configuration options for the Application
+   * @returns {ApplicationConfiguration}           The final configuration values for the application
+   */
+  _initializeApplicationOptions(options) {
+    options = super._initializeApplicationOptions(options);
+    options.id = `DamageTypeSelector-${options.object.id}-${options.path.replaceAll(".", "_")}`;
+    return options;
   }
 
-  get title() {
-    return game.i18n.localize("PF1.DamageType");
-  }
-
-  get id() {
-    return `damage-types-${this.object.id}-${this.path.replaceAll(".", "_")}`;
-  }
+  /* -------------------------------------------- */
 
   get damageCategorySortOrder() {
     return ["physical", "energy", "misc"];
   }
 
-  async getData() {
+  /* -------------------------------------------- */
+
+  /**
+   * @inheritDoc
+   * @internal
+   * @async
+   */
+  async _prepareContext() {
     const damageTypes = pf1.registry.damageTypes
       .filter((damageType) => !damageType.isModifier)
       .map((dt) => ({ ...dt, id: dt.id, enabled: this.damage.values.includes(dt.id) }));
 
     const sortOrder = this.damageCategorySortOrder;
 
-    const context = {
+    return {
       damage: this.damage,
       damageTypes,
       damageModifiers: pf1.registry.damageTypes
@@ -77,27 +114,25 @@ export class DamageTypeSelector extends FormApplication {
           if (idxA < idxB) return -1;
           return 0;
         }),
+      buttons: [{ type: "submit", label: "PF1.Save", icon: "far fa-save" }],
     };
-
-    return context;
   }
 
+  /* -------------------------------------------- */
+
   /**
+   * Update internal data snapshot on form change
+   *
+   * @param formConfig
+   * @param event
    * @override
-   * @param {JQuery<HTMLElement>} html
-   */
-  activateListeners(html) {
-    html.find(`.damage-type`).on("click", this._toggleDamageType.bind(this));
-    html.find(`*[name]`).on("change", this._onChangeData.bind(this));
-  }
-
-  /**
    * @internal
-   * @param {Event} event
+   * @this {DamageTypeSelector&AbstractListSelector}
+   * @returns {Promise<void>}
    */
-  _onChangeData(event) {
+  async _onChangeForm(formConfig, event) {
     event.preventDefault();
-    const elem = event.currentTarget;
+    const elem = event.target;
     const dataPath = elem.name;
 
     let value = elem.value;
@@ -115,13 +150,15 @@ export class DamageTypeSelector extends FormApplication {
     foundry.utils.setProperty(this.damage, dataPath, value);
   }
 
+  /* -------------------------------------------- */
+
   /**
    * @internal
    * @param {Event} event
    */
-  _toggleDamageType(event) {
+  static _toggleDamageType(event) {
     event.preventDefault();
-    const a = event.currentTarget;
+    const a = event.target.closest("[data-action]");
     const dt = a.dataset.id;
 
     if (this.damage.values.includes(dt)) this.damage.values.splice(this.damage.values.indexOf(dt), 1);
@@ -129,13 +166,15 @@ export class DamageTypeSelector extends FormApplication {
     this.render();
   }
 
+  /* -------------------------------------------- */
+
   /**
    * @override
    * @param {Event} event
    * @param {object} formData
    */
-  async _updateObject(event, formData) {
-    return this.object.update({ [this.path]: this.damage });
+  static async _updateObject(event, formData) {
+    return this.options.updateCallback(this.damage);
   }
 }
 

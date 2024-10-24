@@ -15,10 +15,10 @@ system:
       duration:
         units: hour
         value: '@cl'
+      effect: magical sensor
       name: Use
       range:
         units: unlimited
-      spellEffect: magical sensor
   components:
     divineFocus: 1
     verbal: true
@@ -53,7 +53,9 @@ system:
     - id: PZO9002
       pages: '72'
   sr: false
-  subschool: scrying
+  subschool:
+    value:
+      - scrying
   tags:
     - '3.5'
 type: spell

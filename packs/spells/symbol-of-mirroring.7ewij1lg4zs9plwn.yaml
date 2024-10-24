@@ -15,6 +15,7 @@ system:
           type: minute
       duration:
         units: seeText
+      effect: one symbol
       name: Use
       range:
         units: ft
@@ -23,7 +24,6 @@ system:
         description: Will partial
         harmless: true
         type: will
-      spellEffect: one symbol
   components:
     material: true
     somatic: true
@@ -60,6 +60,8 @@ system:
   sources:
     - id: PZO1117
       pages: '241'
-  subschool: figment
+  subschool:
+    value:
+      - figment
 type: spell
 

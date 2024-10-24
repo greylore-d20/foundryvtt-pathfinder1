@@ -19,9 +19,7 @@
   <tr>
     {{#with dr.normal}}
       <td class="roll damage normal">
-        <a class="inline-roll inline-dsn-hidden inline-result" data-tooltip="{{formula}}" data-roll="{{json-string this}}">
-          <i class="fas fa-dice-d20"></i> {{total}}
-        </a>
+        {{{inlineRoll.outerHTML}}}
       </td>
       <td class="damage-types">{{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=damageType damageTypes=@root.damageTypes}}</td>
     {{else}}
@@ -32,9 +30,7 @@
     {{#if atk.hasCritConfirm}}
     {{#with dr.crit}}
       <td class="roll damage critical">
-        <a class="inline-roll inline-dsn-hidden inline-result" data-tooltip="{{formula}}" data-roll="{{json-string this}}">
-          <i class="fas fa-dice-d20"></i> {{total}}
-        </a>
+        {{{inlineRoll.outerHTML}}}
       </td>
       <td class="damage-type">{{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=damageType damageTypes=@root.damageTypes}}</td>
     {{else}}
@@ -82,27 +78,15 @@
         {{#if atk.hasAttack}}
         <tr class="attack">
           <td {{#if atk.hasCritConfirm}}colspan="2"{{else}}colspan="4"{{/if}} class="roll normal">
-            <a class="inline-roll inline-dsn-hidden inline-result{{#if atk.attack.isNat20}} natural-20 success{{/if}}{{#if atk.attack.isNat1}} natural-1 failure{{/if}}{{#if atk.attack.isCrit}} critical-threat{{/if}}"
-            data-tooltip="{{atk.attack.formula}}" data-roll="{{json-string atk.attack}}">
-            <i class="fas fa-dice-d20"></i> {{atk.attack.total}}
-            </a>
+            {{{atk.attack.inlineRoll.outerHTML}}}
           </td>
           {{#if atk.hasCritConfirm}}
           <td colspan="2" class="roll critical">
             {{#if atk.critConfirm.armorAsDR}}
             {{! Armor as DR – Defense DC }}
-            {{localize "PF1.DefenseDC"}}:
-            <a class="inline-roll inline-dsn-hidden inline-result defense-dc" data-tooltip="{{atk.critConfirm.formula}}" data-roll="{{json-string atk.critConfirm}}">
-              {{atk.critConfirm.total}}
-            </a>
-            {{else}}
-            {{! Normal Critical }}
-            <a class="inline-roll inline-dsn-hidden inline-result{{#if atk.critConfirm.isNat20}} success{{/if}}{{#if atk.critConfirm.isNat1}} natural-1 failure{{/if}}"
-            data-tooltip="{{atk.critConfirm.formula}}" data-roll="{{json-string atk.critConfirm}}">
-              <i class="fas fa-dice-d20"></i>
-              {{atk.critConfirm.total}}
-            </a>
+            <span>{{localize "PF1.DefenseDC"}}:</span>
             {{/if}}
+            {{{atk.critConfirm.inlineRoll.outerHTML}}}
           </td>
           {{/if}}
         </tr>

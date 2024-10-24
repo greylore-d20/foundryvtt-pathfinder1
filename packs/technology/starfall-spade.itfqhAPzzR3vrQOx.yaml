@@ -15,11 +15,6 @@ system:
         type: attack
         unchained:
           type: attack
-      attackNotes:
-        - >-
-          When the weapon strikes a foe, it automatically consumes a charge and
-          deals an additional 2 points of plasma damage (1 electricity, 1 fire)
-          on that hit. Attack that miss don't consume charges.
       damage:
         parts:
           - formula: sizeRoll(1, 6, @size)
@@ -33,6 +28,12 @@ system:
       extraAttacks:
         type: standard
       name: Attack
+      notes:
+        footer:
+          - >-
+            When the weapon strikes a foe, it automatically consumes a charge
+            and deals an additional 2 points of plasma damage (1 electricity, 1
+            fire) on that hit. Attack that miss don't consume charges.
       range:
         units: melee
         value: '5'

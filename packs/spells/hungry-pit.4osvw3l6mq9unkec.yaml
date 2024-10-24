@@ -14,7 +14,7 @@ system:
           type: action
       damage:
         parts:
-          - formula: min(10, floor(@cl / 2))d6
+          - formula: (min(10, floor(@cl / 2)))d6
             type:
               custom: ''
               values:
@@ -22,18 +22,19 @@ system:
       duration:
         units: spec
         value: 1 round + 1 round/level
-      effectNotes:
-        - '@Action[Contraction]'
+      effect: 10-ft.-by-10-ft. hole, 10 ft. deep/2 levels
       measureTemplate:
         size: '10'
         type: rect
       name: Use
+      notes:
+        effect:
+          - '@Action[Contraction]'
       range:
         units: medium
       save:
         description: Reflex negates; Reflex half; see text
         type: ref
-      spellEffect: 10-ft.-by-10-ft. hole, 10 ft. deep/2 levels
     - _id: P8HdEWMnXskpnkgl
       activation:
         type: nonaction
@@ -86,6 +87,8 @@ system:
     - id: PZO1115
       pages: '228'
   sr: false
-  subschool: creation
+  subschool:
+    value:
+      - creation
 type: spell
 

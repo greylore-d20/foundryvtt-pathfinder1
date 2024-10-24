@@ -1,14 +1,20 @@
 <section class="form-body">
   <table>
     <thead>
-    {{#each fields as |value|}}
-      <th>{{value}}</th>
-    {{/each}}
-    <th class="entry-control"></th>
+    <tr data-drop="true" data-index="0">
+      <th class="drag-control"></th>
+      {{#each fields as |value|}}
+        <th>{{value}}</th>
+      {{/each}}
+      <th class="entry-control"></th>
+    </tr>
     </thead>
     <tbody>
     {{#each entries as |entry index|}}
-      <tr class="resistance" data-index="{{index}}">
+      <tr class="resistance" data-drop="true" data-index="{{index}}">
+        <td class="drag-control" data-drag="true">
+          <i class="fas fa-bars"></i>
+        </td>
         <td>
           <input type="number" class="textarea" data-index="amount" value={{entry.amount}}
                  data-dtype={{@root.dtypes.[0]}} name="{{index}}-amount">
@@ -33,7 +39,8 @@
           </select>
         </td>
         <td class="entry-control">
-          <button type="button" data-action="deleteEntry" class="entry-control delete-entry"><i class="fas fa-trash"></i></button>
+          <button type="button" data-action="deleteEntry" class="entry-control delete-entry"><i
+            class="fas fa-trash"></i></button>
         </td>
       </tr>
     {{/each}}

@@ -88,7 +88,7 @@ export class ActorSheetPFHaunt extends ActorSheetPFNPC {
    * @param {object} context - Context object to store data into
    * @throws {Error} - If provided ID is invalid.
    */
-  _getTooltipContext(fullId, context) {
+  async _getTooltipContext(fullId, context) {
     const actor = this.actor,
       system = actor.system;
 

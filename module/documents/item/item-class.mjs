@@ -7,6 +7,12 @@ import { RollPF } from "@dice/roll.mjs";
  * For base classes, NPC classes, racial HD, and mythic paths.
  */
 export class ItemClassPF extends ItemPF {
+  /** @override */
+  static system = Object.freeze({
+    ...super.system,
+    hasActions: false,
+  });
+
   /**
    * @internal
    * @override
@@ -16,11 +22,11 @@ export class ItemClassPF extends ItemPF {
    */
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
-
     if (!changed.system) return;
+    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
     // Set level marker
-    if (changed.system.level !== undefined) {
+    if (changed.system.level !== undefined && changed.system.level !== this.system.level) {
       context.pf1 ??= {};
       context.pf1.level ??= {};
       context.pf1.level.old = this.system.level;

@@ -14,15 +14,15 @@ system:
           type: action
       duration:
         units: perm
+      effect: >-
+        figment that cannot extend beyond a 20-ft. cube + one 10-ft. cube/level
+        (S)
       name: Use
       range:
         units: long
       save:
         description: Will disbelief (if interacted with)
         type: will
-      spellEffect: >-
-        figment that cannot extend beyond a 20-ft. cube + one 10-ft. cube/level
-        (S)
   components:
     focus: true
     somatic: true
@@ -53,6 +53,8 @@ system:
     - id: PZO1110
       pages: '319'
   sr: false
-  subschool: figment
+  subschool:
+    value:
+      - figment
 type: spell
 

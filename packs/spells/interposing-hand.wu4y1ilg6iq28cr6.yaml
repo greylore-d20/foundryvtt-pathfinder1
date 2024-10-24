@@ -1,7 +1,7 @@
 _id: wu4y1ilg6iq28cr6
 _key: '!items!wu4y1ilg6iq28cr6'
 folder: NE0tEwSvcr71GnPC
-img: systems/pf1/icons/misc/magic-swirl.png
+img: icons/magic/unholy/strike-hand-glow-pink.webp
 name: Interposing Hand
 system:
   actions:
@@ -14,10 +14,24 @@ system:
       duration:
         units: round
         value: '@cl'
+      effect: 10-ft. hand
       name: Use
       range:
         units: medium
-      spellEffect: 10-ft. hand
+    - _id: kBXEI2XhbFtvyvnM
+      activation:
+        type: move
+        unchained:
+          type: action
+      duration:
+        units: inst
+      name: Redirect Hand
+      range:
+        units: unlimited
+      target:
+        value: One Creature
+      uses:
+        autoDeductChargesCost: '0'
   components:
     focus: true
     somatic: true

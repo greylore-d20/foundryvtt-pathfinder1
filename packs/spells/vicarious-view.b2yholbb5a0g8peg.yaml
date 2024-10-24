@@ -16,13 +16,13 @@ system:
         dismiss: true
         units: minute
         value: '@cl'
+      effect: magical sensor
       name: Use
       range:
         units: touch
       save:
         description: Will negates (object)
         type: will
-      spellEffect: magical sensor
   components:
     somatic: true
     verbal: true
@@ -53,6 +53,8 @@ system:
   sources:
     - id: PZO1134
       pages: '229'
-  subschool: scrying
+  subschool:
+    value:
+      - scrying
 type: spell
 

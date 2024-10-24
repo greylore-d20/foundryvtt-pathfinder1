@@ -190,7 +190,7 @@ items:
           - level: 2
             uuid: Compendium.pf1.class-abilities.2qcz39w9O2Qlms0Q
           - level: 2
-            uuid: Compendium.pf1.class-abilities.kKaz5A6XbuxgVvhO
+            uuid: Compendium.pf1.class-abilities.Item.A54sLfcyoR5HGNbP
           - level: 3
             uuid: Compendium.pf1.class-abilities.WIoNDjnbzdHBkLJr
           - level: 6
@@ -355,12 +355,13 @@ items:
                     - fire
           duration:
             units: inst
-          effectNotes:
-            - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
           measureTemplate:
             size: '5'
             type: circle
           name: Throw
+          notes:
+            effect:
+              - '[[ceil(@class.level / 2) + @abilities.int.mod]] Splash Damage'
           range:
             units: ft
             value: '20'
@@ -497,8 +498,6 @@ items:
             unchained:
               type: hour
           name: Brew
-          range:
-            units: none
           uses:
             autoDeductChargesCost: '-1'
       associations:
@@ -975,7 +974,9 @@ items:
         - id: PZO1110
           pages: '263'
       spellbook: primary
-      subschool: healing
+      subschool:
+        value:
+          - healing
     type: spell
   - _id: kT585sSkNswkXM3D
     _key: '!actors.items!VTkTFJcOG7KjXxIH.kT585sSkNswkXM3D'

@@ -17,15 +17,16 @@ system:
       duration:
         units: round
         value: '@cl'
-      effectNotes:
-        - '[[1d6 + min(5, floor(@cl / 2))]] Strength Penalty'
+      effect: ray
       name: Use
+      notes:
+        effect:
+          - '[[1d6 + min(5, floor(@cl / 2))]] Strength Penalty'
       range:
         units: close
       save:
         description: Fortitude half
         type: fort
-      spellEffect: ray
       touch: true
   components:
     somatic: true

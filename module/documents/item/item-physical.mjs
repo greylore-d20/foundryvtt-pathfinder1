@@ -12,11 +12,8 @@ export class ItemPhysicalPF extends ItemPF {
    */
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
-
-    if (context.diff === false || context.recursive === false) return;
-
-    // No system changes
     if (!changed.system) return;
+    if (context.diff === false || context.recursive === false) return;
 
     await this._resetChargesOnQuantityUpdate(changed);
   }

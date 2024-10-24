@@ -8,9 +8,9 @@
 
     <div class="item-detail item-uses flexrow">
       {{#if action.isSelfCharged}}
-        <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{action.data.uses.self.value}}</span>
+        <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{action.uses.self.value}}</span>
         <span class="sep"> / </span>
-        <span class="max">{{action.data.uses.self.max}}</span>
+        <span class="max">{{action.uses.self.max}}</span>
       {{/if}}
     </div>
 
@@ -81,14 +81,14 @@
 <div class="form-group charges-per-use" data-tooltip="PF1.ChargeCostItemFormulaHint">
   <label>{{localize "PF1.ChargeCostFormula"}}</label>
   <div class="form-fields">
-    <input class="formula" type="text" name="system.uses.autoDeductChargesCost" value="{{system.uses.autoDeductChargesCost}}" placeholder="{{defaultChargeFormula}}">
+    <input class="formula roll" type="text" name="system.uses.autoDeductChargesCost" value="{{system.uses.autoDeductChargesCost}}" placeholder="{{defaultChargeFormula}}">
   </div>
 </div>
 {{#if isRechargeable}}
 <div class="form-group charges-per-recharge" data-tooltip="PF1.RechargeFormulaHint">
   <label>{{localize "PF1.RechargeFormula"}}</label>
   <div class="form-fields">
-    <input class="formula" type="text" name="system.uses.rechargeFormula" value="{{system.uses.rechargeFormula}}" placeholder="@item.uses.max" {{disabled inheritCharges}}>
+    <input class="formula roll" type="text" name="system.uses.rechargeFormula" value="{{system.uses.rechargeFormula}}" placeholder="@item.uses.max" {{disabled inheritCharges}}>
   </div>
 </div>
 {{/if}}

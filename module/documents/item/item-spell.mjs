@@ -26,24 +26,33 @@ export class ItemSpellPF extends ItemPF {
    */
   async _preCreate(data, options, user) {
     await super._preCreate(data, options, user);
-    this._assignLevelOnCreate(data, options);
 
-    // Handle preparation data creation
-    {
-      const prep = data.system.preparation ?? {};
-      const prepUpdate = {};
+    // Following is only if the item is added on actor
+    if (!this.actor) return;
 
-      // Add preparation
-      if (this.actor && prepUpdate.value === undefined) {
-        // Only spontaneous casters auto-prepare new spells
-        if (this.spellbook?.spellPreparationMode === "spontaneous") {
-          prepUpdate.value ??= 1;
-          prepUpdate.max ??= 1;
-        }
+    this.constructor._adjustNewItem(this, data, false);
+  }
+
+  /** @inheritDoc */
+  static _adjustNewItem(item, data, override = false) {
+    if (!item.actor) return;
+
+    // Assign level if undefined
+    if (!Number.isFinite(data?.system?.level) || override) {
+      const book = item.system.spellbook;
+      const cls = item.actor.system.attributes?.spells?.spellbooks?.[book]?.class;
+      const level = item.system.learnedAt?.class?.[cls];
+      if (Number.isFinite(level)) {
+        foundry.utils.setProperty(item._source, "system.level", Math.clamp(level, 0, 9));
       }
+    }
 
-      if (!foundry.utils.isEmpty(prepUpdate)) {
-        this.updateSource({ system: { preparation: prepUpdate } });
+    // Prepare if undefined
+    if (!Number.isFinite(data?.system?.preparation?.value) || override) {
+      // Only spontaneous casters auto-prepare new spells
+      if (item.spellbook?.spellPreparationMode === "spontaneous") {
+        foundry.utils.setProperty(item._source, "system.preparation.value", 1);
+        foundry.utils.setProperty(item._source, "system.preparation.max", 1);
       }
     }
   }
@@ -52,13 +61,13 @@ export class ItemSpellPF extends ItemPF {
    * @internal
    * @override
    * @param {object} changed
-   * @param {object} options
+   * @param {object} context
    * @param {User} user
    */
-  async _preUpdate(changed, options, user) {
-    await super._preUpdate(changed, options, user);
-
+  async _preUpdate(changed, context, user) {
+    await super._preUpdate(changed, context, user);
     if (!changed.system) return;
+    if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
     this._preparationPreUpdate(changed);
   }
@@ -89,21 +98,6 @@ export class ItemSpellPF extends ItemPF {
     // TODO: Remove following once DataModel is implemented with relevant constraints
     if (prep.max < 0) prep.max = 0;
     if (prep.value < 0) prep.value = 0;
-  }
-
-  /**
-   * Assign spell level according to spellbook class if present.
-   *
-   * @protected
-   * @param {object} data Item data
-   * @param {object} options Creation options
-   */
-  _assignLevelOnCreate(data, options) {
-    const actor = this.actor;
-    const book = this.system.spellbook;
-    const cls = actor?.system.attributes?.spells?.spellbooks?.[book]?.class;
-    const level = this.system.learnedAt?.class?.[cls];
-    if (Number.isFinite(level)) this.updateSource({ "system.level": Math.clamp(level, 0, 9) });
   }
 
   /** @inheritDoc */
@@ -192,21 +186,19 @@ export class ItemSpellPF extends ItemPF {
     return result;
   }
 
-  getConditionalSubTargets(target) {
-    const result = super.getConditionalSubTargets(target);
+  /** @override */
+  getConditionalTargets(target, result) {
+    super.getConditionalTargets(target, result);
 
-    // Add subtargets affecting effects
     if (target === "effect") {
       result["cl"] = game.i18n.localize("PF1.CasterLevel");
     }
 
     // Add misc subtargets
     if (target === "misc") {
-      // Add charges subTarget with specific label
-      if (this.type === "spell" && this.useSpellPoints()) result["charges"] = game.i18n.localize("PF1.SpellPointsCost");
+      if (this.useSpellPoints()) result["charges"] = game.i18n.localize("PF1.SpellPointsCost");
+      else delete result["charges"]; // Non-spellpoint spells do not use charges
     }
-
-    return result;
   }
 
   /** @inheritDoc */
@@ -587,7 +579,7 @@ export class ItemSpellPF extends ItemPF {
 
     // Initialize default action
     if (itemData.system.actions.length == 0) itemData.system.actions.push(defaultAction);
-    const defaultAction = itemData.system.actions[0] ?? pf1.components.ItemAction.defaultData;
+    const defaultAction = itemData.system.actions[0] ?? pf1.components.ItemAction({}, { parent: this }).toObject();
     defaultAction.range ??= {};
 
     // Prepare new action copying over with old data if present
@@ -632,9 +624,11 @@ export class ItemSpellPF extends ItemPF {
       itemData.system.price = Math.max(0.5, level) * cl * 25 + materialPrice;
     }
 
-    const convertNotes = (data) => {
+    const convertNotes = (data, keys = []) => {
+      if (!data) return;
+
       // Replace attack and effect formula data
-      for (const arrKey of ["attackNotes", "effectNotes"]) {
+      for (const arrKey of keys) {
         const arr = data[arrKey];
         if (!arr) continue;
         for (let idx = 0; idx < arr.length; idx++) {
@@ -694,16 +688,16 @@ export class ItemSpellPF extends ItemPF {
         if (oldSaveDC?.length) action.save.dc += ` + (${oldSaveDC})[${game.i18n.localize("PF1.DCOffset")}]`;
       }
 
-      convertNotes(action);
+      convertNotes(action.notes, ["effect", "footer"]);
     }
 
-    convertNotes(itemData.system);
+    convertNotes(itemData.system, ["attackNotes", "effectNotes"]);
 
     // Set description
     const spell = new Item.implementation(origData);
     spell.reset();
     // TODO: Make range and duration appear as inline rolls that scale on item CL?
-    const desc = spell.getDescription({ charcard: false, header: true, body: true, rollData });
+    const desc = await spell.getDescription({ charcard: false, header: true, body: true, rollData });
     itemData.system.description.value = this._replaceConsumableConversionString(desc, rollData);
 
     // Create and return synthetic item data
@@ -806,196 +800,79 @@ export class ItemSpellPF extends ItemPF {
   }
 
   /** @inheritDoc */
-  getDescription({ chatcard = false, data = {}, rollData, header = true, body = true } = {}) {
+  async getDescription({ chatcard = false, data = {}, rollData, header = true, body = true, isolated = false } = {}) {
     const headerContent = header
-      ? renderCachedTemplate("systems/pf1/templates/internal/spell-description.hbs", {
+      ? renderCachedTemplate("systems/pf1/templates/items/headers/spell-header.hbs", {
           ...data,
-          ...this.getDescriptionData({ rollData }),
+          ...(await this.getDescriptionData({ rollData, isolated })),
           chatcard: chatcard === true,
         })
       : "";
-    const bodyContent = body ? this.system.description.value : "";
-    return headerContent + bodyContent;
+
+    let bodyContent = "";
+    if (body) bodyContent = `<div class="description-body">` + this.system.description.value + "</div>";
+
+    let separator = "";
+    if (header && body) separator = `<h3 class="description-header">${game.i18n.localize("PF1.Description")}</h3>`;
+
+    return headerContent + separator + bodyContent;
   }
 
   /** @inheritDoc */
-  getDescriptionData({ rollData } = {}) {
-    const srcData = this.system;
+  async getDescriptionData({ rollData, isolated = false } = {}) {
+    const result = await super.getDescriptionData({ rollData, isolated });
+
+    const system = this.system;
+    result.system = system;
+
     const defaultAction = this.defaultAction;
-    const actionData = defaultAction?.data ?? {};
+    const action = defaultAction ?? {};
 
     rollData ??= defaultAction?.getRollData() ?? this.getRollData();
 
-    const label = {
-      school: pf1.config.spellSchools[srcData.school],
-      subschool: pf1.utils.i18n.join([...(srcData.subschool.total ?? [])]),
-      descriptors: pf1.utils.i18n.join([...(srcData.descriptors.total ?? [])], "conjunction", false),
-    };
-    const data = {
-      data: foundry.utils.mergeObject(this.system, srcData, { inplace: false }),
-      label: label,
-    };
+    const labels = this.getLabels({ rollData });
+    result.labels = labels;
+
+    labels.school = pf1.config.spellSchools[system.school];
+    labels.subschool = pf1.utils.i18n.join([...(system.subschool.total ?? [])]);
+    labels.descriptors = pf1.utils.i18n.join([...(system.descriptors.total ?? [])], "conjunction", false);
 
     // Set information about when the spell is learned
-    data.learnedAt = {};
-    if (srcData.learnedAt) {
+    result.learnedAt = {};
+    if (system.learnedAt) {
+      const classNames = await pf1.utils.packs.getClassIDMap();
       ["class", "domain", "subDomain", "elementalSchool", "bloodline"].forEach((category) =>
         pf1.utils.i18n.join(
-          (data.learnedAt[category] = Object.entries(srcData.learnedAt[category]).map(([classId, level]) => {
-            classId = pf1.config.classNames[classId] || classId;
+          (result.learnedAt[category] = Object.entries(system.learnedAt[category]).map(([classId, level]) => {
+            classId = classNames[classId] || classId;
             return `${classId} ${level}`;
           }))
         )
       );
     }
 
-    const isUnchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
-
-    // Set casting time label
-    const act = defaultAction?.activation;
-    if (act != null) {
-      const activationCost = act.cost;
-      const activationType = act.type;
-      const activationTypes = isUnchainedActionEconomy
-        ? pf1.config.abilityActivationTypes_unchained
-        : pf1.config.abilityActivationTypes;
-      const activationTypesPlurals = isUnchainedActionEconomy
-        ? pf1.config.abilityActivationTypesPlurals_unchained
-        : pf1.config.abilityActivationTypesPlurals;
-
-      if (activationType) {
-        if (activationType === "special") {
-          label.castingTime = activationCost || activationTypes.special;
-        } else if (activationTypesPlurals[activationType] != null) {
-          if (activationCost === 1) label.castingTime = `${activationTypes[activationType]}`;
-          else label.castingTime = `${activationTypesPlurals[activationType]}`;
-        } else {
-          label.castingTime = `${activationTypes[activationType]}`;
-        }
-      }
-      if (Number.isFinite(activationCost) && label.castingTime != null)
-        label.castingTime = `${activationCost} ${label.castingTime}`;
-    }
-
     // Set components label
-    label.components = pf1.utils.i18n.join(this.getSpellComponents());
-
-    // Set duration label
-    const duration = actionData.duration;
-    switch (duration?.units) {
-      case "spec":
-        label.duration = duration.value;
-        break;
-      case "seeText":
-      case "inst":
-      case "perm":
-        label.duration = pf1.config.timePeriods[duration.units];
-        break;
-      case "turn": {
-        const unit = pf1.config.timePeriods[duration.units];
-        label.duration = game.i18n.format("PF1.Time.Format", { value: 1, unit });
-        break;
-      }
-      case "round":
-      case "minute":
-      case "hour":
-      case "day":
-      case "month":
-      case "year":
-        if (duration.value) {
-          const unit = pf1.config.timePeriods[duration.units];
-          const roll = Roll.defaultImplementation.safeRoll(duration.value, rollData);
-          const value = roll.total;
-          if (!roll.err) {
-            label.duration = game.i18n.format("PF1.Time.Format", { value, unit });
-          } else {
-            console.error("Error in duration formula:", { formula: duration.value, rollData, roll }, roll.err, this);
-          }
-          label.durationFormula = duration.value;
-          data.variableDuration = /@\w/.test(duration.value);
-        }
-        break;
-    }
-
-    // Dismissable, but only if special duration isn't used
-    // TODO: Better i18n support
-    if (label.duration && duration.dismiss && duration.units !== "spec") {
-      label.duration += " " + game.i18n.localize("PF1.DismissableMark");
-    }
+    labels.components = pf1.utils.i18n.join(this.getSpellComponents());
 
     // Set effect label
-    {
-      const effect = actionData.spellEffect;
-      if (effect) label.effect = effect;
-    }
-    // Set targets label
-    {
-      const targets = actionData.target?.value;
-      if (targets) label.targets = targets;
-    }
-    // Set range label
-    {
-      const rangeUnit = actionData.range?.units;
-      const rangeValue = actionData.range?.value;
-
-      if (rangeUnit != null && rangeUnit !== "none") {
-        label.range = pf1.config.distanceUnits[rangeUnit];
-        const units = pf1.utils.getDistanceSystem();
-        switch (rangeUnit) {
-          case "close":
-            label.range = `${label.range} ${game.i18n.localize(
-              units == "metric" ? "PF1.SpellRangeShortMetric" : "PF1.SpellRangeShort"
-            )}`;
-            break;
-          case "medium":
-            label.range = `${label.range} ${game.i18n.localize(
-              units == "metric" ? "PF1.SpellRangeMediumMetric" : "PF1.SpellRangeMedium"
-            )}`;
-            break;
-          case "long":
-            label.range = `${label.range} ${game.i18n.localize(
-              units == "metric" ? "PF1.SpellRangeLongMetric" : "PF1.SpellRangeLong"
-            )}`;
-            break;
-          case "ft":
-          case "mi":
-            if (!rangeValue) label.range = "";
-            else {
-              let rf = calculateRangeFormula(rangeValue, rangeUnit, rollData);
-              if (rangeUnit === "mi") rf /= 5_280; // Convert feet back to miles
-              const [r, rt] = pf1.utils.convertDistance(rf, rangeUnit);
-              const rl = pf1.config.measureUnitsShort[rt];
-              label.range = `${r} ${rl}`;
-            }
-            break;
-          case "spec":
-            label.range = rangeValue || label.range;
-            break;
-        }
-      }
-    }
-    // Set area label
-    {
-      const area = actionData.area;
-
-      if (area) label.area = area;
-    }
+    const effect = action.effect;
+    if (effect) labels.effect = effect;
 
     // Set DC and SR
     {
-      const savingThrowDescription = actionData.save?.description;
-      label.savingThrow = savingThrowDescription || game.i18n.localize("PF1.None");
+      const savingThrowDescription = action.save?.description;
+      labels.savingThrow = savingThrowDescription || game.i18n.localize("PF1.None");
 
-      const sr = srcData.sr;
-      label.sr = (sr === true ? game.i18n.localize("PF1.Yes") : game.i18n.localize("PF1.No")).toLowerCase();
+      const sr = system.sr;
+      labels.sr = (sr === true ? game.i18n.localize("PF1.Yes") : game.i18n.localize("PF1.No")).toLowerCase();
 
-      if (actionData.range?.units !== "personal") data.useDCandSR = true;
+      if (action.range?.units !== "personal") result.useDCandSR = true;
     }
 
-    const harmless = actionData.save?.harmless ?? false;
-    if (harmless) label.harmless = game.i18n.localize("PF1.Yes").toLowerCase();
+    const harmless = action.save?.harmless ?? false;
+    if (harmless) labels.harmless = game.i18n.localize("PF1.Yes").toLowerCase();
 
-    return data;
+    return result;
   }
 
   /**

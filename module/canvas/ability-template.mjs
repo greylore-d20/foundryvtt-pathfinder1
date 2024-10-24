@@ -50,17 +50,22 @@ export class AbilityTemplate extends MeasuredTemplatePF {
     // Additional type-specific data
     switch (type) {
       case "cone":
-        if (game.settings.get("pf1", "measureStyle") === true)
-          templateData.angle = CONFIG.MeasuredTemplate.defaults.angle;
-        else templateData.angle = CONFIG.MeasuredTemplate.defaults.originalAngle;
+        templateData.angle = game.settings.get("pf1", "measureStyle")
+          ? game.canvas.grid.isHexagonal
+            ? 60
+            : CONFIG.MeasuredTemplate.defaults.angle
+          : CONFIG.MeasuredTemplate.defaults.originalAngle;
         break;
+
       case "rect":
         templateData.distance = Math.sqrt(Math.pow(distance, 2) + Math.pow(distance, 2));
         templateData.direction = 45;
         break;
+
       case "ray":
         templateData.width = CONFIG.MeasuredTemplate.defaults.width;
         break;
+
       default:
         break;
     }
@@ -181,8 +186,8 @@ export class AbilityTemplate extends MeasuredTemplatePF {
           if (this.document.distance < 0) this.document.distance = 0;
         } else {
           if (pfStyle && this.document.t === "cone") {
-            delta = 90;
-            snap = event.shiftKey ? delta : 45;
+            delta = game.canvas.grid.isHexagonal ? 60 : 90;
+            snap = event.shiftKey ? delta : game.canvas.grid.isHexagonal ? 30 : 45;
           } else {
             delta = canvas.grid.type > CONST.GRID_TYPES.SQUARE ? 30 : 15;
             snap = event.shiftKey ? delta : 5;

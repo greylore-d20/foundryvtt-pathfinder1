@@ -66,8 +66,6 @@ globalThis.pf1 = moduleToObject({
   models,
   migrations,
   registry,
-  /** @type {TooltipPF|null} */
-  tooltip: null,
   utils,
   chat,
   // Initialize skip confirm prompt value
@@ -86,6 +84,13 @@ Hooks.once("init", function () {
     warn: (msg, opts = {}) => (opts.console !== false ? console.warn(msg) : undefined),
     error: (msg, opts = {}) => (opts.console !== false ? console.error(msg) : undefined),
   };
+
+  // Temp store
+  Object.defineProperty(pf1, "_temp", {
+    value: {},
+    enumerable: false,
+    writable: false,
+  });
 
   // Global exports
   globalThis.RollPF = dice.RollPF;
@@ -152,6 +157,8 @@ Hooks.once("init", function () {
 
   CONFIG.Dice.rolls.push(dice.D20RollPF);
   CONFIG.Dice.rolls.push(dice.DamageRoll);
+
+  CONFIG.Dice.termTypes.FunctionTerm = pf1.dice.terms.FunctionTermPF;
 
   // Roll functions
   for (const [key, fn] of Object.entries(pf1.utils.roll.functions)) {
@@ -249,12 +256,31 @@ Hooks.once("init", function () {
     ["conditions", registry.Conditions],
     ["sources", registry.Sources],
   ]);
+
   for (const [registryName, registryClass] of registries) {
     pf1.registry[registryName] = new registryClass();
   }
 
+  Object.defineProperty(pf1.documents, "customRolls", {
+    value: function (message, speaker, rollData) {
+      foundry.utils.logCompatibilityWarning(
+        "pf1.documents.customRolls() is deprecated in favor of pf1.chat.command()",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        }
+      );
+
+      const re = /^\/(?<command>h|heal|d|damage)\s+(?<formula>.*?)(\s*#\s*(?<comment>.*))?$/i.exec(message);
+      if (!re) throw new Error(`Failed to parse message: ${message}`);
+
+      const { command, formula, comment } = re.groups;
+      return pf1.chat.command(command, formula, comment, { speaker, rollData });
+    },
+  });
+
   Object.defineProperty(pf1.registry, "materialTypes", {
-    get: () => {
+    get() {
       foundry.utils.logCompatibilityWarning("pf1.registry.materialTypes has been moved to pf1.registry.materials.", {
         since: "PF1 vNEXT",
         until: "PF1 vNEXT+1",
@@ -265,6 +291,9 @@ Hooks.once("init", function () {
 
   //Calculate conditions for world
   CONFIG.statusEffects = pf1.utils.init.getConditions();
+
+  // Register controls
+  documents.controls.registerSystemControls();
 
   // Call post-init hook
   Hooks.callAll("pf1PostInit");
@@ -451,20 +480,21 @@ Hooks.once("i18nInit", function () {
 
   // Point buy data
   doLocalizeKeys(pf1.config.pointBuy, ["label"]);
+
+  // Caster type labels
+  doLocalizeKeys(pf1.config.caster.type, ["label"]);
+  doLocalizeKeys(pf1.config.caster.progression, ["label", "hint"]);
+
+  // Localize registry data
+  for (const registry of Object.values(pf1.registry)) {
+    if (registry instanceof pf1.registry.Registry) registry.localize();
+  }
 });
 
 /**
  * This function runs after game data has been requested and loaded from the servers, so documents exist
  */
 Hooks.once("setup", () => {
-  // Prepare registry data
-  for (const registry of Object.values(pf1.registry)) {
-    if (registry instanceof pf1.registry.Registry) registry.setup();
-  }
-
-  // Register controls
-  documents.controls.registerSystemControls();
-
   Hooks.callAll("pf1PostSetup");
 });
 
@@ -474,15 +504,6 @@ Hooks.once("setup", () => {
  * Once the entire VTT framework is initialized, check to see if we should perform a data migration
  */
 Hooks.once("ready", async function () {
-  // Create tooltip
-  const ttconf = game.settings.get("pf1", "tooltipConfig");
-  const ttwconf = game.settings.get("pf1", "tooltipWorldConfig");
-  if (!ttconf.disable && !ttwconf.disable) pf1.applications.TooltipPF.toggle(true);
-
-  window.addEventListener("resize", () => {
-    pf1.tooltip?.setPosition();
-  });
-
   // Migrate data
   const NEEDS_MIGRATION_VERSION = "10.5";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
@@ -566,9 +587,6 @@ Hooks.on(
     // Optionally hide chat buttons
     if (game.settings.get("pf1", "hideChatButtons")) jq.find(".card-buttons").hide();
 
-    // Apply accessibility settings to chat message
-    chatUtils.applyAccessibilitySettings(cm, jq, options, game.settings.get("pf1", "accessibilityConfig"));
-
     // Alter ammo recovery options
     chatUtils.alterAmmoRecovery(cm, jq);
   }
@@ -588,15 +606,6 @@ Hooks.on("renderChatLog", (_, html) => _canvas.attackReach.addReachListeners(htm
 
 Hooks.on("renderChatPopout", (_, html) => documents.item.ItemPF.chatListeners(html));
 Hooks.on("renderChatPopout", (_, html) => documents.actor.ActorPF.chatListeners(html));
-
-// Hide token tooltip on token update or deletion
-Hooks.on("deleteToken", (token) => pf1.tooltip?.unbind(token));
-Hooks.on("updateToken", (token) => pf1.tooltip?.unbind(token));
-
-Hooks.on("chatMessage", (log, message, chatData) => {
-  const result = documents.customRolls(message, chatData.speaker);
-  return !result;
-});
 
 Hooks.on("renderActorDirectory", (app, html, data) => {
   html.find("li.actor").each((i, li) => {

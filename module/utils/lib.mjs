@@ -90,17 +90,34 @@ export const fractionalToString = (v) => {
   return rv.join(" ");
 };
 
-export const CR = {
-  fromString(value) {
+/**
+ * Challenge Rating helper functions.
+ */
+export class CR {
+  /**
+   * Parse CR string to produce a numeric representation
+   *
+   * Parses 1/8, 1/6, 1/4, 1/3, and 1/2 as exact decimals. Everything else is treated as regular number string and passed through parseFloat().
+   *
+   * @param {string} value
+   * @returns {number}
+   */
+  static fromString(value) {
     if (value === "1/8") return 0.125;
     if (value === "1/6") return 0.1625;
     if (value === "1/4") return 0.25;
     if (value === "1/3") return 0.3375;
     if (value === "1/2") return 0.5;
     return parseFloat(value);
-  },
+  }
 
-  fromNumber(value = 0) {
+  /**
+   * Convert number to string representation.
+   *
+   * @param {number} value
+   * @returns {string}
+   */
+  static fromNumber(value = 0) {
     if (value === 0.125) return "1/8";
     if (value === 0.1625) return "1/6";
     if (value === 0.25) return "1/4";
@@ -108,8 +125,8 @@ export const CR = {
     if (value === 0.5) return "1/2";
     if (!Number.isNumeric(value)) return "0";
     return value?.toString() ?? "";
-  },
-};
+  }
+}
 
 /**
  * Converts feet to what the world is using as a measurement unit.
@@ -758,62 +775,54 @@ export const findInCompendia = function (searchTerm, { packs = [], type, docType
 /**
  * Variant of TextEditor._createInlineRoll for creating unrolled inline rolls.
  *
- * Synchronized with Foundry VTT v10.291
+ * Synchronized with Foundry VTT v12.331
  *
- * {@inheritDoc TextEditor._createInlineRoll
+ * {@inheritDoc TextEditor._createInlineRoll}
  *
  * @param match
  * @param rollData
- * @param options
+ * @param _options
  */
-export function createInlineFormula(match, rollData, options) {
+export function createInlineFormula(match, rollData, _options) {
   let [command, formula, closing, label] = match.slice(1, 5);
-  const isDeferred = !!command;
-  let roll;
+  const rollCls = Roll.defaultImplementation;
 
-  // Leave command variants to be handled by core
-  if (command) return TextEditor._createInlineRoll(match, rollData, { ...options, rolls: true });
-
-  const cls = ["inline-preroll", "inline-formula"];
-
-  // Handle the possibility of closing brackets
+  // Handle the possibility of the roll formula ending with a closing bracket
   if (closing.length === 3) formula += "]";
 
-  // Extract roll data as a parsed chat command
+  command ||= "/r "; // spoof basic roll command if none exist
+
   const chatCommand = `${command}${formula}`;
   let parsedCommand = null;
   try {
     parsedCommand = ChatLog.parse(chatCommand);
-  } catch (err) {
-    console.error("Failed to parse formula:", chatCommand, err);
+    command = parsedCommand[0];
+  } catch {
+    // Something went wrong
     return null;
   }
   const [cmd, matches] = parsedCommand;
-  const [raw, rollType, fml, flv] = matches;
-  // TODO: Prettify display of commands like: /d 3d6
 
+  // Extract components of the matched command
+  if (command) {
+    const matchedCommand = ChatLog.MULTILINE_COMMANDS.has(cmd) ? matches.pop() : matches;
+    const matchedFormula = rollCls.replaceFormulaData(matchedCommand[2].trim(), rollData || {});
+    formula = matchedFormula;
+    const flavor = matchedCommand[3]?.trim();
+    if (flavor) label = flavor;
+  }
+
+  // Construct the roll element
   const a = document.createElement("a");
-
-  // Set roll data
-  if (cmd) {
-    cls.push(cmd);
-    a.dataset.mode = cmd;
+  a.classList.add("inline-preroll", "inline-formula");
+  if (command) {
+    a.classList.add(command);
+    a.dataset.mode = command;
   }
-  a.dataset.flavor = flv?.trim() ?? label ?? "";
-  formula = Roll.defaultImplementation.replaceFormulaData(formula.trim(), rollData || {});
-  try {
-    formula = pf1.utils.formula.simplify(formula);
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
+  a.dataset.flavor = label ?? "";
   a.dataset.formula = formula;
-
-  a.classList.add(...cls);
-
   a.dataset.tooltip = formula;
-  label = label ? `${label}: ${formula}` : formula;
-  a.innerHTML = `<i class="fas fa-dice-d20"></i> ${label}`;
+  a.innerHTML = `<i class="fas fa-dice-d20"></i>${label || formula}`;
 
   return a;
 }
@@ -831,47 +840,29 @@ export function createInlineFormula(match, rollData, options) {
  * @param {boolean} [options.rolls=false] Roll inline rolls. If false, the roll formula is shown instead as if /r had been used.
  * @param {boolean} [options.documents] Parse content links
  * @returns {string} - Enriched HTML string
- * Synchronized with Foundry VTT v11.315
+ * Synchronized with Foundry VTT v12.331
  */
-export async function enrichHTMLUnrolled(content, { rollData, secrets, rolls = false, documents, relativeTo } = {}) {
-  let pcontent = await TextEditor.enrichHTML(content, { secrets, rolls, documents, rollData, relativeTo });
-
-  if (!rolls) {
-    const html = document.createElement("div");
-    html.innerHTML = String(pcontent);
-    const text = TextEditor._getTextNodes(html);
-    const rgx = /\[\[(\/[a-zA-Z]+\s)?(.*?)(]{2,3})(?:{([^}]+)})?/gi;
-    TextEditor._replaceTextContent(text, rgx, (match) => createInlineFormula(match, rollData));
-    pcontent = html.innerHTML;
-  }
-
-  return pcontent;
-}
-
-/**
- * Temporary async variant until the rest of the code can be refactored.
- *
- * @internal
- * @param content
- * @param root0
- * @param root0.rollData
- * @param root0.secrets
- * @param root0.rolls
- * @param root0.documents
- * @param root0.relativeTo
- */
-export async function enrichHTMLUnrolledAsync(
+export async function enrichHTMLUnrolled(
   content,
-  { rollData, secrets, rolls = false, documents, relativeTo } = {}
+  { secrets, documents, links, embeds, rolls = false, rollData, relativeTo } = {}
 ) {
-  let pcontent = await TextEditor.enrichHTML(content, { secrets, rolls, documents, rollData, relativeTo });
+  let pcontent = await TextEditor.enrichHTML(content, {
+    secrets,
+    documents,
+    links,
+    embeds,
+    rolls,
+    rollData,
+    relativeTo,
+  });
 
-  if (!rolls) {
+  if (rolls !== true) {
     const html = document.createElement("div");
     html.innerHTML = String(pcontent);
     const text = TextEditor._getTextNodes(html);
+    rollData = rollData instanceof Function ? rollData() : rollData || {};
     const rgx = /\[\[(\/[a-zA-Z]+\s)?(.*?)(]{2,3})(?:{([^}]+)})?/gi;
-    TextEditor._replaceTextContent(text, rgx, (match) => createInlineFormula(match, rollData));
+    await TextEditor._replaceTextContent(text, rgx, (match) => createInlineFormula(match, rollData));
     pcontent = html.innerHTML;
   }
 
@@ -1261,4 +1252,73 @@ export function isItemSameSubGroup(item0, item1) {
 
   // Assume everything else is only categorized by main type
   return true;
+}
+
+/**
+ * Clone value.
+ *
+ * Similar to `foundry.utils.deepClone()` but does not return references for DataModel instances.
+ *
+ * @remarks
+ * - Documents are returned as references (unless source option is enabled)
+ * - PIXI graphics are returned as references
+ * - DataModels are extracted like objects with `parent` excluded
+ * - Unsupported objects call .toObject() when present, otherwise as references
+ *
+ * @param {object} original - Original data
+ * @param {object} [options] - Additioanl options
+ * @param {boolean} [options.strict=false] - Throw an error if a reference would be returned.
+ * @param {boolean} [options.source=false] - Return source data instead for supporting data.
+ * @throws {Error} - With strict mode if reference would be returned.
+ * @returns {object} - Cloned object
+ */
+export function deepClone(original, { strict = false, source = false } = {}) {
+  return _deepClone(original, strict, source);
+}
+
+function _deepClone(original, strict = false, source = false, _depth = 0) {
+  if (_depth > 100) {
+    throw new Error("Maximum depth exceeded. Be sure your object does not contain cyclical data structures.");
+  }
+  _depth++;
+
+  // Simple types (null, undefined, number, string, bigint, function,...)
+  if (typeof original !== "object" || original === null) return original;
+
+  // Does not clone injected extra data
+  if (Array.isArray(original)) return original.map((value) => _deepClone(value, strict, source, _depth));
+
+  // Dates
+  if (original instanceof Date) return new Date(original);
+
+  // Return documents as is
+  if (original instanceof foundry.abstract.Document) {
+    if (source) return original.toObject();
+    if (strict) throw new Error("Document instance encountered");
+    return original;
+  }
+
+  if (original instanceof PIXI.DisplayObject) {
+    if (strict) throw new Error("PIXI graphic encountered");
+    return original;
+  }
+
+  // Unsupported advanced objects
+  if (original instanceof foundry.abstract.DataModel) {
+    if (source) return original.toObject();
+    // Otherwise treat as regular object
+  } else if (original.constructor && original.constructor !== Object) {
+    if (typeof original.toObject === "function") return original.toObject();
+    else if (typeof original.toJSON === "function") return original.toJSON();
+    if (strict) throw new Error(`Unsupported advanced object: ${original.constructor.name}`);
+    return original;
+  }
+
+  // DataModels and other plain objects
+  const clone = {};
+  for (const k of Object.keys(original)) {
+    clone[k] = _deepClone(original[k], strict, source, _depth);
+  }
+
+  return clone;
 }

@@ -14,11 +14,11 @@ system:
           type: hour
       duration:
         units: inst
+      effect: one duplicate creature
       name: Use
       range:
         units: ft
         value: '0'
-      spellEffect: one duplicate creature
   components:
     material: true
     somatic: true
@@ -60,6 +60,8 @@ system:
     - id: PZO1110
       pages: '343'
   sr: false
-  subschool: shadow
+  subschool:
+    value:
+      - shadow
 type: spell
 

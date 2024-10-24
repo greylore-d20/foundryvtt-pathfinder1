@@ -1,75 +1,68 @@
-import { getSkipActionPrompt } from "@documents/settings.mjs";
+const { DocumentSheetV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
-export class ActionSelector extends Application {
-  /**
-   * @param {ItemPF} item - The item for which to choose an attack
-   * @param {object} [options={}] - Application options
-   * @param {object} [useOptions={}] - Use options
-   */
-  constructor(item, options = {}, useOptions = {}) {
-    super(options);
+export class ActionSelector extends HandlebarsApplicationMixin(DocumentSheetV2) {
+  static DEFAULT_OPTIONS = {
+    classes: ["pf1-v2", "action-selector"],
+    window: {
+      minimizable: false,
+      resizable: false,
+    },
+    actions: {
+      click: ActionSelector._onClickAction,
+    },
+    position: {
+      width: 390,
+    },
+    sheetConfig: false,
+  };
 
-    this.useOptions = useOptions;
-    this.item = item;
-  }
-
-  static get defaultOptions() {
-    const options = super.defaultOptions;
-    return {
-      ...options,
+  static PARTS = {
+    form: {
       template: "systems/pf1/templates/apps/action-select.hbs",
-      classes: [...options.classes, "pf1", "action-selector"],
-      width: 400,
-    };
+    },
+  };
+
+  get item() {
+    return this.document;
   }
 
   get title() {
     return game.i18n.format("PF1.Application.ActionSelector.Title", {
-      actor: this.item.actor.name ?? "",
+      actor: this.item.actor.name,
       item: this.item.name,
     });
   }
 
-  async getData() {
-    const result = await super.getData();
-
-    result.item = this.item.toObject();
-    result.actions = this.item.actions;
-
-    return result;
+  async _prepareContext() {
+    return {
+      actions: this.item.actions,
+    };
   }
 
-  activateListeners(html) {
-    super.activateListeners(html);
-
-    html.find(".action").on("click", this._onClickAction.bind(this));
-  }
-
-  _onClickAction(event) {
+  static _onClickAction(event) {
     event.preventDefault();
 
-    const actionId = event.currentTarget.dataset?.action;
-    const result = this.item.use({ ...this.useOptions, actionId, skipDialog: getSkipActionPrompt() });
-    this.resolve?.(result);
+    const target = event.target.closest("[data-action]");
+    this.resolve(target.dataset?.id);
     this.close();
   }
 
   close(...args) {
-    this.resolve?.();
+    this.resolve(null);
     super.close(...args);
   }
 
   /**
-   * @param {ItemPF} item
-   * @param {object} options
+   * @param {object} options - Options
+   * @param {ItemPF} options.document - Item to select action for.
    * @param {object} renderOptions - Options passed to application rendering
    * @returns {Promise<ChatMessage|object|undefined>} - Result of ItemPF.use() for selected action
    */
-  static async open(item, options = {}, renderOptions = {}) {
+  static async open(options) {
     return new Promise((resolve) => {
-      const selector = new this(item, undefined, options);
+      const selector = new this(options);
       selector.resolve = resolve;
-      selector.render(true, { focus: true, ...renderOptions });
+      selector.render(true);
     });
   }
 }

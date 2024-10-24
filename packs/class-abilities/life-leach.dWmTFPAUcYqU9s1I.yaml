@@ -24,11 +24,12 @@ system:
       duration:
         units: hour
         value: max(@abilities.cha.mod, 0)
-      effectNotes:
-        - >-
-          Gain temp HP equal to damage dealt for [[max(@abilities.cha.mod, 0)]]
-          hours
       name: Use
+      notes:
+        effect:
+          - >-
+            Gain temp HP equal to damage dealt for [[max(@abilities.cha.mod,
+            0)]] hours
       range:
         units: ft
         value: '30'

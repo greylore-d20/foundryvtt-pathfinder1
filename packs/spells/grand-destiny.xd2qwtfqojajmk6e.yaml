@@ -15,13 +15,13 @@ system:
       duration:
         units: spec
         value: 10 minutes/level or until discharged
+      effect: one willing creature
       name: Use
       range:
         units: medium
       save:
         description: none
         harmless: true
-      spellEffect: one willing creature
   components:
     somatic: true
     verbal: true
@@ -55,6 +55,8 @@ system:
   sources:
     - id: PZO9465
       pages: '8'
-  subschool: compulsion
+  subschool:
+    value:
+      - compulsion
 type: spell
 

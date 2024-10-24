@@ -14,10 +14,10 @@ system:
       duration:
         units: spec
         value: 1 hour/level or until discharged, then 1 round/level; see text
+      effect: phantom watchdog
       name: Use
       range:
         units: close
-      spellEffect: phantom watchdog
   components:
     material: true
     somatic: true
@@ -58,6 +58,8 @@ system:
     - id: PZO1110
       pages: '306'
   sr: false
-  subschool: creation
+  subschool:
+    value:
+      - creation
 type: spell
 

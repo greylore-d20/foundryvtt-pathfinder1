@@ -20,6 +20,7 @@ import * as chatUtils from "./module/utils/chat.mjs";
 import { initializeModuleIntegration } from "./module/modules.mjs";
 import { ActorPFProxy } from "@actor/actor-proxy.mjs";
 import { ItemPFProxy } from "@item/item-proxy.mjs";
+import * as tours from "module/tours.mjs";
 
 // New API
 import * as PF1 from "./module/config.mjs";
@@ -50,6 +51,7 @@ export {
   models,
   migrations,
   registry,
+  tours,
   utils,
   chat,
 };

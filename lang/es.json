@@ -222,7 +222,7 @@
     "SkillClm": "Trepar",
     "SkillCrf": "Artesanía",
     "SkillDip": "Diplomacia",
-    "SkillDev": "Desactivar Mecanismo",
+    "SkillDev": "Inutilizar Mecanismo",
     "SkillDis": "Disfrazarse",
     "SkillEsc": "Escapismo",
     "SkillFly": "Volar",
@@ -383,7 +383,7 @@
     "ArmorClass": "Clase de Armadura",
     "Attacks": "Ataques",
     "Biography": "Biografía",
-    "Buffs": "Potenciadores (Buffs)",
+    "Buffs": "Potenc. (Buffs)",
     "Change": "Cambio",
     "Changes": "Cambios",
     "ClassAbilities": "Habilidades de Clase",
@@ -442,7 +442,9 @@
       "Weapon": {
         "LabelPlural": "Competencia con armas",
         "simple": "Armas simples",
-        "martial": "Armas marciales"
+        "martial": "Armas marciales",
+        "firearm": "Armas de fuego",
+        "siege": "Máquinas de asedio"
       },
       "Granted": "Competencias adquiridas",
       "Penalty": "Penalizador por competencia"
@@ -738,7 +740,8 @@
         "day": "Al día",
         "week": "A la semana",
         "charges": "Cargas",
-        "hour": "Por hora"
+        "hour": "Por hora",
+        "minute": "Por minuto"
       }
     },
     "MaximumUsesFormula": "Fórmula de Usos Máximos",
@@ -1353,7 +1356,7 @@
     },
     "Trap": {
       "Type": "Tipo",
-      "DisableDeviceDC": "Desactivar dispositivo CD",
+      "DisableDeviceDC": "CD de Inutilizar mecanismo",
       "EffectsDetails": "Efectos",
       "Trigger": "Disparador",
       "PerceptionDC": "CD Percepción"
@@ -1492,7 +1495,8 @@
       "dying": "Moribundo/a",
       "flatFooted": "Desprevenido/a",
       "stable": "Estable",
-      "unconscious": "Inconsciente"
+      "unconscious": "Inconsciente",
+      "moraleEffects": "Efectos de moral"
     },
     "ActionTypes": {
       "mwak": "Ataque con Arma Cuerpo a Cuerpo",
@@ -1802,6 +1806,15 @@
           },
           "misc": {
             "Single": "Miscelánea"
+          },
+          "firearm": {
+            "Single": "Arma de fuego"
+          },
+          "siege": {
+            "Single": "Asedio"
+          },
+          "heavy": {
+            "Single": "Pesada"
           }
         }
       }
@@ -2292,7 +2305,65 @@
         "Silver": "Plata",
         "NexavarianSteel": "Acero nexavariano",
         "BlightQuartz": "Cuarzo marchito",
-        "NexavaranSteel": "Acero nexavarano"
+        "NexavaranSteel": "Acero nexavarano",
+        "abysium": "Abysium",
+        "blackwood": "Maderanegra",
+        "dragonhide": "Piel de dragón",
+        "heatstonePlating": "Chapado de piedra de calor",
+        "spireSteel": "Acero de Spire",
+        "epic": "Épica",
+        "adamantine": "Adamantina",
+        "alchemicalSilver": "Plata alquímica",
+        "angelSkin": "Piel de ángel",
+        "aszite": "Aszita",
+        "blightQuartz": "Cuarzo tinzado",
+        "bloodCrystal": "Cristal de sangre",
+        "buletteArmor": "Armadura de bulette",
+        "caphorite": "Caforita",
+        "cloth": "Tela",
+        "coldIron": "Hierro frío",
+        "cryptstone": "Piedra de cripta",
+        "darkleafCloth": "Tela de hojaoscura",
+        "darkwood": "Madera oscura",
+        "druchite": "Druchita",
+        "eelHide": "Piel de anguila",
+        "elysianBronze": "Bronce eliseo",
+        "fireForgedSteel": "Acero forjado al fuego",
+        "frostForgedSteel": "Acero forjado en escarcha",
+        "glaucite": "Glaucita",
+        "greenwood": "Madera verde",
+        "griffonMane": "Melena de grifo",
+        "horacalcum": "Auricalco",
+        "inubrix": "Inubrix",
+        "irespanbasalt": "Basalto Irespan",
+        "lazurite": "Lazurita",
+        "leather": "Cuero",
+        "liquidGlass": "Cristal líquido",
+        "livingSteel": "Acero vivo",
+        "mithral": "Mithril",
+        "nexavaranSteel": "Acero nexavarano",
+        "noqual": "Nocual",
+        "pyresteel": "Acero de pira",
+        "siccatite": "Sicatita",
+        "silver": "Plata",
+        "silversheen": "Plata luminosa",
+        "singingSteel": "Acero cantor",
+        "steel": "Acero",
+        "sunsilk": "Seda solar",
+        "sunsilver": "Plata solar",
+        "throneglass": "Crital de trono",
+        "viridium": "Viridio",
+        "voidglass": "Cristal del Vacío",
+        "whipwood": "Látigo de madera",
+        "wyroot": "Wyroot",
+        "bone": "Hueso",
+        "bronze": "Bronce",
+        "glass": "Cristal",
+        "gold": "Oro",
+        "obsidian": "Obsidiana",
+        "stone": "Piedra",
+        "wood": "Madera",
+        "magic": "Mágica"
       }
     },
     "NaturalArmor": "Armadura natural",
@@ -2316,7 +2387,7 @@
         "Abbr": "Manio. de vuelo",
         "Quality": {
           "clumsy": "Torpe",
-          "poor": "Pobre",
+          "poor": "Mala",
           "average": "Regular",
           "good": "Buena",
           "perfect": "Perfecta"
@@ -2522,7 +2593,7 @@
           "CustomPlaceholder": "ej: '@level * 1000'",
           "CustomUsage": "La fórmula de experiencia personalizada es acumulativa. Esto significa que, por ejemplo, para imitar la experiencia al estilo de PF2, simplemente tendrías que introducir <code>1000</code>, ya que cada nivel requiere 1000 de experiencia exactamente, mientras que establecerlo en <code>@nivel * 1000</code> significaría que cada nivel requiere mil más que el anterior. Utiliza los datos de la tirada normal del personaje añadiendo <code>@nivel</code> para el nivel actual."
         },
-        "Disable": "Desactivar",
+        "Disable": "Desactivar el seguimiento de experiencia",
         "DisableHint": "Desactiva el Seguimiento de Experiencia del sistema, así como barras de experiencia, detectores de subida de nivel, categorías de avance de personaje, etc.",
         "Distributor": "Distribuidor de experiencia",
         "DistributorHint": "Abre el distribuidor de PX al final del combate a menos que se mantenga presionada la tecla de Shift cuando se confirme la eliminación del combate."
@@ -2621,8 +2692,8 @@
           "HeldHint": "Ocultar objetos poseídos de todos los jugadores",
           "Armor": "Ocultar armadura",
           "ArmorHint": "Ocultar armadura de todos los jugadores",
-          "Buffs": "Ocultar potenciadores (buffs)",
-          "BuffsHint": "Ocultar potenciadores (buffs) de todos los jugadores",
+          "Buffs": "Ocultar potenc. (buffs)",
+          "BuffsHint": "Ocultar potenc. (buffs) de todos los jugadores",
           "Conditions": "Ocultar estados",
           "ConditionsHint": "Ocultar estados de todos los jugadores",
           "Clothing": "Ocultar vestimenta",
@@ -2758,7 +2829,27 @@
     "CustomSkill": "Habilidad personalizada",
     "BuffTarWeaponAttack": "Tiradas de ataque con armas",
     "BuffTarSpellAttack": "Tiradas de ataque con conjuro",
-    "NoCastingAbilityLimit": "Ignorar límite de característica"
+    "NoCastingAbilityLimit": "Ignorar límite de característica",
+    "WeaponSubtypeAssault": "Asalto",
+    "SpellSubschools": {
+      "calling": "Llamada",
+      "teleportation": "Teletransporte",
+      "compulsion": "Compulsión",
+      "charm": "Hechizo",
+      "creation": "Creación",
+      "figment": "Quimera",
+      "glamer": "Engaño",
+      "haunted": "Embrujo",
+      "healing": "Curación",
+      "pattern": "Pauta",
+      "phantasm": "Fantasmagoría",
+      "polymorph": "Polimorfía",
+      "scrying": "Escudriñamiento",
+      "shadow": "Sombra",
+      "summoning": "Convocación"
+    },
+    "WeaponSubtypeDirect": "Fuego directo",
+    "WeaponSubtypeIndirect": "Fuego indirecto"
   },
   "TOKEN": {
     "VisionLowLight": "Visión en la Penumbra",

@@ -354,6 +354,7 @@ Hooks.once("i18nInit", function () {
     "armorProficiencies",
     "weaponProficiencies",
     "actorSizes",
+    "actorAgeCategories",
     "abilityActivationTypes",
     "abilityActivationTypesPlurals",
     "limitedUsePeriods",

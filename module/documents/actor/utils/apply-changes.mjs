@@ -1288,6 +1288,22 @@ export const addDefaultChanges = function (changes) {
     );
   }
 
+  // Add age modifiers to attributes
+  const ageCategoryKey = actorData.traits.ageCategory;
+  if (ageCategoryKey) {
+    const ageCategory = pf1.config.ageCategoryMods[ageCategoryKey];
+    for (const [key, value] of Object.entries(ageCategory)) {
+      changes.push(
+        new pf1.components.ItemChange({
+          formula: value,
+          target: key,
+          type: "untyped",
+          flavor: pf1.config.actorAgeCategories[ageCategoryKey],
+        })
+      );
+    }
+  }
+
   // Custom skill rank bonus from sheet
   if (this.system.details?.bonusSkillRankFormula) {
     changes.push(

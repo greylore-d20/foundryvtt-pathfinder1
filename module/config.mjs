@@ -469,6 +469,16 @@ export const actorSizes = {
 };
 
 /**
+ * Possible creature age categories
+ */
+export const actorAgeCategories = {
+  adult: "PF1.ActorAgeCategory.adult",
+  middleAge: "PF1.ActorAgeCategory.middleAge",
+  old: "PF1.ActorAgeCategory.old",
+  venerable: "PF1.ActorAgeCategory.venerable",
+};
+
+/**
  * Armor & shield cost multipliers for different creature sizes.
  *
  * @see https://aonprd.com/Rules.aspx?Name=Armor%20for%20Unusual%20Creatures&Category=Armor
@@ -614,6 +624,13 @@ export const sizeStealthMods = {
   huge: -8,
   grg: -12,
   col: -16,
+};
+
+export const ageCategoryMods = {
+  adult: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
+  middleAge: { str: -1, dex: -1, con: -1, int: 1, wis: 1, cha: 1 },
+  old: { str: -3, dex: -3, con: -3, int: 2, wis: 2, cha: 2 },
+  venerable: { str: -6, dex: -6, con: -6, int: 3, wis: 3, cha: 3 },
 };
 
 /**

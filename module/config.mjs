@@ -471,12 +471,12 @@ export const actorSizes = {
 /**
  * Possible creature age categories
  */
-export const actorAgeCategories = {
-  young: "PF1.ActorAgeCategory.young",
-  adult: "PF1.ActorAgeCategory.adult",
-  middleAge: "PF1.ActorAgeCategory.middleAge",
-  old: "PF1.ActorAgeCategory.old",
-  venerable: "PF1.ActorAgeCategory.venerable",
+export const ageCategories = {
+  young: "PF1.AgeCategory.young",
+  adult: "PF1.AgeCategory.adult",
+  middleAge: "PF1.AgeCategory.middleAge",
+  old: "PF1.AgeCategory.old",
+  venerable: "PF1.AgeCategory.venerable",
 };
 
 /**

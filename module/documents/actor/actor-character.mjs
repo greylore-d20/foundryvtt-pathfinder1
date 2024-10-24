@@ -132,7 +132,7 @@ export class ActorCharacterPF extends ActorPF {
     actorData.traits ??= {};
     // Prepare age category data
     actorData.traits.ageCategory ??= { base: "adult" };
-    const ageCategoryChart = Object.keys(pf1.config.actorAgeCategories);
+    const ageCategoryChart = Object.keys(pf1.config.ageCategories);
     actorData.traits.ageCategory.value = ageCategoryChart.indexOf(actorData.traits.ageCategory.base);
   }
 

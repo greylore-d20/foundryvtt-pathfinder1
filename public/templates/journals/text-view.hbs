@@ -1,0 +1,14 @@
+{{#if data.title.show}}
+{{#with pf1}}
+<span class='pf1 page-nesting'>
+{{#if h1}}<span class='parent h1'>{{h1.name}}</span>{{/if}}
+{{#if h2}}<span class='page-nesting-separator'>&gt;</span> <span class='parent h2'>{{h2.name}}</span>{{/if}}
+</span>
+{{/with}}
+<header class="journal-page-header">
+    <h{{data.title.level}}>{{data.name}}</h{{data.title.level}}>
+</header>
+{{/if}}
+<section class="journal-page-content">
+  {{{editor.content}}}
+</section>

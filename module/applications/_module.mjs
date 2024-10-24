@@ -11,6 +11,7 @@ export * as item from "./item/_module.mjs";
 export * as component from "./component/_module.mjs";
 export * as settings from "./settings/_module.mjs";
 export * as compendiumBrowser from "./compendium-browser/_module.mjs";
+export * as journal from "./journal/_module.mjs";
 
 export { ActionSelector } from "./action-selector.mjs";
 export { AttackDialog } from "./attack-dialog.mjs";

@@ -2112,11 +2112,10 @@ export class ItemSheetPF extends ItemSheet {
     if (!document.querySelector(`.locked-tooltip.change-${changeId}`)) {
       await game.tooltip.activate(el, {
         content,
+        locked: true,
         direction: TooltipManager.TOOLTIP_DIRECTIONS.LEFT,
-        cssClass: "pf1 change-menu",
+        cssClass: "pf1 change-menu change-" + changeId,
       });
-      const tooltip = game.tooltip.lockTooltip();
-      tooltip.classList.add("change-" + changeId);
     }
   }
 

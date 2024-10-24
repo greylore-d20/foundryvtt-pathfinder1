@@ -230,6 +230,12 @@ Hooks.once("init", function () {
     makeDefault: true,
   });
 
+  DocumentSheetConfig.registerSheet(JournalEntryPage, "pf1", applications.journal.JournalTextPageSheetPF1, {
+    types: ["text"],
+    makeDefault: false,
+    label: "PF1.Sheet.TextPage",
+  });
+
   // Register detection modes
   for (const mode of Object.values(pf1.canvas.detectionModes)) {
     CONFIG.Canvas.detectionModes[mode.ID] = new mode({

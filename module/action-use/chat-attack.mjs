@@ -126,9 +126,12 @@ export class ChatAttack {
     /** @type {D20RollPF} */
     if (critical === true) {
       if (this.action.critConfirmBonus) {
-        let critConfirm = this.action.critConfirmBonus;
-        if (RollPF.parse(critConfirm).length > 1) critConfirm = `(${critConfirm})`;
-        extraParts.push(`${critConfirm}[${game.i18n.localize("PF1.CriticalConfirmation")}]`);
+        const critConfirm = this.action.critConfirmBonus;
+        const parsedConfirmResult = RollPF.parse(critConfirm);
+        if (parsedConfirmResult.length > 1)
+          extraParts.push(`(${critConfirm})[${game.i18n.localize("PF1.CriticalConfirmation")}]`);
+        else if (parsedConfirmResult[0].flavor) extraParts.push(critConfirm);
+        else extraParts.push(`${critConfirm}[${game.i18n.localize("PF1.CriticalConfirmation")}]`);
       }
 
       const ccKeys = pf1.documents.actor.changes.getChangeFlat.call(actor, "critConfirm");

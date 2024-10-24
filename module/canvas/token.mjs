@@ -74,7 +74,9 @@ export class TokenPF extends Token {
   }
 
   /**
-   * Synced with Foundry v11.315
+   * Override to support vision sharing and setting for minimum needed permission level.
+   *
+   * Synced with Foundry v12.331
    *
    * @override
    * @since PF1 v10
@@ -99,8 +101,7 @@ export class TokenPF extends Token {
     const guarantee = game.settings.get("pf1", "guaranteedVision");
     const canObserve = this.actor?.testUserPermission(game.user, guarantee) ?? false;
     if (!canObserve) return false;
-    const others = this.layer.controlled.filter((t) => !t.document.hidden && t.hasSight);
-    return !others.length;
+    return !this.layer.controlled.some((t) => !t.document.hidden && t.hasSight);
   }
 
   /**

@@ -1292,9 +1292,9 @@ export const addDefaultChanges = function (changes) {
   }
 
   // Add age modifiers to attributes
-  const ageCategoryMods = Object.values(pf1.config.ageCategoryMods);
+  const ageCategories = Object.values(pf1.config.ageCategories);
   for (const key of ["str", "dex", "con", "int", "wis", "cha"]) {
-    const lookupStatement = "lookup(@ageCategory, " + ageCategoryMods.map((c) => c[key]).join(", ") + ")";
+    const lookupStatement = "lookup(@ageCategory, " + ageCategories.map((c) => c.modifiers[key]).join(", ") + ")";
     console.log(
       `ifelse(gt(@abilities.${key}.base + ${lookupStatement}, 0), ${lookupStatement}, -@abilities.${key}.base + 1)`
     );

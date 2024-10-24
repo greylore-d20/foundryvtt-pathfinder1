@@ -5,15 +5,15 @@ name: Age Resistance
 system:
   changes:
     - _id: WaaiXiVf
-      formula: lookup(@ageCategory, 0, 0, 1, 3, 3)
+      formula: min(@abilities.str.base, lookup(@ageCategory, 0, 0, 1, 3, 3))
       target: str
       type: untyped
     - _id: XEsEY43y
-      formula: lookup(@ageCategory, 0, 0, 1, 3, 3)
+      formula: min(@abilities.dex.base, lookup(@ageCategory, 0, 0, 1, 3, 3))
       target: dex
       type: untyped
     - _id: S8Je6yLF
-      formula: lookup(@ageCategory, 0, 0, 1, 3, 3)
+      formula: min(@abilities.con.base, lookup(@ageCategory, 0, 0, 1, 3, 3))
       target: con
       type: untyped
   description:

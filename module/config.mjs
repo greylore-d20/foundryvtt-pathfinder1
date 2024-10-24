@@ -472,6 +472,7 @@ export const actorSizes = {
  * Possible creature age categories
  */
 export const actorAgeCategories = {
+  young: "PF1.ActorAgeCategory.young",
   adult: "PF1.ActorAgeCategory.adult",
   middleAge: "PF1.ActorAgeCategory.middleAge",
   old: "PF1.ActorAgeCategory.old",
@@ -627,6 +628,7 @@ export const sizeStealthMods = {
 };
 
 export const ageCategoryMods = {
+  young: { str: -2, dex: -2, con: -2, int: 0, wis: -2, cha: 0 },
   adult: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
   middleAge: { str: -1, dex: -1, con: -1, int: 1, wis: 1, cha: 1 },
   old: { str: -3, dex: -3, con: -3, int: 2, wis: 2, cha: 2 },

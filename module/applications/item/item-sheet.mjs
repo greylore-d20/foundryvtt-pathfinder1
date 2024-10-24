@@ -2109,12 +2109,15 @@ export class ItemSheetPF extends ItemSheet {
     content.querySelector(".delete").addEventListener("click", (ev) => this._onDeleteChange(ev, el));
     content.querySelector(".edit").addEventListener("click", (ev) => this._onEditChange(ev, el, true));
 
-    await game.tooltip.activate(el, {
-      content,
-      locked: true,
-      direction: TooltipManager.TOOLTIP_DIRECTIONS.LEFT,
-      cssClass: "pf1 change-menu",
-    });
+    if (!document.querySelector(`.locked-tooltip.change-${changeId}`)) {
+      await game.tooltip.activate(el, {
+        content,
+        direction: TooltipManager.TOOLTIP_DIRECTIONS.LEFT,
+        cssClass: "pf1 change-menu",
+      });
+      const tooltip = game.tooltip.lockTooltip();
+      tooltip.classList.add("change-" + changeId);
+    }
   }
 
   /**

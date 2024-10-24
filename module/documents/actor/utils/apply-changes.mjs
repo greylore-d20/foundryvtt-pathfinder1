@@ -1295,9 +1295,6 @@ export const addDefaultChanges = function (changes) {
   const ageCategories = Object.values(pf1.config.ageCategories);
   for (const key of ["str", "dex", "con", "int", "wis", "cha"]) {
     const lookupStatement = "lookup(@ageCategory, " + ageCategories.map((c) => c.modifiers[key]).join(", ") + ")";
-    console.log(
-      `ifelse(gt(@abilities.${key}.base + ${lookupStatement}, 0), ${lookupStatement}, -@abilities.${key}.base + 1)`
-    );
     changes.push(
       new pf1.components.ItemChange({
         formula: `ifelse(gt(@abilities.${key}.base + ${lookupStatement}, 0), ${lookupStatement}, -@abilities.${key}.base + 1)`,

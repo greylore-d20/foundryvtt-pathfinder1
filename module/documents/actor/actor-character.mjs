@@ -125,6 +125,21 @@ export class ActorCharacterPF extends ActorPF {
    * @protected
    * @override
    */
+  prepareBaseData() {
+    super.prepareBaseData();
+    const actorData = this.system;
+
+    actorData.traits ??= {};
+    // Prepare age category data
+    actorData.traits.ageCategory ??= { base: "adult" };
+    const ageCategoryChart = Object.keys(pf1.config.actorAgeCategories);
+    actorData.traits.ageCategory.value = ageCategoryChart.indexOf(actorData.traits.ageCategory.base);
+  }
+
+  /**
+   * @protected
+   * @override
+   */
   prepareDerivedData() {
     super.prepareDerivedData();
     const actorData = this.system;

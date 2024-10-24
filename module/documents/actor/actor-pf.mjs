@@ -4491,8 +4491,8 @@ export class ActorPF extends ActorBasePF {
     result.size = sizeChart.indexOf(result.traits.size);
 
     // Set age category index
-    const ageCategoryChart = Object.keys(pf1.config.actorAgeCategories);
-    result.ageCategory = ageCategoryChart.indexOf(result.traits.ageCategory);
+    const ageCategories = Object.keys(pf1.config.actorAgeCategories);
+    result.ageCategory = Math.clamped(result.traits?.ageCategory?.value, 0, ageCategories.length - 1);
 
     // Add more info for formulas
     result.armor = { type: 0, total: 0, ac: 0, enh: 0 };

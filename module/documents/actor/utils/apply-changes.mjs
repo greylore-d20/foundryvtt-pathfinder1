@@ -179,6 +179,9 @@ export const getChangeFlat = function (target, modifierType, value) {
     case "carryMult":
       result.push("system.details.carryCapacity.multiplier.total");
       break;
+    case "ageCategory":
+      result.push("system.traits.ageCategory.value");
+      break;
     case "ac":
       result.push("system.attributes.ac.normal.total", "system.attributes.ac.touch.total");
 
@@ -1289,19 +1292,21 @@ export const addDefaultChanges = function (changes) {
   }
 
   // Add age modifiers to attributes
-  const ageCategoryKey = actorData.traits.ageCategory;
-  if (ageCategoryKey) {
-    const ageCategory = pf1.config.ageCategoryMods[ageCategoryKey];
-    for (const [key, value] of Object.entries(ageCategory)) {
-      changes.push(
-        new pf1.components.ItemChange({
-          formula: value,
-          target: key,
-          type: "untyped",
-          flavor: pf1.config.actorAgeCategories[ageCategoryKey],
-        })
-      );
-    }
+  const ageCategoryMods = Object.values(pf1.config.ageCategoryMods);
+  for (const key of ["str", "dex", "con", "int", "wis", "cha"]) {
+    const lookupStatement = "lookup(@ageCategory, " + ageCategoryMods.map((c) => c[key]).join(", ") + ")";
+    console.log(
+      `ifelse(gt(@abilities.${key}.base + ${lookupStatement}, 0), ${lookupStatement}, -@abilities.${key}.base + 1)`
+    );
+    changes.push(
+      new pf1.components.ItemChange({
+        formula: `ifelse(gt(@abilities.${key}.base + ${lookupStatement}, 0), ${lookupStatement}, -@abilities.${key}.base + 1)`,
+        target: key,
+        type: "untyped",
+        flavor: game.i18n.localize("PF1.Age"),
+        priority: -1000,
+      })
+    );
   }
 
   // Custom skill rank bonus from sheet

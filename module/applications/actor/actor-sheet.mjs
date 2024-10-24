@@ -1636,7 +1636,7 @@ export class ActorSheetPF extends ActorSheet {
         break;
       case "age-category":
         paths.push(
-          { path: "@traits.ageCategory", value: system.traits.ageCategory },
+          { path: "@traits.ageCategory.base", value: system.traits.ageCategory.base },
           { path: "@ageCategory", value: lazy.rollData.ageCategory }
         );
         break;

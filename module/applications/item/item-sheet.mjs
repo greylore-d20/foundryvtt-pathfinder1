@@ -2109,7 +2109,7 @@ export class ItemSheetPF extends ItemSheet {
     content.querySelector(".delete").addEventListener("click", (ev) => this._onDeleteChange(ev, el));
     content.querySelector(".edit").addEventListener("click", (ev) => this._onEditChange(ev, el, true));
 
-    if (!document.querySelector(`.locked-tooltip.change-${changeId}`)) {
+    if (!document.querySelector(`.locked-tooltip.pf1.change-${changeId}`)) {
       await game.tooltip.activate(el, {
         content,
         locked: true,

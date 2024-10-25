@@ -2100,6 +2100,33 @@ export class ActorPF extends ActorBasePF {
     return 0; // Only used by PCs
   }
 
+  /**
+   * Create a new Token document, not yet saved to the database, which represents the Actor, and apply actor size to it.
+   *
+   * @override
+   * @param {object} [data={}]            Additional data, such as x, y, rotation, etc. for the created token data
+   * @param {object} [options={}]         The options passed to the TokenDocument constructor
+   * @returns {Promise<TokenDocumentPF>}  The created TokenDocument instance
+   */
+  async getTokenDocument(data = {}, options = {}) {
+    const size = Object.values(pf1.config.tokenSizes)[this.getRollData({ refresh: true }).tokenSize];
+    if (size) {
+      Object.assign(data, {
+        width: size.w,
+        height: size.h,
+        texture: {
+          scaleX: size.scale * (this.prototypeToken.texture.scaleX || 1),
+          scaleY: size.scale * (this.prototypeToken.texture.scaleY || 1),
+        },
+      });
+    }
+
+    const tokenDocument = await super.getTokenDocument(data, options);
+    console.log(tokenDocument);
+
+    return tokenDocument;
+  }
+
   /* -------------------------------------------- */
 
   /* -------------------------------------------- */
@@ -2119,8 +2146,6 @@ export class ActorPF extends ActorBasePF {
     if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
     const oldData = this.system;
-
-    this._syncProtoTokenSize(changed);
 
     // Offset HP values
     const attributes = changed.system.attributes;
@@ -2196,42 +2221,6 @@ export class ActorPF extends ActorBasePF {
           if (!progs[prog]) bookData.casterType = Object.keys(progs)[0];
         }
       }
-    }
-  }
-
-  /**
-   * Synchronize prototype token sizing with actor size.
-   *
-   * @param changed
-   * @internal
-   */
-  _syncProtoTokenSize(changed) {
-    const sizeKey = changed.system.traits?.size?.base;
-    if (!sizeKey) return;
-
-    if (this.token) return;
-
-    const staticSize =
-      changed.prototypeToken?.flags?.pf1?.staticSize ?? this.prototypeToken.getFlag("pf1", "staticSize") ?? false;
-    if (staticSize) return;
-
-    const sizes = Object.keys(pf1.config.tokenSizes);
-    this.system.traits.size = {
-      base: sizeKey,
-      value: sizes.indexOf(sizeKey),
-      token: sizes.indexOf(sizeKey),
-    };
-    applyChanges.call(this);
-
-    const size = Object.values(pf1.config.tokenSizes)[this.system.traits.size.token];
-    if (!size) return;
-
-    changed.prototypeToken ??= {};
-    if (changed.prototypeToken?.width === undefined) {
-      changed.prototypeToken.width = size.w;
-    }
-    if (changed.prototypeToken?.height === undefined) {
-      changed.prototypeToken.height = size.h;
     }
   }
 

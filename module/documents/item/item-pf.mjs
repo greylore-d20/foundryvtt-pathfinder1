@@ -1152,7 +1152,6 @@ export class ItemPF extends ItemBasePF {
 
     if ((changed?.system?.active !== undefined && this.adjustsSize) || this.isSizeChange(changed)) {
       this.actor.updateTokenSize();
-      this.actor.update({ "system.traits.size.base": this.actor.system.traits.size.base });
     }
 
     if (this._memoryVariables) this._onMemorizedUpdate(changed, context);

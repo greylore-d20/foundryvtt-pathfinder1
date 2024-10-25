@@ -181,6 +181,14 @@ export const getChangeFlat = function (target, modifierType, value) {
       break;
     case "ageCategory":
       result.push("system.traits.ageCategory.value");
+      result.push("system.traits.ageCategory.mental");
+      result.push("system.traits.ageCategory.physical");
+      break;
+    case "ageCategoryMental":
+      result.push("system.traits.ageCategory.mental");
+      break;
+    case "ageCategoryPhysical":
+      result.push("system.traits.ageCategory.physical");
       break;
     case "ac":
       result.push("system.attributes.ac.normal.total", "system.attributes.ac.touch.total");
@@ -1294,7 +1302,11 @@ export const addDefaultChanges = function (changes) {
   // Add age modifiers to attributes
   const ageCategories = Object.values(pf1.config.ageCategories);
   for (const key of ["str", "dex", "con", "int", "wis", "cha"]) {
-    const lookupStatement = "lookup(@ageCategory, " + ageCategories.map((c) => c.modifiers[key]).join(", ") + ")";
+    const ageCategoryIdentifier = ["str", "dex", "con"].includes(key) ? "physical" : "mental";
+    const lookupStatement =
+      `lookup(@ageCategory.${ageCategoryIdentifier} + 1, 0, ` +
+      ageCategories.map((c) => c.modifiers[key]).join(", ") +
+      ")";
     changes.push(
       new pf1.components.ItemChange({
         formula: `ifelse(gt(@abilities.${key}.base + ${lookupStatement}, 0), ${lookupStatement}, -@abilities.${key}.base + 1)`,

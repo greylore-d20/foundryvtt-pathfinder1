@@ -4492,7 +4492,11 @@ export class ActorPF extends ActorBasePF {
 
     // Set age category index
     const ageCategories = Object.keys(pf1.config.ageCategories);
-    result.ageCategory = Math.clamped(result.traits?.ageCategory?.value, 0, ageCategories.length - 1);
+    result.ageCategory = {
+      value: Math.clamped(result.traits?.ageCategory?.value, 0, ageCategories.length - 1),
+      physical: Math.clamped(result.traits?.ageCategory?.physical, 0, ageCategories.length - 1),
+      mental: Math.clamped(result.traits?.ageCategory?.mental, 0, ageCategories.length - 1),
+    };
 
     // Add more info for formulas
     result.armor = { type: 0, total: 0, ac: 0, enh: 0 };

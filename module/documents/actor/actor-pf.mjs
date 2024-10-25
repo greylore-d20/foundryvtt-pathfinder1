@@ -2120,6 +2120,8 @@ export class ActorPF extends ActorBasePF {
 
     const oldData = this.system;
 
+    this._syncProtoTokenSize(changed);
+
     // Offset HP values
     const attributes = changed.system.attributes;
     if (attributes) {
@@ -2200,32 +2202,37 @@ export class ActorPF extends ActorBasePF {
   /**
    * Synchronize prototype token sizing with actor size.
    *
+   * @param changed
    * @internal
    */
-  async _syncProtoTokenSize() {
-    const sizeKeys = Object.keys(pf1.config.tokenSizes);
-    const sizeKey = sizeKeys[this.getRollData({ refresh: true }).tokenSize];
+  _syncProtoTokenSize(changed) {
+    const sizeKey = changed.system.traits?.size?.base;
+    if (!sizeKey) return;
 
     if (this.token) return;
 
-    const changes = {};
-
     const staticSize =
-      changes.prototypeToken?.flags?.pf1?.staticSize ?? this.prototypeToken.getFlag("pf1", "staticSize") ?? false;
+      changed.prototypeToken?.flags?.pf1?.staticSize ?? this.prototypeToken.getFlag("pf1", "staticSize") ?? false;
     if (staticSize) return;
 
-    const size = pf1.config.tokenSizes[sizeKey];
+    const sizes = Object.keys(pf1.config.tokenSizes);
+    this.system.traits.size = {
+      base: sizeKey,
+      value: sizes.indexOf(sizeKey),
+      token: sizes.indexOf(sizeKey),
+    };
+    applyChanges.call(this);
+
+    const size = Object.values(pf1.config.tokenSizes)[this.system.traits.size.token];
     if (!size) return;
 
-    changes.prototypeToken ??= {};
-    if (changes.prototypeToken?.width === undefined) {
-      changes.prototypeToken.width = size.w;
+    changed.prototypeToken ??= {};
+    if (changed.prototypeToken?.width === undefined) {
+      changed.prototypeToken.width = size.w;
     }
-    if (changes.prototypeToken?.height === undefined) {
-      changes.prototypeToken.height = size.h;
+    if (changed.prototypeToken?.height === undefined) {
+      changed.prototypeToken.height = size.h;
     }
-
-    await this.update(changes);
   }
 
   /**
@@ -2280,19 +2287,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (sourceUser && changed?.system?.traits?.size?.base) {
-      this.updateTokenSize({ proto: true }).then();
-    }
-  }
-
-  async updateTokenSize({ proto = false } = {}) {
-    const sizes = Object.keys(pf1.config.tokenSizes);
-    const sizeKey = sizes[this.getRollData({ refresh: true }).tokenSize];
-
-    if (sizeKey !== undefined) {
-      this._updateTokenSize(sizeKey);
-      if (proto) {
-        await this._syncProtoTokenSize(this);
-      }
+      this.updateTokenSize();
     }
   }
 
@@ -2304,12 +2299,18 @@ export class ActorPF extends ActorBasePF {
    * @todo Add option to update token size on all scenes.
    *
    * @internal
-   * @param {string} sizeKey - New size key
+   * @param {string} [sizeKey] - Size key to update to. If not provided, will use actor's current size.
    * @param {object} [options] - Additional options
    * @returns {Promise<TokenDocument[]>|null} - Updated token documents, or null if no update was performed.
    * @throws {Error} - On invalid parameters
    */
-  async _updateTokenSize(sizeKey, options = {}) {
+  async updateTokenSize(sizeKey = undefined, options = {}) {
+    if (!sizeKey) {
+      const sizes = Object.keys(pf1.config.tokenSizes);
+      sizeKey = sizes[this.getRollData({ refresh: true }).tokenSize];
+      if (sizeKey === undefined) return;
+    }
+
     const size = pf1.config.tokenSizes[sizeKey];
     if (!size) throw new Error(`Size key "${sizeKey}" is invalid`);
     const scene = canvas.scene;

@@ -46,20 +46,18 @@
 /**
  * Patch ImagePopout image share handling function to respect identified status of items
  *
- * Synchronized with Foundry VTT v11.311
+ * Synchronized with Foundry VTT v12.331
  *
- * Does not work if sharing embedded document image from compendium.
+ * HACK: This breaks Foundry API by turning it into async function, but since this is a socket handler, that should not matter.
+ *
+ * @see https://github.com/foundryvtt/foundryvtt/issues/8953
  */
 {
   const original_handleShareImage = ImagePopout._handleShareImage;
-  ImagePopout._handleShareImage = function ({ image, title, caption, uuid, showTitle } = {}) {
-    try {
-      const doc = fromUuidSync(uuid);
-      if (doc instanceof Item) {
-        title = doc.name;
-      }
-    } catch (error) {
-      console.error("Failed to protect against document identity leakage", error);
+  ImagePopout._handleShareImage = async function ({ image, title, caption, uuid, showTitle } = {}) {
+    const doc = await fromUuid(uuid);
+    if (doc instanceof Item) {
+      title = doc.name;
     }
 
     return original_handleShareImage.call(this, { image, title, caption, uuid, showTitle });

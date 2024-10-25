@@ -218,10 +218,10 @@
     {{localize "PF1.BaseFormula"}}
   </h4>
   <ol class="damage-parts form-group tooltip">
-    {{#each data.damage.parts as |part i| }}
+    {{#each action.damage.parts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
       <input class="damage-formula formula" type="text" name="damage.parts.{{i}}.formula" placeholder="{{localize "PF1.DamageFormulaHint"}}" value="{{formula}}">
-      {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=type name=(concat "damage.parts." i ".type") damageTypes=@root.damageTypes}}
+      {{> "systems/pf1/templates/internal/damage-type-visual.hbs" types=this name=(concat "damage.parts." i ".types")}}
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}
@@ -243,10 +243,10 @@
     {{localize "PF1.OnCritBonusFormula"}}
   </h4>
   <ol class="damage-parts form-group tooltip">
-    {{#each data.damage.critParts as |part i| }}
+    {{#each action.damage.critParts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
       <input class="damage-formula formula" type="text" name="damage.critParts.{{i}}.formula" placeholder="{{localize "PF1.DamageFormulaHint"}}" value="{{formula}}">
-      {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=type name=(concat "damage.critParts." i ".type") damageTypes=@root.damageTypes}}
+      {{> "systems/pf1/templates/internal/damage-type-visual.hbs" types=this name=(concat "damage.critParts." i ".types")}}
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}
@@ -268,10 +268,10 @@
     {{localize "PF1.NonMultBonusFormula"}}
   </h4>
   <ol class="damage-parts form-group">
-    {{#each data.damage.nonCritParts as |part i| }}
+    {{#each action.damage.nonCritParts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
       <input class="damage-formula formula" type="text" name="damage.nonCritParts.{{i}}.formula" placeholder="{{localize "PF1.DamageFormulaHint"}}" value="{{formula}}">
-      {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=type name=(concat "damage.nonCritParts." i ".type") damageTypes=@root.damageTypes}}
+      {{> "systems/pf1/templates/internal/damage-type-visual.hbs" types=this name=(concat "damage.nonCritParts." i ".types")}}
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}

@@ -180,6 +180,17 @@ export class ItemActionSheet extends FormApplication {
           modifier.subTargets = action.getConditionalSubTargets(modifier.target);
           modifier.conditionalModifierTypes = action.getConditionalModifierTypes(modifier.target);
           modifier.conditionalCritical = action.getConditionalCritical(modifier.target);
+
+          // Damage type supporting data
+          modifier.types = new Set();
+          modifier.custom = new Set();
+          modifier.standard = new Set();
+          for (const type of modifier.damageType) {
+            modifier.types.add(type);
+            const d = pf1.registry.damageTypes.get(type);
+            if (d) modifier.standard.add(d);
+            else modifier.custom.add(d);
+          }
         }
       }
     }
@@ -452,17 +463,10 @@ export class ItemActionSheet extends FormApplication {
 
     // Add new damage component
     if (a.classList.contains("add-damage")) {
-      // Get initial data
-      const damageTypeBase = pf1.components.ItemAction.defaultDamageType;
-      const initialData = {
-        formula: "",
-        type: damageTypeBase,
-      };
-
       // Add data
       const damage = foundry.utils.getProperty(this.action.toObject(), k2);
       const damageParts = foundry.utils.getProperty(damage, k3) ?? [];
-      damageParts.push(initialData);
+      damageParts.push({});
       const updateData = { [path]: damageParts };
       return this._updateObject(event, this._getSubmitData(updateData));
     }

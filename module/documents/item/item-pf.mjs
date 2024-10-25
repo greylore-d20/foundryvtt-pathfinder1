@@ -692,13 +692,9 @@ export class ItemPF extends ItemBasePF {
         }
         context.action.size = Object.values(pf1.config.actorSizes)[sizeIndex] || pf1.config.actorSizes.med;
 
-        const getTypes = (t) =>
-          [
-            ...(t.type?.values.map((dt) => pf1.registry.damageTypes.get(dt)?.name || dt) ?? []),
-            ...(t.type?.custom.split(";") ?? []),
-          ].filter((t) => !!t);
-
-        const types = fullInfo ? action.damage?.parts?.map(getTypes).flat() : getTypes(action.damage?.parts?.[0]);
+        const types = fullInfo
+          ? action.damage?.parts?.map((part) => part.fullTypes.all.map((t) => t.name || t)).flat()
+          : action.damage?.parts?.[0].fullTypes.all.map((t) => t.name || t) ?? [];
 
         context.action.type = types.join(", ");
       }

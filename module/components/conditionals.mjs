@@ -165,7 +165,7 @@ export class ItemConditionalModifier {
       target: "",
       subTarget: "",
       type: "",
-      damageType: pf1.components.ItemAction.defaultDamageType,
+      damageType: [],
       critical: "",
     };
   }

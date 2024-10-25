@@ -3,25 +3,26 @@
   {{localize "PF1.Conditionals"}}
 </h4>
 <ol class="conditionals form-group">
-  {{#each data.conditionals as |conditional a|}}
-  <li class="conditional flexcolumn" data-conditional="{{conditional._id}}"><div class="conditional flexrow" data-conditional="{{conditional._id}}">
-      <input class="conditional-default" type="checkbox" data-tooltip="PF1.Default" name="conditionals.{{a}}.default" {{checked this.default}}>
-      <input class="conditional-name" type="text" name="conditionals.{{a}}.name" value="{{lookup this "name"}}"
+  {{#each data.conditionals as |conditional cidx|}}
+  <li class="conditional" data-conditional="{{conditional.id}}">
+    <div class="flexrow" data-conditional="{{conditional.id}}">
+      <input class="conditional-default" type="checkbox" data-tooltip="PF1.Default" name="conditionals.{{cidx}}.default" {{checked this.default}}>
+      <input class="conditional-name" type="text" name="conditionals.{{cidx}}.name" value="{{name}}"
       placeholder="{{localize "PF1.Name"}}">
       <a class="delete-conditional conditional-control delete-conditional"><i class="fas fa-trash"></i></a>
     </div>
     <ol class="conditionals form-group">
-      {{#each this.modifiers as |modifier m|}}
-      <li class="conditional-modifier flexrow" data-conditional="{{conditional._id}}" data-modifier="{{modifier._id}}">
-        <input class="conditional-formula formula" type="text" name="conditionals.{{a}}.modifiers.{{m}}.formula" value="{{lookup this "formula"}}"
+      {{#each this.modifiers as |modifier midx|}}
+      <li class="conditional-modifier flexrow" data-conditional="{{../id}}" data-modifier="{{modifier._id}}">
+        <input class="conditional-formula formula" type="text" name="conditionals.{{cidx}}.modifiers.{{midx}}.formula" value="{{formula}}"
         placeholder="{{localize "PF1.Formula"}}" required>
 
-        <select class="conditional-target" name="conditionals.{{a}}.modifiers.{{m}}.target" required>
+        <select class="conditional-target" name="conditionals.{{cidx}}.modifiers.{{midx}}.target" required>
           {{selectOptions targets selected=target blank=""}}
         </select>
 
         {{#unless (or (eq modifier.target "size") (eq modifier.target "critMult"))}}
-          <select class="conditional-sub-target" name="conditionals.{{a}}.modifiers.{{m}}.subTarget">
+          <select class="conditional-sub-target" name="conditionals.{{cidx}}.modifiers.{{midx}}.subTarget">
             {{#if target}}
             {{selectOptions subTargets selected=subTarget}}
             {{else}}
@@ -30,7 +31,7 @@
           </select>
 
           {{#if (eq modifier.target "attack")}}
-          <select class="conditional-type" name="conditionals.{{a}}.modifiers.{{m}}.type">
+          <select class="conditional-type" name="conditionals.{{cidx}}.modifiers.{{midx}}.type">
             {{#if target}}
             {{selectOptions conditionalModifierTypes selected=type}}
             {{else}}
@@ -41,12 +42,12 @@
 
           {{#if (eq modifier.target "damage")}}
           <div class="conditional-damage-type">
-              {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=(lookup this "damageType") name=(concat "conditionals." a ".modifiers." m ".damageType") damageTypes=@root.damageTypes}}
+              {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=damageType name=(concat "conditionals." a ".modifiers." m ".damageType") damageTypes=@root.damageTypes}}
           </div>
           {{/if}}
 
           {{#if (or (eq modifier.target "attack") (eq modifier.target "damage"))}}
-          <select class="conditional-critical" name="conditionals.{{a}}.modifiers.{{m}}.critical">
+          <select class="conditional-critical" name="conditionals.{{cidx}}.modifiers.{{midx}}.critical">
             {{#if target}}
             {{selectOptions conditionalCritical selected=critical localize=true}}
             {{else}}

@@ -1,14 +1,78 @@
-import { keepUpdateArray } from "@utils";
+import { CompactingMixin } from "@models/abstract/compacting-mixin.mjs";
+import { PreparedModel } from "@models/abstract/prepared-model.mjs";
+import { IDField } from "@datafields/id-field.mjs";
 
 /**
  * Conditional modifier bundle.
  */
-export class ItemConditional {
-  constructor(data, parent) {
-    this.data = data;
-    this.parent = parent;
+export class ItemConditional extends CompactingMixin(PreparedModel) {
+  constructor(data, options) {
+    if (options instanceof pf1.components.ItemAction) {
+      foundry.utils.logCompatibilityWarning(
+        "ItemConditional constructor's second parameter as parent is deprecated. Please wrap it in options object like with datamodels.",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        }
+      );
+      options = { parent: options };
+    }
+    super(data, options);
+  }
 
-    this.prepareData();
+  static defineSchema() {
+    const fields = foundry.data.fields;
+
+    return {
+      _id: new IDField(),
+      name: new fields.StringField(),
+      default: new fields.BooleanField({ initial: false }),
+      modifiers: new fields.ArrayField(new fields.ObjectField()), // TODO
+    };
+  }
+
+  _configure(options) {
+    super._configure(options);
+
+    // Following prevent these definitions being lost on model reset()
+    Object.defineProperties(this, {
+      // Modifiers collection cache to avoid conflicts with stored array
+      _modifiers: {
+        value: new Collection(),
+        writable: false,
+        enumerable: false,
+      },
+    });
+  }
+
+  /**
+   * @internal
+   */
+  prepareData() {
+    this._prepareModifiers();
+  }
+
+  /**
+   * @internal
+   */
+  _prepareModifiers() {
+    const collection = this._modifiers;
+    const prior = new Collection(collection.entries());
+    collection.clear(); // TODO: Remove specific entries after the loop instead of full clear here
+
+    for (const modData of this.modifiers) {
+      let modifier = null;
+      if (prior && prior.has(modData._id)) {
+        modifier = prior.get(modData._id);
+        modifier.updateSource(modData, { recursive: false });
+      } else {
+        modifier = new pf1.components.ItemConditionalModifier(modData, { parent: this });
+      }
+
+      collection.set(modifier.id, modifier);
+    }
+
+    this.modifiers = collection;
   }
 
   /**
@@ -17,76 +81,41 @@ export class ItemConditional {
    * @param {object|object[]} data - Data to create conditional(s) from.
    * @param {object} context - Context data
    * @param {ItemAction} context.parent Parent action to add the conditional to.
+   * @throws {Error} - If no valid parent is defined.
    * @returns {ItemConditional[]} - Created conditionals
    */
   static async create(data, context = {}) {
     const { parent } = context;
 
+    if (!(parent instanceof pf1.components.ItemAction))
+      throw new Error("Can not create conditionals without parent ItemAction");
+
     if (!Array.isArray(data)) data = [data];
 
-    if (parent instanceof pf1.components.ItemAction) {
-      // Prepare data
-      data = data.map((dataObj) => foundry.utils.mergeObject(this.defaultData, dataObj));
-      const conditionals = parent.toObject().conditionals || [];
-      conditionals.push(...data);
+    // Prepare data
+    data = data.map((dataObj) => new this(dataObj).toObject());
+    const conditionals = parent.toObject().conditionals || [];
+    conditionals.push(...data);
 
-      // Update parent
-      await parent.update({ conditionals });
+    // Update parent
+    await parent.update({ conditionals });
 
-      // Return results
-      return data.map((o) => parent.conditionals.get(o._id));
-    }
-
-    return [];
+    // Return results
+    return data.map((o) => parent.conditionals.get(o._id));
   }
 
   static get defaultData() {
-    return {
-      _id: foundry.utils.randomID(16),
-      default: false,
-      name: "",
-      modifiers: [],
-    };
+    foundry.utils.logCompatibilityWarning("ItemConditional.defaultData has been deprecated with no replacement.", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+
+    return new this().toObject(true, false);
   }
 
   /** @type {string} */
   get id() {
-    return this.data._id;
-  }
-
-  /** @type {string} */
-  get name() {
-    return this.data.name;
-  }
-
-  /**
-   * @internal
-   */
-  prepareData() {
-    // Update modifiers
-    if (this.data.modifiers instanceof Array) {
-      this.modifiers = this._prepareModifiers(this.data.modifiers);
-    }
-  }
-
-  /**
-   * @internal
-   * @param modifiers
-   * @returns {Collection<string,ItemConditionalModifier>}
-   */
-  _prepareModifiers(modifiers) {
-    const prior = this.modifiers;
-    const collection = new Collection();
-    for (const o of modifiers) {
-      let modifier = null;
-      if (prior && prior.has(o._id)) {
-        modifier = prior.get(o._id);
-        modifier.data = o;
-        modifier.prepareData();
-      } else modifier = new pf1.components.ItemConditionalModifier(o, this);
-      collection.set(o._id || modifier.data._id, modifier);
-    }
-    return collection;
+    return this._id;
   }
 
   /**
@@ -96,37 +125,90 @@ export class ItemConditional {
    * @param {object} options
    */
   async update(updateData, options = {}) {
-    const conditionals = this.parent.toObject().conditionals || [];
-    const old = conditionals.find((c) => c._id === this.id);
-    const newUpdateData = foundry.utils.mergeObject(old, updateData);
+    if (options.dryRun) return this.updateSource(updateData, { dryRun: true });
 
-    // Make sure modifiers remain in an array
-    keepUpdateArray(this.data, newUpdateData, "modifiers");
+    this.updateSource(updateData);
 
-    if (options.dryRun) return newUpdateData;
-    await this.parent.update({ [`conditionals.${old}`]: newUpdateData });
+    const conditionals = this.parent.conditionals.map((t) => t.toObject());
+
+    await this.parent.update({ conditionals });
   }
 
+  /**
+   * Delete conditional
+   */
   async delete() {
-    const conditionals = this.parent.toObject().conditionals || [];
+    const conditionals = this.parent.conditionals.map((t) => t.toObject());
     conditionals.findSplice((c) => c._id === this.id);
     return this.parent.update({ conditionals });
+  }
+
+  /**
+   * @internal
+   * @param {object} data
+   */
+  static pruneData(data) {
+    if (!data.default) delete data.default;
+    if (!(data.modifiers?.length > 0)) delete data.modifiers;
+    else {
+      for (const m of data.modifiers) {
+        ItemConditionalModifier.pruneData(m);
+      }
+    }
   }
 }
 
 /**
  * Individual modifier in a conditional bundle.
  */
-export class ItemConditionalModifier {
+export class ItemConditionalModifier extends CompactingMixin(foundry.abstract.DataModel) {
   /**
    * @param {object} data
-   * @param {ItemConditional} parent
+   * @param {object} options
    */
-  constructor(data, parent) {
-    this.data = data;
-    this.parent = parent;
+  constructor(data, options) {
+    if (options instanceof pf1.components.ItemAction) {
+      foundry.utils.logCompatibilityWarning(
+        "ItemConditionalModifier constructor's second parameter as parent is deprecated. Please wrap it in options object like with datamodels.",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        }
+      );
+      options = { parent: options };
+    }
+    super(data, options);
+  }
 
-    this.prepareData();
+  static defineSchema() {
+    const fields = foundry.data.fields;
+
+    return {
+      _id: new IDField(),
+      formula: new fields.StringField(),
+      target: new fields.StringField(), // modifier on what?
+      subTarget: new fields.StringField(), // which attack is this targeting?
+      type: new fields.StringField({ initial: "untyped" }), // Bonus type
+      damageType: new fields.ObjectField(), // { values: [], custom: "" },
+      critical: new fields.StringField({ initial: "normal" }), // Does this target normal or critical confirm? or which kind of damage is this in relation to crits?
+    };
+  }
+
+  static get defaultData() {
+    foundry.utils.logCompatibilityWarning(
+      "ItemConditionalModifier.defaultData has been deprecated with no replacement.",
+      {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      }
+    );
+
+    return new this().toObject(true, false);
+  }
+
+  /** @type {string} */
+  get id() {
+    return this._id;
   }
 
   /**
@@ -139,46 +221,23 @@ export class ItemConditionalModifier {
    */
   static async create(data, context = {}) {
     const { parent } = context;
+    if (!(parent instanceof pf1.components.ItemConditional))
+      throw new Error("Conditional modifier's parent must be a Conditional");
 
     if (!Array.isArray(data)) data = [data];
 
-    if (parent instanceof pf1.components.ItemConditional) {
-      // Prepare data
-      data = data.map((dataObj) => foundry.utils.mergeObject(this.defaultData, dataObj));
-      const newConditionalModifierData = foundry.utils.deepClone(parent.data.modifiers || []);
-      newConditionalModifierData.push(...data);
+    const modifiers = parent.toObject().modifiers ?? [];
 
-      // Update parent
-      await parent.update({ modifiers: newConditionalModifierData });
+    // Prepare data
+    data = data.map((dataObj) => new this(dataObj).toObject());
+    modifiers.push(...data);
 
-      // Return results
-      return data.map((o) => parent.modifiers.get(o._id));
-    }
+    // Update parent
+    await parent.update({ modifiers });
 
-    return [];
+    // Return results
+    return data.map((o) => parent.modifiers.get(o._id));
   }
-
-  static get defaultData() {
-    return {
-      _id: foundry.utils.randomID(16),
-      formula: "",
-      target: "",
-      subTarget: "",
-      type: "",
-      damageType: pf1.components.ItemAction.defaultDamageType,
-      critical: "",
-    };
-  }
-
-  /** @type {string} */
-  get id() {
-    return this.data._id;
-  }
-
-  /**
-   * @internal
-   */
-  prepareData() {}
 
   /**
    * Update modifier
@@ -188,12 +247,12 @@ export class ItemConditionalModifier {
    * @returns - Updated action
    */
   async update(updateData, options = {}) {
-    const idx = this.parent.data.modifiers.indexOf(this.data);
-    const prevData = foundry.utils.deepClone(this.data);
-    const newUpdateData = foundry.utils.flattenObject(foundry.utils.mergeObject(prevData, updateData));
+    if (options.dryRun) return this.updateSource(updateData, { dryRun: true });
 
-    if (options.dryRun) return newUpdateData;
-    await this.parent.update({ [`modifiers.${idx}`]: foundry.utils.expandObject(newUpdateData) });
+    this.updateSource(updateData);
+
+    const modifiers = this.parent.modifiers.map((m) => m.toObject());
+    return this.parent.update({ modifiers });
   }
 
   /**
@@ -202,11 +261,33 @@ export class ItemConditionalModifier {
    * @returns - Updated action
    */
   async delete() {
-    const idx = this.parent.data.modifiers.indexOf(this.data);
+    const modifiers = this.parent.toObject().modifiers ?? [];
+    const idx = modifiers.findIndex((m) => m._id === this.id);
     if (idx < 0) throw new Error(`Modifier not found in parent ${this.parent.name}`);
 
-    const modifiers = foundry.utils.duplicate(this.parent.data.modifiers);
     modifiers.splice(idx, 1);
     return this.parent.update({ modifiers });
+  }
+
+  /**
+   * @internal
+   * @param {object} data
+   */
+  static pruneData(data) {
+    if (!data.type) delete data.type;
+    if (!data.formula) delete data.formula;
+    if (!data.critical || data.critical === "normal") delete data.critical;
+    if (!data.target) delete data.target;
+    if (!data.subTarget) delete data.subTarget;
+
+    if (!["attack", "damage"].includes(data.target)) {
+      delete data.critical;
+    }
+
+    // Damage type is only meaningful with damage target
+    if (data.target !== "damage") delete data.damageType;
+    else {
+      // TODO: clean damage type contents otherwise
+    }
   }
 }

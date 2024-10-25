@@ -8,8 +8,6 @@ import { CompactingMixin } from "@models/abstract/compacting-mixin.mjs";
 import { DamagePartModel } from "@models/action/damage-part-model.mjs";
 import { ExtraAttackModel } from "@models/action/extra-attack-mode.mjs";
 
-import { IDField } from "@datafields/id-field.mjs";
-
 /**
  * Action pseudo-document
  */
@@ -908,14 +906,16 @@ export class ItemAction extends CompactingMixin(DocumentLikeModel) {
     const prior = new Collection(collection.entries());
     collection.clear(); // TODO: Remove specific entries after the loop instead of full clear here
 
-    for (const o of this.conditionals) {
+    for (const condData of this.conditionals) {
       let conditional = null;
-      if (prior && prior.has(o._id)) {
-        conditional = prior.get(o._id);
-        conditional.data = o;
-        conditional.prepareData();
-      } else conditional = new pf1.components.ItemConditional(o, this);
-      collection.set(o._id || conditional.data._id, conditional);
+      if (prior && prior.has(condData._id)) {
+        conditional = prior.get(condData._id);
+        conditional.updateSource(condData, { recursive: false });
+      } else {
+        conditional = new pf1.components.ItemConditional(condData, { parent: this });
+      }
+
+      collection.set(conditional.id, conditional);
     }
 
     this.conditionals = collection;

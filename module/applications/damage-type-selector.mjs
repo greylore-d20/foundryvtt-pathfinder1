@@ -50,6 +50,8 @@ export class DamageTypeSelector extends HandlebarsApplicationMixin(ApplicationV2
     options.path = path;
     super(options);
     this.damage = foundry.utils.deepClone(data) || { values: [] };
+    this.damage.values ??= [];
+    this.damage.custom ??= "";
   }
 
   /* -------------------------------------------- */

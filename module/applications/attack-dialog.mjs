@@ -59,9 +59,12 @@ export class AttackDialog extends Application {
     };
 
     this.conditionals = {};
-    action.conditionals?.contents.forEach((conditional, idx) => {
-      this.conditionals[`conditional.${idx}`] = conditional.data.default === true;
-    });
+    for (const conditional of action.conditionals) {
+      this.conditionals[`conditionals.${conditional.id}`] = {
+        enabled: conditional.default === true,
+        conditional,
+      };
+    }
 
     if (useOptions.haste) this._toggleExtraAttack("haste-attack", true);
     if (useOptions.manyshot) this._toggleExtraAttack("manyshot", true);
@@ -258,7 +261,7 @@ export class AttackDialog extends Application {
     event.preventDefault();
 
     const elem = event.currentTarget;
-    this.conditionals[elem.name] = elem.checked === true;
+    this.conditionals[elem.name].enabled = elem.checked === true;
     this.render();
   }
 

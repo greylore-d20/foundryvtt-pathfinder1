@@ -474,7 +474,7 @@ export const actorSizes = {
 export const ageCategories = {
   young: {
     label: "PF1.AgeCategories.young",
-    modifiers: { str: -2, dex: -2, con: -2, int: 0, wis: -2, cha: 0 },
+    modifiers: { str: -2, dex: 2, con: -2, int: 0, wis: -2, cha: 0 },
   },
   adult: {
     label: "PF1.AgeCategories.adult",

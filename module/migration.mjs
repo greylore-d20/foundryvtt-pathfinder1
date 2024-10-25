@@ -2910,7 +2910,7 @@ const _migrateActorFlags = (actorData, updateData) => {
 /**
  * @param actorData
  * @param updateData
- * @since PF1 v11
+ * @since PF1 vNEXT
  */
 const _migrateActorSize = (actorData, updateData) => {
   const sizeData = actorData.system.traits.size;

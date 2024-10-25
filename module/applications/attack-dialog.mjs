@@ -248,7 +248,7 @@ export class AttackDialog extends Application {
         0,
         new ActionUseAttack(game.i18n.localize(translationString[type]), "", null, { abstract: true, type })
       );
-      this.setAttackAmmo(place, this.action.item.getFlag("pf1", "defaultAmmo"));
+      this.setAttackAmmo(place, this.action.item.system.ammo?.default);
     } else {
       this.attacks.findSplice((o) => o.type === type);
     }
@@ -299,8 +299,9 @@ export class AttackDialog extends Application {
     const ammoId = elem.closest(".ammo-item").dataset.id;
     switch (elem.dataset.type) {
       case "set-default":
-        if (ammoId === "null") await this.action.item.unsetFlag("pf1", "defaultAmmo");
-        else await this.action.item.setFlag("pf1", "defaultAmmo", ammoId);
+        if (ammoId === "null") await this.action.item.update({ "system.ammo.-=default": null });
+        else await this.action.item.update({ "system.ammo.default": ammoId });
+
         // Apply CSS class, since we can't do a render in here and keep the dropdown menu open
         elem
           .closest("ul")
@@ -360,7 +361,7 @@ export class AttackDialog extends Application {
 
     // Set ammo usage
     if (this.action.ammo.type) {
-      const ammoId = this.action.item.getFlag("pf1", "defaultAmmo");
+      const ammoId = this.action.item.system.ammo?.default;
       if (ammoId != null) {
         for (let a = 0; a < this.attacks.length; a++) {
           this.setAttackAmmo(a, ammoId);

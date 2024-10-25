@@ -914,6 +914,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateItemMaterials(itemData, updateData);
   _migrateItemUnusedData(itemData, updateData);
   _migrateSpellSubschool(itemData, updateData);
+  _migrateItemDefaultAmmo(itemData, updateData);
 
   // Migrate action data
   const alreadyHasActions = itemData.system.actions instanceof Array && itemData.system.actions.length > 0;
@@ -1651,6 +1652,15 @@ const _migrateSpellSubschool = (item, updateData) => {
   });
 
   updateData["system.subschool"] = { value, custom };
+};
+
+const _migrateItemDefaultAmmo = (itemData, updateData) => {
+  const ammoId = itemData.flags?.pf1?.defaultAmmo;
+  if (!ammoId) return;
+  if (!itemData.system?.ammo?.default) {
+    updateData["system.ammo.default"] = ammoId;
+  }
+  updateData["flags.pf1.-=defaultAmmo"] = null;
 };
 
 const _migrateItemSize = function (ent, updateData) {

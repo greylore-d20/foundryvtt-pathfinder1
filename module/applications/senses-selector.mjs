@@ -60,7 +60,7 @@ export class SensesSelector extends HandlebarsApplicationMixin(DocumentSheetV2) 
   async _prepareContext() {
     const actor = this.document;
 
-    const senses = foundry.utils.deepClone(actor.toObject().system.traits?.senses ?? {});
+    const senses = actor.toObject().system.traits?.senses ?? {};
     for (const [key, type] of Object.entries(this.constructor.convertKeys)) {
       const value = senses[key];
       if (type === "distance" && value.value > 0) {

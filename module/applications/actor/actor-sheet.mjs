@@ -3249,13 +3249,25 @@ export class ActorSheetPF extends ActorSheet {
     newItem.updateSource(createData);
 
     // Add type specific data
-    if (type === "spell") {
-      newItem.updateSource({
-        system: {
-          level: parseInt(el.dataset.level),
-          spellbook: el.dataset.book,
-        },
-      });
+    switch (type) {
+      case "spell": {
+        newItem.updateSource({
+          system: {
+            level: parseInt(el.dataset.level),
+            spellbook: el.dataset.book,
+          },
+        });
+        break;
+      }
+      case "feat":
+        // Add class association to class features
+        if (newItem.subType === "classFeat" && !newItem.system.class) {
+          const classes = [...this.actor.itemTypes.class].sort((a, b) => (b.system.level || 0) - (a.system.level || 0));
+          if (classes.length > 0) {
+            newItem.updateSource({ system: { class: classes[0].system.tag } });
+          }
+        }
+        break;
     }
 
     this._sortNewItem(newItem);

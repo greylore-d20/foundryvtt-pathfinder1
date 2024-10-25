@@ -687,7 +687,7 @@ export class ItemSheetPF extends ItemSheet {
     // Prepare ammunition
     context.canUseAmmo = !context.isNaturalAttack && item.type !== "spell";
     if (context.canUseAmmo && item.system.ammo?.type) {
-      context.defaultAmmo = actor?.items.get(item.getFlag("pf1", "defaultAmmo"));
+      context.defaultAmmo = item.defaultAmmo;
       if (context.defaultAmmo) {
         context.invalidDefaultAmmo = context.defaultAmmo.system.extraType !== item.system.ammo.type;
       }

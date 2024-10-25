@@ -137,7 +137,7 @@ export class ActorVehiclePF extends ActorPF {
    */
   prepareCMB() {
     const base = this.system.abilities.str.value || 0,
-      size = this.system.traits.size || "med",
+      size = this.system.traits.size.base || "med",
       szCMBMod = pf1.config.sizeSpecialMods[size] ?? 0;
 
     this.system.attributes.cmb.total = base + szCMBMod;
@@ -210,8 +210,7 @@ export class ActorVehiclePF extends ActorPF {
       /* ----------------------------- */
 
     // Set size index
-    const sizeChart = Object.keys(pf1.config.sizeChart);
-    result.size = sizeChart.indexOf(result.traits.size);
+    result.size = result.traits.size.value;
 
     // Add item dictionary flags
     result.dFlags = this.itemFlags?.dictionary ?? {};

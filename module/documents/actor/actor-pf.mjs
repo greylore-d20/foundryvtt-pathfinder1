@@ -1358,7 +1358,7 @@ export class ActorPF extends ActorBasePF {
       genAtk = this.system.attributes.attack.general ?? 0,
       cmbAbl = this.system.attributes.cmbAbility,
       cmbAblMod = this.system.abilities[cmbAbl]?.mod ?? 0,
-      size = this.system.traits.size,
+      size = this.system.traits.size.base,
       szCMBMod = pf1.config.sizeSpecialMods[size] ?? 0,
       cmbBonus = this.system.attributes.cmb.bonus ?? 0,
       cmb = shrAtk + genAtk + szCMBMod + cmbBonus + cmbAblMod;
@@ -2279,7 +2279,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (sourceUser) {
-      const sizeKey = changed.system.traits?.size;
+      const sizeKey = changed.system.traits?.size?.base;
       if (sizeKey !== undefined) {
         this._updateTokenSize(sizeKey);
       }
@@ -4320,7 +4320,7 @@ export class ActorPF extends ActorBasePF {
     const carryCapacity = this.system.details?.carryCapacity ?? {};
     const carryStr = this.system.abilities.str.total + carryCapacity.bonus?.total;
     let carryMultiplier = carryCapacity.multiplier?.total;
-    const size = this.system.traits.size;
+    const size = this.system.traits.size.base;
     if (this.system.attributes.quadruped) carryMultiplier *= pf1.config.encumbranceMultipliers.quadruped[size];
     else carryMultiplier *= pf1.config.encumbranceMultipliers.normal[size];
     const table = pf1.config.encumbranceLoads;
@@ -4487,8 +4487,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Set size index
-    const sizeChart = Object.keys(pf1.config.sizeChart);
-    result.size = sizeChart.indexOf(result.traits.size);
+    result.size = result.traits.size.value;
 
     // Add more info for formulas
     result.armor = { type: 0, total: 0, ac: 0, enh: 0 };

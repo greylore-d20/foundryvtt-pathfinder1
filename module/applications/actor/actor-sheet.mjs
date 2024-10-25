@@ -1632,7 +1632,10 @@ export class ActorSheetPF extends ActorSheet {
         break;
       }
       case "size":
-        paths.push({ path: "@traits.size", value: system.traits.size }, { path: "@size", value: lazy.rollData.size });
+        paths.push(
+          { path: "@traits.size.base", value: system.traits.size.base },
+          { path: "@size", value: lazy.rollData.size }
+        );
         break;
       case "stature":
         paths.push({ path: "@traits.stature", value: system.traits.stature });
@@ -4001,7 +4004,7 @@ export class ActorSheetPF extends ActorSheet {
     // But do so only when the drop originates from compendium or items directory
     if (source.isPhysical) {
       if (fromCompendium || fromItemsDir) {
-        data.system.size = this.actor.system.traits?.size || "med";
+        data.system.size = this.actor.system.traits?.size?.base || "med";
       }
     }
   }

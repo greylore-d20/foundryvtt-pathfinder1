@@ -1248,45 +1248,46 @@ export const addDefaultChanges = function (changes) {
   }
 
   // Add size bonuses to various attributes
-  const sizeKey = actorData.traits.size;
-  if (sizeKey !== "med") {
-    // AC
-    changes.push(
-      new pf1.components.ItemChange({
-        formula: pf1.config.sizeMods[sizeKey],
-        target: "ac",
-        type: "size",
-        flavor: game.i18n.localize("PF1.ModifierType.size"),
-      })
-    );
-    // Stealth skill
-    changes.push(
-      new pf1.components.ItemChange({
-        formula: pf1.config.sizeStealthMods[sizeKey],
-        target: "skill.ste",
-        type: "size",
-        flavor: game.i18n.localize("PF1.ModifierType.size"),
-      })
-    );
-    // Fly skill
-    changes.push(
-      new pf1.components.ItemChange({
-        formula: pf1.config.sizeFlyMods[sizeKey],
-        target: "skill.fly",
-        type: "size",
-        flavor: game.i18n.localize("PF1.ModifierType.size"),
-      })
-    );
-    // CMD
-    changes.push(
-      new pf1.components.ItemChange({
-        formula: pf1.config.sizeSpecialMods[sizeKey],
-        target: "cmd",
-        type: "size",
-        flavor: game.i18n.localize("PF1.ModifierType.size"),
-      })
-    );
-  }
+  // AC
+  changes.push(
+    new pf1.components.ItemChange({
+      formula: "lookup(@size + 1, 0, " + Object.values(pf1.config.sizeMods).join(", ") + ")",
+      target: "ac",
+      type: "size",
+      flavor: game.i18n.localize("PF1.ModifierType.size"),
+      priority: -1000,
+    })
+  );
+  // Stealth skill
+  changes.push(
+    new pf1.components.ItemChange({
+      formula: "lookup(@size + 1, 0, " + Object.values(pf1.config.sizeStealthMods).join(", ") + ")",
+      target: "skill.ste",
+      type: "size",
+      flavor: game.i18n.localize("PF1.ModifierType.size"),
+      priority: -1000,
+    })
+  );
+  // Fly skill
+  changes.push(
+    new pf1.components.ItemChange({
+      formula: "lookup(@size + 1, 0, " + Object.values(pf1.config.sizeFlyMods).join(", ") + ")",
+      target: "skill.fly",
+      type: "size",
+      flavor: game.i18n.localize("PF1.ModifierType.size"),
+      priority: -1000,
+    })
+  );
+  // CMD
+  changes.push(
+    new pf1.components.ItemChange({
+      formula: "lookup(@size + 1, 0, " + Object.values(pf1.config.sizeSpecialMods).join(", ") + ")",
+      target: "cmd",
+      type: "size",
+      flavor: game.i18n.localize("PF1.ModifierType.size"),
+      priority: -1000,
+    })
+  );
 
   // Custom skill rank bonus from sheet
   if (this.system.details?.bonusSkillRankFormula) {

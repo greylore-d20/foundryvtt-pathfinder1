@@ -210,7 +210,9 @@ export class ActorVehiclePF extends ActorPF {
       /* ----------------------------- */
 
     // Set size index
-    result.size = result.traits.size.value;
+    const sizes = Object.values(pf1.config.sizeChart);
+    result.size = Math.clamped(result.traits.size.value, 0, sizes.length - 1);
+    result.tokenSize = Math.clamped(result.traits.size.token, 0, sizes.length - 1);
 
     // Add item dictionary flags
     result.dFlags = this.itemFlags?.dictionary ?? {};

@@ -1104,6 +1104,32 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
+   * Determine whether this item adjusts senses
+   *
+   * @type {boolean}
+   * @readonly
+   * @private
+   */
+  get adjustsSize() {
+    return this.isSizeChange(this);
+  }
+
+  /**
+   * Determine whether a given change set affects size
+   *
+   * @param {object} base
+   * @returns {boolean}
+   * @internal
+   */
+  isSizeChange(base) {
+    for (const change of base.system?.changes || []) {
+      if (change.target.match(/^(?:size|tokenSize)/i)) return true;
+    }
+
+    return false;
+  }
+
+  /**
    * @override
    * @param {object} changed
    * @param {object} context
@@ -1122,6 +1148,10 @@ export class ItemPF extends ItemBasePF {
     if (state != null) {
       const startTime = this.effect?.duration.startTime ?? game.time.worldTime;
       this.executeScriptCalls("toggle", { state, startTime });
+    }
+
+    if ((changed?.system?.active !== undefined && this.adjustsSize) || this.isSizeChange(changed)) {
+      this.actor.updateTokenSize();
     }
 
     if (this._memoryVariables) this._onMemorizedUpdate(changed, context);

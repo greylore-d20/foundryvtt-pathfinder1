@@ -2279,10 +2279,15 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (sourceUser) {
-      const sizeKey = changed.system.traits?.size?.base;
-      if (sizeKey !== undefined) {
-        this._updateTokenSize(sizeKey);
-      }
+      this.updateTokenSize();
+    }
+  }
+
+  updateTokenSize() {
+    const sizes = Object.keys(pf1.config.tokenSizes);
+    const sizeKey = sizes[this.getRollData({ refresh: true }).tokenSize];
+    if (sizeKey !== undefined) {
+      this._updateTokenSize(sizeKey);
     }
   }
 
@@ -4488,7 +4493,9 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Set size index
-    result.size = result.traits.size.value;
+    const sizes = Object.values(pf1.config.sizeChart);
+    result.size = Math.clamped(result.traits.size.value, 0, sizes.length - 1);
+    result.tokenSize = Math.clamped(result.traits.size.token, 0, sizes.length - 1);
 
     // Add more info for formulas
     result.armor = { type: 0, total: 0, ac: 0, enh: 0 };

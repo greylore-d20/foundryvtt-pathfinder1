@@ -150,6 +150,7 @@ export class ActorHauntPF extends ActorNPCPF {
 
     // Spoof size as Medium instead of letting it fail to Fine
     result.size = 4;
+    result.tokenSize = 4;
 
     // Add item dictionary flags
     result.dFlags = this.itemFlags?.dictionary ?? {};

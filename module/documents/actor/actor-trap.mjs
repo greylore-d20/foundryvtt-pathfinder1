@@ -157,6 +157,8 @@ export class ActorTrapPF extends ActorNPCPF {
 
     // Spoof size as Medium instead of letting it fail to Fine
     result.size = 4;
+    result.tokenSize = 4;
+
     // Spoof range as medium tall creature
     result.range = pf1.documents.actor.ActorPF.getReach();
 

@@ -1637,7 +1637,8 @@ export class ActorSheetPF extends ActorSheet {
       case "size":
         paths.push(
           { path: "@traits.size.base", value: system.traits.size.base },
-          { path: "@size", value: lazy.rollData.size }
+          { path: "@size", value: lazy.rollData.size },
+          { path: "@tokenSize", value: lazy.rollData.tokenSize }
         );
         break;
       case "stature":

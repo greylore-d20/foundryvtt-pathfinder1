@@ -133,7 +133,11 @@ export class ActorCharacterPF extends ActorPF {
     // Prepare age category data
     actorData.traits.size ??= { base: "med" };
     const sizeCategoryChart = Object.keys(pf1.config.sizeChart);
-    actorData.traits.size.value = sizeCategoryChart.indexOf(actorData.traits.size.base);
+    const sizeValue = sizeCategoryChart.indexOf(actorData.traits.size.base);
+    Object.assign(actorData.traits.size, {
+      value: sizeValue,
+      token: sizeValue,
+    });
   }
 
   /**

@@ -179,6 +179,13 @@ export const getChangeFlat = function (target, modifierType, value) {
     case "carryMult":
       result.push("system.details.carryCapacity.multiplier.total");
       break;
+    case "size":
+      result.push("system.traits.size.value");
+      result.push("system.traits.size.token");
+      break;
+    case "tokenSize":
+      result.push("system.traits.size.token");
+      break;
     case "ac":
       result.push("system.attributes.ac.normal.total", "system.attributes.ac.touch.total");
 

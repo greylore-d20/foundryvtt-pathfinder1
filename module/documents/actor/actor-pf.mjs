@@ -4494,8 +4494,8 @@ export class ActorPF extends ActorBasePF {
 
     // Set size index
     const sizes = Object.values(pf1.config.sizeChart);
-    result.size = Math.clamped(result.traits.size.value, 0, sizes.length - 1);
-    result.tokenSize = Math.clamped(result.traits.size.token, 0, sizes.length - 1);
+    result.size = Math.clamp(result.traits.size.value, 0, sizes.length - 1);
+    result.tokenSize = Math.clamp(result.traits.size.token, 0, sizes.length - 1);
 
     // Add more info for formulas
     result.armor = { type: 0, total: 0, ac: 0, enh: 0 };

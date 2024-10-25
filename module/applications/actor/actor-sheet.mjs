@@ -1467,16 +1467,14 @@ export class ActorSheetPF extends ActorSheet {
           // omit: + @attributes.attack.general
         });
 
-        if (system.traits.size.base !== "med") {
-          sources.push({
-            sources: [
-              {
-                name: game.i18n.localize("PF1.Size"),
-                value: Object.values(pf1.config.sizeSpecialMods)[system.traits.size.value],
-              },
-            ],
-          });
-        }
+        sources.push({
+          sources: [
+            {
+              name: game.i18n.localize("PF1.Size"),
+              value: Object.values(pf1.config.sizeSpecialMods)[system.traits.size.value],
+            },
+          ],
+        });
 
         if (system.attributes.cmbAbility) {
           sources.push({
@@ -2224,16 +2222,14 @@ export class ActorSheetPF extends ActorSheet {
               }
             );
 
-            if (system.traits.size.base !== "med") {
-              sources.push({
-                sources: [
-                  {
-                    name: game.i18n.localize("PF1.Size"),
-                    value: Object.values(pf1.config.sizeMods)[system.traits.size.value],
-                  },
-                ],
-              });
-            }
+            sources.push({
+              sources: [
+                {
+                  name: game.i18n.localize("PF1.Size"),
+                  value: Object.values(pf1.config.sizeMods)[system.traits.size.value],
+                },
+              ],
+            });
 
             sources.push({ sources: getSource("system.attributes.attack.general") });
             sources.push({ sources: getSource(`system.attributes.attack.${subTarget}`) });

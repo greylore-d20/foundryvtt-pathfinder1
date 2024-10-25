@@ -1358,8 +1358,8 @@ export class ActorPF extends ActorBasePF {
       genAtk = this.system.attributes.attack.general ?? 0,
       cmbAbl = this.system.attributes.cmbAbility,
       cmbAblMod = this.system.abilities[cmbAbl]?.mod ?? 0,
-      size = this.system.traits.size.base,
-      szCMBMod = pf1.config.sizeSpecialMods[size] ?? 0,
+      size = this.system.traits.size.value,
+      szCMBMod = Object.values(pf1.config.sizeSpecialMods)[size] ?? 0,
       cmbBonus = this.system.attributes.cmb.bonus ?? 0,
       cmb = shrAtk + genAtk + szCMBMod + cmbBonus + cmbAblMod;
     this.system.attributes.cmb.total = cmb;

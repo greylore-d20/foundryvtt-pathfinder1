@@ -2120,8 +2120,6 @@ export class ActorPF extends ActorBasePF {
 
     const oldData = this.system;
 
-    this._syncProtoTokenSize(changed);
-
     // Offset HP values
     const attributes = changed.system.attributes;
     if (attributes) {
@@ -2203,28 +2201,31 @@ export class ActorPF extends ActorBasePF {
    * Synchronize prototype token sizing with actor size.
    *
    * @internal
-   * @param {object} changed - Pre-uppdate data
    */
-  _syncProtoTokenSize(changed) {
-    const sizeKey = changed.system.traits?.size?.base;
-    if (!sizeKey) return;
+  async _syncProtoTokenSize() {
+    const sizeKeys = Object.keys(pf1.config.tokenSizes);
+    const sizeKey = sizeKeys[this.getRollData({ refresh: true }).tokenSize];
 
     if (this.token) return;
 
+    const changes = {};
+
     const staticSize =
-      changed.prototypeToken?.flags?.pf1?.staticSize ?? this.prototypeToken.getFlag("pf1", "staticSize") ?? false;
+      changes.prototypeToken?.flags?.pf1?.staticSize ?? this.prototypeToken.getFlag("pf1", "staticSize") ?? false;
     if (staticSize) return;
 
     const size = pf1.config.tokenSizes[sizeKey];
     if (!size) return;
 
-    changed.prototypeToken ??= {};
-    if (changed.prototypeToken?.width === undefined) {
-      changed.prototypeToken.width = size.w;
+    changes.prototypeToken ??= {};
+    if (changes.prototypeToken?.width === undefined) {
+      changes.prototypeToken.width = size.w;
     }
-    if (changed.prototypeToken?.height === undefined) {
-      changed.prototypeToken.height = size.h;
+    if (changes.prototypeToken?.height === undefined) {
+      changes.prototypeToken.height = size.h;
     }
+
+    await this.update(changes);
   }
 
   /**
@@ -2278,16 +2279,20 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
-    if (sourceUser) {
-      this.updateTokenSize();
+    if (sourceUser && changed?.system?.traits?.size?.base) {
+      this.updateTokenSize({ proto: true }).then();
     }
   }
 
-  updateTokenSize() {
+  async updateTokenSize({ proto = false } = {}) {
     const sizes = Object.keys(pf1.config.tokenSizes);
     const sizeKey = sizes[this.getRollData({ refresh: true }).tokenSize];
+
     if (sizeKey !== undefined) {
       this._updateTokenSize(sizeKey);
+      if (proto) {
+        await this._syncProtoTokenSize(this);
+      }
     }
   }
 

@@ -4,16 +4,16 @@ img: systems/pf1/icons/misc/magic-swirl.png
 name: Age Resistance, Lesser
 system:
   changes:
-    - _id: BYikT0Kj
-      formula: min(@abilities.str.base, lookup(@ageCategory, 0, 0, 1, 1, 1))
+    - _id: zVCpjEGH
+      formula: min(@abilities.str.base, lookup(@ageCategory.physical, 0, 0, 1, 1, 1))
       target: str
       type: untyped
-    - _id: Ze3WLxgZ
-      formula: min(@abilities.dex.base, lookup(@ageCategory, 0, 0, 1, 1, 1))
+    - _id: Hh6IsAYr
+      formula: min(@abilities.dex.base, lookup(@ageCategory.physical, 0, 0, 1, 1, 1))
       target: dex
       type: untyped
-    - _id: zVCpjEGH
-      formula: min(@abilities.con.base, lookup(@ageCategory, 0, 0, 1, 1, 1))
+    - _id: ieYso59a
+      formula: min(@abilities.con.base, lookup(@ageCategory.physical, 0, 0, 1, 1, 1))
       target: con
       type: untyped
   description:

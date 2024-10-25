@@ -2109,22 +2109,21 @@ export class ActorPF extends ActorBasePF {
    * @returns {Promise<TokenDocumentPF>}  The created TokenDocument instance
    */
   async getTokenDocument(data = {}, options = {}) {
-    const size = Object.values(pf1.config.tokenSizes)[this.getRollData({ refresh: true }).tokenSize];
-    if (size) {
-      Object.assign(data, {
-        width: size.w,
-        height: size.h,
-        texture: {
-          scaleX: size.scale * (this.prototypeToken.texture.scaleX || 1),
-          scaleY: size.scale * (this.prototypeToken.texture.scaleY || 1),
-        },
-      });
+    if (!this.prototypeToken.flags?.pf1?.staticSize) {
+      const size = Object.values(pf1.config.tokenSizes)[this.getRollData({ refresh: true }).tokenSize];
+      if (size) {
+        Object.assign(data, {
+          width: size.w,
+          height: size.h,
+          texture: {
+            scaleX: size.scale * (this.prototypeToken.texture.scaleX || 1),
+            scaleY: size.scale * (this.prototypeToken.texture.scaleY || 1),
+          },
+        });
+      }
     }
 
-    const tokenDocument = await super.getTokenDocument(data, options);
-    console.log(tokenDocument);
-
-    return tokenDocument;
+    return super.getTokenDocument(data, options);
   }
 
   /* -------------------------------------------- */

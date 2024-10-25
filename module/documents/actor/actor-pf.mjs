@@ -2206,7 +2206,7 @@ export class ActorPF extends ActorBasePF {
    * @param {object} changed - Pre-uppdate data
    */
   _syncProtoTokenSize(changed) {
-    const sizeKey = changed.system.traits?.size;
+    const sizeKey = changed.system.traits?.size?.base;
     if (!sizeKey) return;
 
     if (this.token) return;
@@ -2829,12 +2829,13 @@ export class ActorPF extends ActorBasePF {
 
     // Alter attack ability
     const atkAbl = this.system.attributes?.attack?.[`${ranged ? "ranged" : "melee"}Ability`];
-    atkData.abiliy ??= {};
+    atkData.ability ??= {};
     atkData.ability.attack = ability ?? (atkAbl || (ranged ? "dex" : "str"));
 
     // Alter activation type
     atkData.activation ??= {};
     atkData.activation.type = "attack";
+    atkData.activation.unchained ??= {};
     atkData.activation.unchained.type = "attack";
 
     // Generate temporary item

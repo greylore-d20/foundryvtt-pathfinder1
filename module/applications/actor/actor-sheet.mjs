@@ -225,7 +225,7 @@ export class ActorSheetPF extends ActorSheet {
     {
       const attributes = context.system.attributes,
         abilities = context.system.abilities,
-        sizeModifier = pf1.config.sizeMods[context.system.traits.size],
+        sizeModifier = Object.values(pf1.config.sizeMods)[context.system.traits.size.value],
         baseBonus = attributes.attack.shared + attributes.attack.general + sizeModifier,
         meleeAbility = abilities[attributes.attack.meleeAbility]?.mod ?? 0,
         rangedAbility = abilities[attributes.attack.rangedAbility]?.mod ?? 0;
@@ -1467,9 +1467,14 @@ export class ActorSheetPF extends ActorSheet {
           // omit: + @attributes.attack.general
         });
 
-        if (system.traits.size !== "med") {
+        if (system.traits.size.base !== "med") {
           sources.push({
-            sources: [{ name: game.i18n.localize("PF1.Size"), value: pf1.config.sizeSpecialMods[system.traits.size] }],
+            sources: [
+              {
+                name: game.i18n.localize("PF1.Size"),
+                value: Object.values(pf1.config.sizeSpecialMods)[system.traits.size.value],
+              },
+            ],
           });
         }
 
@@ -2219,12 +2224,12 @@ export class ActorSheetPF extends ActorSheet {
               }
             );
 
-            if (system.traits.size !== "med") {
+            if (system.traits.size.base !== "med") {
               sources.push({
                 sources: [
                   {
                     name: game.i18n.localize("PF1.Size"),
-                    value: pf1.config.sizeMods[system.traits.size],
+                    value: Object.values(pf1.config.sizeMods)[system.traits.size.value],
                   },
                 ],
               });

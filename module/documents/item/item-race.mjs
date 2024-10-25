@@ -57,7 +57,7 @@ export class ItemRacePF extends ItemPF {
     // Track size change
     const newSize = changed.system?.size;
     if (actor && newSize !== undefined) {
-      const oldSize = actor.system.traits?.size;
+      const oldSize = actor.system.traits?.size?.base;
       if (this.system.size === oldSize && newSize !== oldSize) {
         context._pf1SizeChanged = true;
       }

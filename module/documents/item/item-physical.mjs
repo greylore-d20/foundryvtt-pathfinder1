@@ -266,7 +266,7 @@ export class ItemPhysicalPF extends ItemPF {
    */
   _getArmorWeightMultiplier() {
     // Scale weight for weapons, armor and shields
-    const actorSize = this.actor?.system.traits?.size;
+    const actorSize = this.actor?.system.traits?.size?.base;
     const itemSize = this.system.size || "med";
     const size = this.system.resizing ? actorSize || itemSize : itemSize;
     const mult = pf1.config.armorWeight[size];

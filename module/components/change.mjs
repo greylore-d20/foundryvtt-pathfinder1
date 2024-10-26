@@ -218,11 +218,13 @@ export class ItemChange extends foundry.abstract.DataModel {
 
     const idx = changes.findIndex((change) => change._id === this.id);
     if (idx >= 0) {
-      const updated = this.updateSource(data);
+      // Temporary change to validate the update
+      const tc = new this.constructor(this.toObject());
+      const updated = tc.updateSource(data);
       // Omit update if nothing would change
       if (foundry.utils.isEmpty(updated)) return null;
 
-      changes[idx] = this.toObject();
+      changes[idx] = tc.toObject();
       return this.parent.update({ "system.changes": changes }, context);
     } else {
       throw new Error(`Change #${this.id} not found on parent ${this.parent.uuid}`);

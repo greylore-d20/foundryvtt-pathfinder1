@@ -1085,23 +1085,34 @@ export class ItemPF extends ItemBasePF {
    * @private
    */
   get adjustsVision() {
-    return this._hasVisionUpdate(this);
+    return this._hasVisionUpdate(this, true);
   }
 
   /**
    * Determine whether a given change set affect senses
    *
-   * @param {object} changes
+   * @param {object} changes - An object containing changeFlags and changes to be inspected.
+   * @param {boolean} absolute - If passed as true, only checks for flags that are set to true.
    * @returns {boolean}
    * @internal
    */
-  _hasVisionUpdate(changes) {
-    if (
-      changes?.system?.changeFlags?.lowLightVision !== undefined ||
-      changes?.system?.changeFlags?.hasSenseSI !== undefined ||
-      changes?.system?.changeFlags?.hasSenseSID !== undefined
-    ) {
-      return true;
+  _hasVisionUpdate(changes, absolute = false) {
+    if (absolute) {
+      if (
+        changes.system?.changeFlags?.lowLightVision ||
+        changes.system?.changeFlags?.seeInvisibility ||
+        changes.system?.changeFlags?.seeInDarkness
+      ) {
+        return true;
+      }
+    } else {
+      if (
+        changes.system?.changeFlags?.lowLightVision !== undefined ||
+        changes.system?.changeFlags?.seeInvisibility !== undefined ||
+        changes.system?.changeFlags?.seeInDarkness !== undefined
+      ) {
+        return true;
+      }
     }
 
     for (const change of changes.system?.changes || []) {

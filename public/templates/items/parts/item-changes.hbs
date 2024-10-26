@@ -5,14 +5,14 @@
 
     <div class="controls flexrow">
       <a class="control flag-selector" data-title="PF1.CheckFlags"
-         data-options="changeFlagTargets" data-for="system.changeFlags">
+         data-options="changeFlags" data-for="system.changeFlags">
         <i class="fas fa-edit"></i> {{localize "PF1.Edit"}}
       </a>
     </div>
   </div>
 
   <ol class="item-list">
-    {{#each config.changeFlagTargets as |label key|}}
+    {{#each config.changeFlags as |label key|}}
       {{#if (lookup ../system.changeFlags key)}}
         <li class="item change-flag flexrow">
           <div class="item-name flag-name flexrow {{key}}">

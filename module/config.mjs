@@ -2466,7 +2466,7 @@ export const contextNoteCategories = {
   misc: { label: "PF1.Misc" },
 };
 
-export const changeFlagTargets = {
+export const changeFlags = {
   immuneToMorale: "PF1.ChangeFlags.ImmuneToMoraleEffects",
   loseDexToAC: "PF1.ChangeFlags.LoseDexToAC",
   noMediumEncumbrance: "PF1.ChangeFlags.NoMediumEncumbrance",

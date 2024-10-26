@@ -1153,7 +1153,7 @@ export class ItemPF extends ItemBasePF {
       // Item contains a size change and active state was toggled
       (changed?.system?.active !== undefined && this.adjustsSize) ||
       // Item contains a new or updated size change
-      ItemPF._hasSizeUpdate(changed) ||
+      this.constructor._hasSizeUpdate(changed) ||
       // Item contained a size change that was removed
       (context.adjustedSize && !this.adjustsSize)
     ) {

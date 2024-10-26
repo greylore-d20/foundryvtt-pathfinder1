@@ -11,6 +11,7 @@ import { Widget_CategorizedItemPicker } from "@app/categorized-item-picker.mjs";
 import { getSkipActionPrompt } from "@documents/settings.mjs";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 import { getItem } from "@utils/dialog.mjs";
+import { FlagSelector } from "@app/flag-selector.mjs";
 
 /**
  * Override and extend the core ItemSheet implementation to handle game system specific item types
@@ -1341,8 +1342,9 @@ export class ItemSheetPF extends ItemSheet {
     html.find("a.help-browser[data-url]").click(this._openHelpBrowser.bind(this));
 
     // Open entry/trait editor/viewer
-    html.find(".entry-selector").click(this._onEntrySelector.bind(this));
-    html.find(".trait-selector").click(this._onTraitSelector.bind(this));
+    html.find(".entry-selector").on("click", this._onEntrySelector.bind(this));
+    html.find(".trait-selector").on("click", this._onTraitSelector.bind(this));
+    html.find(".flag-selector").on("click", this._onFlagSelector.bind(this));
 
     // Content source editor
     html
@@ -1931,6 +1933,7 @@ export class ItemSheetPF extends ItemSheet {
       title: game.i18n.localize(a.dataset.title),
       subject: a.dataset.options,
       choices: pf1.config[a.dataset.options],
+      hasCustom: a.dataset.hasCustom !== "false",
     };
 
     switch (a.dataset.options) {
@@ -1948,6 +1951,28 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     new ActorTraitSelector({
+      ...options,
+      document: this.item,
+    }).render(true);
+  }
+
+  /**
+   * Handle spawning the FlagSelector application which allows a checkbox of multiple trait options
+   *
+   * @param {Event} event   The click event which originated the selection
+   * @private
+   */
+  _onFlagSelector(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const options = {
+      name: a.dataset.for,
+      title: game.i18n.localize(a.dataset.title),
+      subject: a.dataset.options,
+      choices: pf1.config[a.dataset.options],
+    };
+
+    new FlagSelector({
       ...options,
       document: this.item,
     }).render(true);

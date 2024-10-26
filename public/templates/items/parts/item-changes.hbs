@@ -1,51 +1,28 @@
-<ol class="item-groups-list changeflags-list">
-  {{!-- Flags --}}
-  <li class="item-list-header flexrow">
-    <div class="item-name flag-name flexrow">
-      <h3>{{localize "PF1.CheckFlags"}}</h3>
+{{!-- Flags --}}
+<div class="item-groups-list changeflags-list">
+  <div class="item-list-header flexrow">
+    <h3>{{localize "PF1.EnabledCheckFlags"}}</h3>
+
+    <div class="controls flexrow">
+      <a class="control flag-selector" data-title="PF1.CheckFlags"
+         data-options="changeFlags" data-for="system.changeFlags">
+        <i class="fas fa-edit"></i> {{localize "PF1.Edit"}}
+      </a>
     </div>
-    <div class="item-enabled flexrow">{{localize "PF1.Enabled"}}</div>
-  </li>
+  </div>
 
   <ol class="item-list">
-    <li class="item change-flag flexrow">
-      <div class="item-name flag-name flexrow">
-        <h4>{{localize "PF1.ChangeFlags.NoMediumEncumbrance"}}</h4>
-      </div>
-      <div class="item-enabled flexrow"><input type="checkbox" name="system.changeFlags.noMediumEncumbrance" {{checked system.changeFlags.noMediumEncumbrance}}></div>
-    </li>
-    <li class="item change-flag flexrow">
-      <div class="item-name flag-name flexrow">
-        <h4>{{localize "PF1.ChangeFlags.NoHeavyEncumbrance"}}</h4>
-      </div>
-      <div class="item-enabled flexrow"><input type="checkbox" name="system.changeFlags.noHeavyEncumbrance" {{checked system.changeFlags.noHeavyEncumbrance}}></div>
-    </li>
-    <li class="item change-flag flexrow">
-      <div class="item-name flag-name flexrow">
-        <h4>{{localize "PF1.ChangeFlags.MediumArmorFullSpeed"}}</h4>
-      </div>
-      <div class="item-enabled flexrow"><input type="checkbox" name="system.changeFlags.mediumArmorFullSpeed" {{checked system.changeFlags.mediumArmorFullSpeed}}></div>
-    </li>
-    <li class="item change-flag flexrow">
-      <div class="item-name flag-name flexrow">
-        <h4>{{localize "PF1.ChangeFlags.HeavyArmorFullSpeed"}}</h4>
-      </div>
-      <div class="item-enabled flexrow"><input type="checkbox" name="system.changeFlags.heavyArmorFullSpeed" {{checked system.changeFlags.heavyArmorFullSpeed}}></div>
-    </li>
-    <li class="item change-flag flexrow">
-      <div class="item-name flag-name flexrow">
-        <h4>{{localize "PF1.ChangeFlags.LoseDexToAC"}}</h4>
-      </div>
-      <div class="item-enabled flexrow"><input type="checkbox" name="system.changeFlags.loseDexToAC" {{checked system.changeFlags.loseDexToAC}}></div>
-    </li>
-    <li class="item change-flag flexrow">
-      <div class="item-name flag-name flexrow">
-        <h4>{{localize "PF1.ChangeFlags.ImmuneToMoraleEffects"}}</h4>
-      </div>
-      <div class="item-enabled flexrow"><input type="checkbox" name="system.changeFlags.immuneToMorale" {{checked system.changeFlags.immuneToMorale}}></div>
-    </li>
+    {{#each config.changeFlags as |label key|}}
+      {{#if (lookup ../system.changeFlags key)}}
+        <li class="item change-flag flexrow">
+          <div class="item-name flag-name flexrow {{key}}">
+            <h4>{{label}}</h4>
+          </div>
+        </li>
+      {{/if}}
+    {{/each}}
   </ol>
-</ol>
+</div>
 
 {{!-- Changes --}}
 <ol class="item-groups-list changes-list">

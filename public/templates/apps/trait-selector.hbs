@@ -15,28 +15,30 @@
   </ol>
 
   {{! Custom }}
-  <div class="form-group stacked custom-tags">
-    <h3>{{localize "PF1.Custom"}}</h3>
-    <ul class="custom-tag-list">
-      {{#each custom}}
-        <li class="custom-tag" data-custom-tag="{{this}}">
-          <a data-custom-tag="{{this}}" data-action="delete">
-            <span>{{this}}</span>
-            <i class="fa-solid fa-delete-left"></i>
-          </a>
-        </li>
-      {{/each}}
-      {{#unless custom.length}}
-        <li class="info">{{localize "PF1.Application.TraitSelector.NoCustomEntries"}}</li>
-      {{/unless}}
-    </ul>
+  {{#if hasCustom}}
+    <div class="form-group stacked custom-tags">
+      <h3>{{localize "PF1.Custom"}}</h3>
+      <ul class="custom-tag-list">
+        {{#each custom}}
+          <li class="custom-tag" data-custom-tag="{{this}}">
+            <a data-custom-tag="{{this}}" data-action="delete">
+              <span>{{this}}</span>
+              <i class="fa-solid fa-delete-left"></i>
+            </a>
+          </li>
+        {{/each}}
+        {{#unless custom.length}}
+          <li class="info">{{localize "PF1.Application.TraitSelector.NoCustomEntries"}}</li>
+        {{/unless}}
+      </ul>
 
-    <input type="text" name="custom" data-dtype="String"
-           placeholder="{{localize "PF1.Application.TraitSelector.CustomPlaceholder"}}">
+      <input type="text" name="custom" data-dtype="String"
+             placeholder="{{localize "PF1.Application.TraitSelector.CustomPlaceholder"}}">
 
-    <p class="hint">
-      <i class="fa-solid fa-circle-info"></i>
-      {{localize "PF1.Application.TraitSelector.CustomHint"}}
-    </p>
-  </div>
+      <p class="hint">
+        <i class="fa-solid fa-circle-info"></i>
+        {{localize "PF1.Application.TraitSelector.CustomHint"}}
+      </p>
+    </div>
+  {{/if}}
 </section>

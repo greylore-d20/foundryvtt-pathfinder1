@@ -1111,7 +1111,7 @@ export class ItemPF extends ItemBasePF {
    * @private
    */
   get adjustsSize() {
-    return this.isSizeChange(this);
+    return this._hasSizeUpdate(this);
   }
 
   /**
@@ -1121,7 +1121,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {boolean}
    * @internal
    */
-  isSizeChange(base) {
+  _hasSizeUpdate(base) {
     for (const change of base.system?.changes || []) {
       if (change.target.match(/^(?:size|tokenSize)/i)) return true;
     }
@@ -1150,7 +1150,7 @@ export class ItemPF extends ItemBasePF {
       this.executeScriptCalls("toggle", { state, startTime });
     }
 
-    if ((changed?.system?.active !== undefined && this.adjustsSize) || this.isSizeChange(changed)) {
+    if ((changed?.system?.active !== undefined && this.adjustsSize) || this._hasSizeUpdate(changed)) {
       this.actor.updateTokenSize();
     }
 

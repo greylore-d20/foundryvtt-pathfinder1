@@ -1190,7 +1190,7 @@ export class ItemPF extends ItemBasePF {
       // Item contains a vision change and active state was toggled
       (changed?.system?.active !== undefined && this.adjustsVision) ||
       // Item contains a new or updated vision change
-      ItemPF._hasVisionUpdate(changed) ||
+      this.constructor._hasVisionUpdate(changed) ||
       // Item contained a vision change that was removed
       (context.adjustedVision && !this.adjustsVision)
     ) {

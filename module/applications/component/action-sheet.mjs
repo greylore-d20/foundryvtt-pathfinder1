@@ -601,7 +601,7 @@ export class ItemActionSheet extends FormApplication {
       // Preserve arrays
       // Convert {0:{}} to [{}] keeping order of keys
       const preserveArray = (obj) =>
-        Object.entries(obj)
+        Object.entries(obj ?? {})
           .sort(([k0], [k1]) => k0 - k1)
           .map(([_, data]) => data);
 

@@ -3813,6 +3813,7 @@ export class ActorSheetPF extends ActorSheet {
       name: path,
       title: label.innerText,
       subject: a.dataset.options,
+      hasCustom: a.dataset.hasCustom !== "false",
       choices,
     };
 

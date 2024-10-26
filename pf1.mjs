@@ -384,6 +384,7 @@ Hooks.once("i18nInit", function () {
     "damageResistances",
     "vehicles",
     "woundThresholdConditions",
+    "changeFlags",
   ];
 
   // Localize pf1.const objects

@@ -2505,6 +2505,15 @@ export const contextNoteCategories = {
   misc: { label: "PF1.Misc" },
 };
 
+export const changeFlags = {
+  immuneToMorale: "PF1.ChangeFlags.ImmuneToMoraleEffects",
+  loseDexToAC: "PF1.ChangeFlags.LoseDexToAC",
+  noMediumEncumbrance: "PF1.ChangeFlags.NoMediumEncumbrance",
+  noHeavyEncumbrance: "PF1.ChangeFlags.NoHeavyEncumbrance",
+  mediumArmorFullSpeed: "PF1.ChangeFlags.MediumArmorFullSpeed",
+  heavyArmorFullSpeed: "PF1.ChangeFlags.HeavyArmorFullSpeed",
+};
+
 /**
  * A list of Golarion's languages
  */

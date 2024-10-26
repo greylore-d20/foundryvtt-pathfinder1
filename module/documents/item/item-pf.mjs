@@ -159,6 +159,8 @@ export class ItemPF extends ItemBasePF {
    * @param {User} user
    */
   async _preUpdate(changed, context, user) {
+    context.adjustedSize = this.adjustsSize;
+
     await super._preUpdate(changed, context, user);
 
     // Obsolete ammo location
@@ -1104,29 +1106,26 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
-   * Determine whether this item adjusts senses
+   * Determine whether this item adjusts actor size
    *
    * @type {boolean}
    * @readonly
    * @private
    */
   get adjustsSize() {
-    return this._hasSizeUpdate(this);
+    return this.changes.some((change) => ["size", "tokenSize"].includes(change.target));
   }
 
   /**
    * Determine whether a given change set affects size
    *
+   * @static
    * @param {object} base
    * @returns {boolean}
    * @internal
    */
-  _hasSizeUpdate(base) {
-    for (const change of base.system?.changes || []) {
-      if (change.target.match(/^(?:size|tokenSize)/i)) return true;
-    }
-
-    return false;
+  static _hasSizeUpdate(base) {
+    return base.system?.changes?.some((change) => ["size", "tokenSize"].includes(change.target)) || false;
   }
 
   /**
@@ -1150,7 +1149,14 @@ export class ItemPF extends ItemBasePF {
       this.executeScriptCalls("toggle", { state, startTime });
     }
 
-    if ((changed?.system?.active !== undefined && this.adjustsSize) || this._hasSizeUpdate(changed)) {
+    if (
+      // Item contains a size change and active state was toggled
+      (changed?.system?.active !== undefined && this.adjustsSize) ||
+      // Item contains a new or updated size change
+      ItemPF._hasSizeUpdate(changed) ||
+      // Item contained a size change that was removed
+      (context.adjustedSize && !this.adjustsSize)
+    ) {
       this.actor.updateTokenSize();
     }
 

@@ -2473,6 +2473,18 @@ export const contextNoteCategories = {
   misc: { label: "PF1.Misc" },
 };
 
+export const changeFlags = {
+  lowLightVision: "PF1.ChangeFlags.LowLightVision",
+  seeInDarkness: "PF1.ChangeFlags.SeeInDarkness",
+  seeInvisibility: "PF1.ChangeFlags.SeeInvisibility",
+  immuneToMorale: "PF1.ChangeFlags.ImmuneToMoraleEffects",
+  loseDexToAC: "PF1.ChangeFlags.LoseDexToAC",
+  noMediumEncumbrance: "PF1.ChangeFlags.NoMediumEncumbrance",
+  noHeavyEncumbrance: "PF1.ChangeFlags.NoHeavyEncumbrance",
+  mediumArmorFullSpeed: "PF1.ChangeFlags.MediumArmorFullSpeed",
+  heavyArmorFullSpeed: "PF1.ChangeFlags.HeavyArmorFullSpeed",
+};
+
 /**
  * A list of Golarion's languages
  */

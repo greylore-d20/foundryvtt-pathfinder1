@@ -1,12 +1,6 @@
 .pf1.item.sheet form {
   .tab.changes {
-    .changes-list {
-      > .changes {
-        display: flex;
-        flex-flow: column nowrap;
-        gap: 0;
-      }
-
+    :is(.changes-list, .changeflags-list) {
       .item-list-header {
         display: flex;
         flex-flow: row nowrap;
@@ -22,6 +16,14 @@
         .controls {
           flex: 0;
         }
+      }
+    }
+
+    .changes-list {
+      > .changes {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 0;
       }
 
       .change {

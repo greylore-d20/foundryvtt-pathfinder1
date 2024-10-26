@@ -159,6 +159,8 @@ export class ItemPF extends ItemBasePF {
    * @param {User} user
    */
   async _preUpdate(changed, context, user) {
+    context.adjustedVision = this.adjustsVision;
+
     await super._preUpdate(changed, context, user);
 
     // Obsolete ammo location
@@ -1111,41 +1113,35 @@ export class ItemPF extends ItemBasePF {
    * @private
    */
   get adjustsVision() {
-    return this._hasVisionUpdate(this, true);
+    if (
+      this.system.changeFlags.lowLightVision ||
+      this.system.changeFlags.seeInvisibility ||
+      this.system.changeFlags.seeInDarkness
+    ) {
+      return true;
+    }
+
+    return this.system.changes.some(change => pf1.config.buffTargets[change.target]?.category === "senses");
   }
 
   /**
    * Determine whether a given change set affect senses
    *
+   * @static
    * @param {object} changes - An object containing changeFlags and changes to be inspected.
-   * @param {boolean} absolute - If passed as true, only checks for flags that are set to true.
    * @returns {boolean}
    * @internal
    */
-  _hasVisionUpdate(changes, absolute = false) {
-    if (absolute) {
-      if (
-        changes.system?.changeFlags?.lowLightVision ||
-        changes.system?.changeFlags?.seeInvisibility ||
-        changes.system?.changeFlags?.seeInDarkness
-      ) {
-        return true;
-      }
-    } else {
-      if (
-        changes.system?.changeFlags?.lowLightVision !== undefined ||
-        changes.system?.changeFlags?.seeInvisibility !== undefined ||
-        changes.system?.changeFlags?.seeInDarkness !== undefined
-      ) {
-        return true;
-      }
+  static _hasVisionUpdate(changes) {
+    if (
+      changes.system?.changeFlags?.lowLightVision !== undefined ||
+      changes.system?.changeFlags?.seeInvisibility !== undefined ||
+      changes.system?.changeFlags?.seeInDarkness !== undefined
+    ) {
+      return true;
     }
 
-    for (const change of changes.system?.changes || []) {
-      if (change.target.match(/^sense/i)) return true;
-    }
-
-    return false;
+    return changes.system?.changes?.some(change => pf1.config.buffTargets[change.target]?.category === "senses") || false;
   }
 
   /**
@@ -1188,7 +1184,14 @@ export class ItemPF extends ItemBasePF {
       }
     }
 
-    if ((changed?.system?.active !== undefined && this.adjustsVision) || this._hasVisionUpdate(changed)) {
+    if (
+      // Item has vision change and was toggled
+      (changed?.system?.active !== undefined && this.adjustsVision)
+      // Item got a new vision change
+      || ItemPF._hasVisionUpdate(changed)
+      // Item had a vision change that was removed
+      || (context.adjustedVision && !this.adjustsVision)
+    ) {
       const initializeVision = true;
       const refreshLighting = this.system.changeFlags.lowLightVision || false;
       this.actor.updateVision(initializeVision, refreshLighting);

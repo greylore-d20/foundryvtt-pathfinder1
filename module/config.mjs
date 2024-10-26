@@ -2271,15 +2271,15 @@ export const conditionalTargets = {
 };
 
 // Default filters to exclude secondary actors
-const baseActorFilters = { actor: { exclude: ["haunt", "vehicle", "trap"] } };
+const baseActorFilters = () => ({ actor: { exclude: ["haunt", "vehicle", "trap"] } });
 
 /**
  * Dictionaries of change/buff targets, each with a label and a category it belongs to,
  * as well as a sort value that determines this buffTarget's priority when Changes are applied.
  */
 export const buffTargets = /** @type {const} */ ({
-  acpA: { label: "PF1.ACPArmor", category: "misc", sort: 10000, filters: { ...baseActorFilters } },
-  acpS: { label: "PF1.ACPShield", category: "misc", sort: 11000, filters: { ...baseActorFilters } },
+  acpA: { label: "PF1.ACPArmor", category: "misc", sort: 10000, filters: { ...baseActorFilters() } },
+  acpS: { label: "PF1.ACPShield", category: "misc", sort: 11000, filters: { ...baseActorFilters() } },
   mDexA: { label: "PF1.MaxDexArmor", category: "misc", sort: 20000 },
   mDexS: { label: "PF1.MaxDexShield", category: "misc", sort: 21000 },
   reach: { label: "PF1.BuffTarReach", category: "misc", sort: 50000 },
@@ -2306,19 +2306,19 @@ export const buffTargets = /** @type {const} */ ({
     category: "skills",
     sort: 50000,
     deferred: true,
-    filters: { ...baseActorFilters },
+    filters: { ...baseActorFilters() },
   },
   unskills: {
     label: "PF1.BuffTarUntrainedSkills",
     category: "skills",
     sort: 100000,
     deferred: true,
-    filters: { ...baseActorFilters },
+    filters: { ...baseActorFilters() },
   },
-  carryStr: { label: "PF1.CarryStrength", category: "misc", sort: 60000, filters: { ...baseActorFilters } },
-  carryMult: { label: "PF1.CarryMultiplier", category: "misc", sort: 61000, filters: { ...baseActorFilters } },
-  size: { label: "PF1.Size", category: "misc", sort: 63000, filters: { ...baseActorFilters } },
-  tokenSize: { label: "PF1.TokenSize", category: "misc", sort: 63250, filters: { ...baseActorFilters } },
+  carryStr: { label: "PF1.CarryStrength", category: "misc", sort: 60000, filters: { ...baseActorFilters() } },
+  carryMult: { label: "PF1.CarryMultiplier", category: "misc", sort: 61000, filters: { ...baseActorFilters() } },
+  size: { label: "PF1.Size", category: "misc", sort: 63000, filters: { ...baseActorFilters() } },
+  tokenSize: { label: "PF1.TokenSize", category: "misc", sort: 63250, filters: { ...baseActorFilters() } },
   strSkills: { label: "PF1.BuffTarStrSkills", category: "skills", sort: 70000 }, // TODO: Should be deferred
   dexSkills: { label: "PF1.BuffTarDexSkills", category: "skills", sort: 71000 }, // TODO: Should be deferred
   conSkills: { label: "PF1.BuffTarConSkills", category: "skills", sort: 72000 }, // TODO: Should be deferred
@@ -2372,22 +2372,22 @@ export const buffTargets = /** @type {const} */ ({
   ffcmd: { label: "PF1.CMDFlatFooted", category: "defense", sort: 152000 },
   init: { label: "PF1.Initiative", category: "misc", sort: 160000 }, // TODO: Should be deferred
   mhp: { label: "PF1.HitPoints", category: "health", sort: 170000 },
-  wounds: { label: "PF1.Wounds", category: "health", sort: 180000, filters: { ...baseActorFilters } },
-  vigor: { label: "PF1.Vigor", category: "health", sort: 181000, filters: { ...baseActorFilters } },
+  wounds: { label: "PF1.Wounds", category: "health", sort: 180000, filters: { ...baseActorFilters() } },
+  vigor: { label: "PF1.Vigor", category: "health", sort: 181000, filters: { ...baseActorFilters() } },
   spellResist: { label: "PF1.SpellResistance", category: "defense", sort: 190000 },
-  bonusFeats: { label: "PF1.BuffTarBonusFeats", category: "misc", sort: 200000, filters: { ...baseActorFilters } },
+  bonusFeats: { label: "PF1.BuffTarBonusFeats", category: "misc", sort: 200000, filters: { ...baseActorFilters() } },
   bonusSkillRanks: {
     label: "PF1.BuffTarBonusSkillRanks",
     category: "skills",
     sort: 210000,
-    filters: { ...baseActorFilters },
+    filters: { ...baseActorFilters() },
   },
   concentration: {
     label: "PF1.Concentration",
     category: "spell",
     sort: 220000,
     deferred: true,
-    filters: { ...baseActorFilters },
+    filters: { ...baseActorFilters() },
   },
   cl: { label: "PF1.CasterLevel", category: "spell", sort: 230000 },
   dc: { label: "PF1.SpellDC", category: "spell", sort: 240000 },
@@ -2401,13 +2401,13 @@ export const buffTargetCategories = /** @type {const} */ ({
   savingThrows: { label: "PF1.SavingThrowPlural" },
   attack: { label: "PF1.Attack" },
   damage: { label: "PF1.Damage" },
-  ability: { label: "PF1.AbilityScore", filters: { ...baseActorFilters } },
-  abilityChecks: { label: "PF1.BuffTarAbilityChecks", filters: { ...baseActorFilters } },
-  health: { label: "PF1.Health", filters: { ...baseActorFilters } },
-  skills: { label: "PF1.Skills", filters: { ...baseActorFilters } },
-  skill: { label: "PF1.BuffTarSpecificSkill", filters: { ...baseActorFilters } },
+  ability: { label: "PF1.AbilityScore", filters: { ...baseActorFilters() } },
+  abilityChecks: { label: "PF1.BuffTarAbilityChecks", filters: { ...baseActorFilters() } },
+  health: { label: "PF1.Health", filters: { ...baseActorFilters() } },
+  skills: { label: "PF1.Skills", filters: { ...baseActorFilters() } },
+  skill: { label: "PF1.BuffTarSpecificSkill", filters: { ...baseActorFilters() } },
   speed: { label: "PF1.Movement.Speed" },
-  spell: { label: "PF1.BuffTarSpells", filters: { ...baseActorFilters } },
+  spell: { label: "PF1.BuffTarSpells", filters: { ...baseActorFilters() } },
   misc: { label: "PF1.Misc" },
 });
 
@@ -2459,10 +2459,10 @@ export const contextNoteTargets = {
 export const contextNoteCategories = {
   attacks: { label: "PF1.Attacks" },
   savingThrows: { label: "PF1.SavingThrowPlural" },
-  skills: { label: "PF1.Skills", filters: { ...baseActorFilters } },
-  skill: { label: "PF1.BuffTarSpecificSkill", filters: { ...baseActorFilters } },
+  skills: { label: "PF1.Skills", filters: { ...baseActorFilters() } },
+  skill: { label: "PF1.BuffTarSpecificSkill", filters: { ...baseActorFilters() } },
   abilityChecks: { label: "PF1.BuffTarAbilityChecks" },
-  spell: { label: "PF1.BuffTarSpells", filters: { ...baseActorFilters } },
+  spell: { label: "PF1.BuffTarSpells", filters: { ...baseActorFilters() } },
   defense: { label: "PF1.Defense" },
   speed: { label: "PF1.Movement.Speed" },
   misc: { label: "PF1.Misc" },

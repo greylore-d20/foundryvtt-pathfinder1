@@ -8,7 +8,6 @@ import { ActorTraitSelector } from "@app/trait-selector.mjs";
  * @property {string} _collator               Collator for sorting
  * @property {object} attributes              The currently stored values for this trait selector
  * @property {string[]} attributes.value      Elements from the provided set of choices that have been checked
- * @property {string[]} attributes.custom     Custom elements that have been provided by the user
  */
 export class FlagSelector extends ActorTraitSelector {
   static DEFAULT_OPTIONS = {

@@ -19,6 +19,7 @@ import { registerConfigTests } from "./config.test.mjs";
 import { registerCurrencyTests } from "./currency.test.mjs";
 import { registerWoundThresholdsTests } from "./wound-thresholds.test.mjs";
 import { registerMaterialTests } from "./material.test.mjs";
+import { registerPackContentLinks } from "./pack-content-links.mjs";
 
 // Registers all `Quench` tests
 Hooks.on("quenchReady", () => {
@@ -45,4 +46,5 @@ Hooks.on("quenchReady", () => {
   registerMaterialTests();
   // Misc
   registerCurrencyTests();
+  registerPackContentLinks();
 });

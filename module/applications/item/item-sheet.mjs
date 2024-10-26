@@ -687,7 +687,7 @@ export class ItemSheetPF extends ItemSheet {
     // Prepare ammunition
     context.canUseAmmo = !context.isNaturalAttack && item.type !== "spell";
     if (context.canUseAmmo && item.system.ammo?.type) {
-      context.defaultAmmo = actor?.items.get(item.getFlag("pf1", "defaultAmmo"));
+      context.defaultAmmo = item.defaultAmmo;
       if (context.defaultAmmo) {
         context.invalidDefaultAmmo = context.defaultAmmo.system.extraType !== item.system.ammo.type;
       }
@@ -2109,12 +2109,14 @@ export class ItemSheetPF extends ItemSheet {
     content.querySelector(".delete").addEventListener("click", (ev) => this._onDeleteChange(ev, el));
     content.querySelector(".edit").addEventListener("click", (ev) => this._onEditChange(ev, el, true));
 
-    await game.tooltip.activate(el, {
-      content,
-      locked: true,
-      direction: TooltipManager.TOOLTIP_DIRECTIONS.LEFT,
-      cssClass: "pf1 change-menu",
-    });
+    if (!document.querySelector(`.locked-tooltip.pf1.change-${changeId}`)) {
+      await game.tooltip.activate(el, {
+        content,
+        locked: true,
+        direction: TooltipManager.TOOLTIP_DIRECTIONS.LEFT,
+        cssClass: "pf1 change-menu change-" + changeId,
+      });
+    }
   }
 
   /**

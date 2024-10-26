@@ -1,7 +1,5 @@
 import { ItemBasePF } from "@item/item-base.mjs";
 import { keepUpdateArray } from "@utils";
-import { ItemChange } from "@component/change.mjs";
-import { ItemAction } from "@component/action.mjs";
 import { getHighestChanges } from "@documents/actor/utils/apply-changes.mjs";
 import { RollPF } from "@dice/roll.mjs";
 import { ActionUse } from "@actionUse/action-use.mjs";
@@ -138,6 +136,21 @@ export class ItemPF extends ItemBasePF {
     }
   }
 
+  /** @override */
+  getFlag(scope, key) {
+    if (scope === "pf1" && key === "defaultAmmo") {
+      foundry.utils.logCompatibilityWarning(
+        "item.getFlag('pf1', 'defaultAmmo') is deprecated, please use item.system.ammo?.default instead",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        }
+      );
+      return this.system.ammo?.default || this.flags?.pf1?.defaultAmmo;
+    }
+    return super.getFlag(scope, key);
+  }
+
   /**
    * @internal
    * @override
@@ -147,6 +160,20 @@ export class ItemPF extends ItemBasePF {
    */
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
+
+    // Obsolete ammo location
+    if (changed.flags?.pf1?.defaultAmmo) {
+      foundry.utils.logCompatibilityWarning(
+        "item.flags.pf1.defaultAmmo is no longer used, please use item.system.ammo.default instead",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        }
+      );
+      foundry.utils.setProperty(changed.system, "ammo.default", changed.flags?.pf1?.defaultAmmo);
+      delete changed.flags.pf1.defaultAmmo;
+    }
+
     if (!changed.system) return;
     if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
@@ -745,8 +772,7 @@ export class ItemPF extends ItemBasePF {
    * @type {Item|undefined}
    */
   get defaultAmmo() {
-    const ammoId = this.getFlag("pf1", "defaultAmmo");
-    return this.actor?.items.get(ammoId);
+    return this.actor?.items.get(this.system.ammo?.default);
   }
 
   /* -------------------------------------------- */
@@ -1641,7 +1667,7 @@ export class ItemPF extends ItemBasePF {
 
     if (shared.useOptions.ammo) {
       if (action.usesAmmo) {
-        await this.setFlag("pf1", "defaultAmmo", shared.useOptions.ammo);
+        await this.update({ "system.ammo.default": shared.useOptions.ammo });
       } else {
         console.error("Attempted to set ammo for action that does not use ammo");
       }

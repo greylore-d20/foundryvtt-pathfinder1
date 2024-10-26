@@ -37,6 +37,16 @@
       {{/if}}
     </ul>
 
+    {{! Languages }}
+    {{#if (or system.languages.value.length system.languages.custom.length)}}
+    <ul class="property-list languages">
+      <h5>{{localize "PF1.Languages"}}</h5>
+      {{#each languages.selected as |v k|}}
+        <li class="property language {{k}}">{{v}}</li>
+      {{/each}}
+    </ul>
+    {{/if}}
+
     {{! Speeds }}
 
     {{> "systems/pf1/templates/items/parts/item-sidebar-inputs.hbs"}}

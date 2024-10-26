@@ -243,14 +243,14 @@ export class ActionUse {
     const { conditional: conditionals } = foundry.utils.expandObject(formData);
     if (conditionals) {
       this.shared.conditionals = [];
-      Object.entries(conditionals).forEach(([idx, value]) => {
-        if (value) this.shared.conditionals.push(parseInt(idx));
+      Object.entries(conditionals).forEach(([condId, value]) => {
+        if (value) this.shared.conditionals.push(condId);
       });
     }
     // Conditional defaults for fast-forwarding
     if (!this.shared.conditionals) {
-      this.shared.conditionals = this.shared.action.conditionals?.reduce((arr, con, i) => {
-        if (con.default) arr.push(i);
+      this.shared.conditionals = this.shared.action.conditionals?.reduce((arr, con) => {
+        if (con.default) arr.push(con.id);
         return arr;
       }, []);
     }
@@ -306,7 +306,7 @@ export class ActionUse {
     // Set default ammo usage
     const ammoType = this.action.ammo.type;
     if (ammoType) {
-      const ammoId = this.item.getFlag("pf1", "defaultAmmo");
+      const ammoId = this.item.system.ammo?.default;
       const ammos = this.getAmmo();
       if (ammoId && ammos.length) {
         const ammo = ammos.find((a) => a.id === ammoId);
@@ -332,8 +332,7 @@ export class ActionUse {
 
     const ammoCost = this.action.ammo.cost;
 
-    const ammoId = this.item.getFlag("pf1", "defaultAmmo");
-    const item = this.item.actor?.items.get(ammoId);
+    const item = this.item.defaultAmmo;
     if (item && (item.system.quantity || 0) >= ammoCost) return;
 
     const ammo = this.actor.itemTypes.loot
@@ -348,7 +347,7 @@ export class ActionUse {
 
     if (ammo.length == 0) return;
 
-    await this.item.setFlag("pf1", "defaultAmmo", ammo[0].id);
+    await this.item.update({ "system.ammo.default": ammo[0].id });
   }
 
   /**
@@ -359,18 +358,18 @@ export class ActionUse {
   getAmmo() {
     const actor = this.actor;
     const ammoCost = this.action.ammo.cost;
-    const ammo = actor.itemTypes.loot.filter((item) => this._filterAmmo(item, ammoCost));
+    const availableAmmo = actor.itemTypes.loot.filter((item) => this._filterAmmo(item, ammoCost));
 
-    const defaultAmmo = this.action.item.getFlag("pf1", "defaultAmmo");
+    const defaultAmmo = this.action.item.defaultAmmo;
 
-    return ammo.map((o) => {
+    return availableAmmo.map((ammo) => {
       return {
-        id: o.id,
-        quantity: o.system.quantity || 0,
-        abundant: o.system.abundant || false,
-        data: o.toObject(),
-        document: o,
-        isDefault: defaultAmmo === o.id,
+        id: ammo.id,
+        quantity: ammo.system.quantity || 0,
+        abundant: ammo.system.abundant || false,
+        data: ammo.toObject(),
+        document: ammo,
+        isDefault: defaultAmmo === ammo,
       };
     });
   }
@@ -455,8 +454,8 @@ export class ActionUse {
   async handleConditionals() {
     if (this.shared.conditionals) {
       const conditionalData = {};
-      for (const i of this.shared.conditionals) {
-        const conditional = this.shared.action.conditionals[i];
+      for (const condId of this.shared.conditionals) {
+        const conditional = this.shared.action.conditionals.get(condId);
         const tag = pf1.utils.createTag(conditional.name);
         for (const [i, modifier] of conditional.modifiers.entries()) {
           // Adds a formula's result to rollData to allow referencing it.
@@ -1272,7 +1271,7 @@ export class ActionUse {
     // Add conditionals info
     if (this.shared.conditionals?.length) {
       this.shared.conditionals.forEach((c) => {
-        properties.push(this.shared.action.conditionals[c].name);
+        properties.push(this.shared.action.conditionals.get(c).name);
       });
     }
 

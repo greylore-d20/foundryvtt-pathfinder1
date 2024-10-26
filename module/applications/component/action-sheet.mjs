@@ -508,7 +508,7 @@ export class ItemActionSheet extends FormApplication {
     if (conditionalElement && modifierElement) {
       const conditional = this.action.conditionals.get(conditionalElement.dataset.conditional);
       const modifier = conditional.modifiers.get(modifierElement.dataset.modifier);
-      const app = new pf1.applications.DamageTypeSelector(modifier, "damageType", modifier.data.damageType, {
+      const app = new pf1.applications.DamageTypeSelector(modifier, "damageType", modifier.damageType, {
         updateCallback: (update) => {
           modifier.update({ damageType: update });
         },
@@ -594,31 +594,37 @@ export class ItemActionSheet extends FormApplication {
   async _updateObject(event, formData) {
     const oldData = this.action.toObject(true, false);
 
-    // Handle conditionals array
-    const conditionalData = oldData.conditionals ?? [];
-    Object.entries(formData)
-      .filter((o) => o[0].startsWith("conditionals"))
-      .forEach((o) => {
-        let reResult;
-        // Handle conditional modifier
-        if ((reResult = o[0].match(/^conditionals.([0-9]+).modifiers.([0-9]+).(.+)$/))) {
-          const conditionalIdx = parseInt(reResult[1]);
-          const modifierIdx = parseInt(reResult[2]);
-          const conditional = conditionalData[conditionalIdx] ?? oldData.conditionals[conditionalIdx];
-          const path = reResult[3];
-          foundry.utils.setProperty(conditional.modifiers[modifierIdx], path, o[1]);
-        }
-        // Handle conditional
-        else if ((reResult = o[0].match(/^conditionals.([0-9]+).(.+)$/))) {
-          const conditionalIdx = parseInt(reResult[1]);
-          const conditional = conditionalData[conditionalIdx] ?? oldData.conditionals[conditionalIdx];
-          const path = reResult[2];
-          foundry.utils.setProperty(conditional, path, o[1]);
-        }
-      });
-    formData["conditionals"] = conditionalData;
-
     formData = foundry.utils.expandObject(formData);
+
+    // Handle conditionals array, merging imcomplete data with old data
+    if (formData.conditionals) {
+      // Preserve arrays
+      // Convert {0:{}} to [{}] keeping order of keys
+      const preserveArray = (obj) =>
+        Object.entries(obj)
+          .sort(([k0], [k1]) => k0 - k1)
+          .map(([_, data]) => data);
+
+      // Convert to arrays and merge old data
+      // mergeObject() does not do deep merging into arrays, so this is somewhat manual
+      const oldConds = oldData.conditionals ?? [];
+      const conditionals = preserveArray(formData.conditionals);
+      for (let ci = 0; ci < conditionals.length; ci++) {
+        const c = conditionals[ci];
+        c.modifiers = preserveArray(c.modifiers);
+
+        const oldC = oldConds[ci];
+        for (let mi = 0; mi < c.modifiers.length; mi++) {
+          const m = c.modifiers[mi];
+          const oldM = oldC.modifiers[mi];
+
+          c.modifiers[mi] = foundry.utils.mergeObject(oldM, m);
+        }
+        conditionals[ci] = foundry.utils.mergeObject(oldC, c);
+      }
+
+      formData.conditionals = conditionals;
+    }
 
     // Merge partial damage data to preserve overall data
     if (formData.damage) {

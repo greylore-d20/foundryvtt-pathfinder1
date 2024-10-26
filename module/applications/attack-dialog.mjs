@@ -59,9 +59,12 @@ export class AttackDialog extends Application {
     };
 
     this.conditionals = {};
-    action.conditionals?.contents.forEach((conditional, idx) => {
-      this.conditionals[`conditional.${idx}`] = conditional.data.default === true;
-    });
+    for (const conditional of action.conditionals) {
+      this.conditionals[`conditionals.${conditional.id}`] = {
+        enabled: conditional.default === true,
+        conditional,
+      };
+    }
 
     if (useOptions.haste) this._toggleExtraAttack("haste-attack", true);
     if (useOptions.manyshot) this._toggleExtraAttack("manyshot", true);
@@ -248,7 +251,7 @@ export class AttackDialog extends Application {
         0,
         new ActionUseAttack(game.i18n.localize(translationString[type]), "", null, { abstract: true, type })
       );
-      this.setAttackAmmo(place, this.action.item.getFlag("pf1", "defaultAmmo"));
+      this.setAttackAmmo(place, this.action.item.system.ammo?.default);
     } else {
       this.attacks.findSplice((o) => o.type === type);
     }
@@ -258,7 +261,7 @@ export class AttackDialog extends Application {
     event.preventDefault();
 
     const elem = event.currentTarget;
-    this.conditionals[elem.name] = elem.checked === true;
+    this.conditionals[elem.name].enabled = elem.checked === true;
     this.render();
   }
 
@@ -299,8 +302,9 @@ export class AttackDialog extends Application {
     const ammoId = elem.closest(".ammo-item").dataset.id;
     switch (elem.dataset.type) {
       case "set-default":
-        if (ammoId === "null") await this.action.item.unsetFlag("pf1", "defaultAmmo");
-        else await this.action.item.setFlag("pf1", "defaultAmmo", ammoId);
+        if (ammoId === "null") await this.action.item.update({ "system.ammo.-=default": null });
+        else await this.action.item.update({ "system.ammo.default": ammoId });
+
         // Apply CSS class, since we can't do a render in here and keep the dropdown menu open
         elem
           .closest("ul")
@@ -360,7 +364,7 @@ export class AttackDialog extends Application {
 
     // Set ammo usage
     if (this.action.ammo.type) {
-      const ammoId = this.action.item.getFlag("pf1", "defaultAmmo");
+      const ammoId = this.action.item.system.ammo?.default;
       if (ammoId != null) {
         for (let a = 0; a < this.attacks.length; a++) {
           this.setAttackAmmo(a, ammoId);

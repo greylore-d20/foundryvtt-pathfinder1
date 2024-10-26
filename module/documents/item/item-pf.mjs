@@ -1121,7 +1121,7 @@ export class ItemPF extends ItemBasePF {
       return true;
     }
 
-    return this.system.changes.some(change => pf1.config.buffTargets[change.target]?.category === "senses");
+    return this.system.changes.some((change) => pf1.config.buffTargets[change.target]?.category === "senses");
   }
 
   /**
@@ -1141,7 +1141,9 @@ export class ItemPF extends ItemBasePF {
       return true;
     }
 
-    return changes.system?.changes?.some(change => pf1.config.buffTargets[change.target]?.category === "senses") || false;
+    return (
+      changes.system?.changes?.some((change) => pf1.config.buffTargets[change.target]?.category === "senses") || false
+    );
   }
 
   /**
@@ -1185,12 +1187,12 @@ export class ItemPF extends ItemBasePF {
     }
 
     if (
-      // Item has vision change and was toggled
-      (changed?.system?.active !== undefined && this.adjustsVision)
-      // Item got a new vision change
-      || ItemPF._hasVisionUpdate(changed)
-      // Item had a vision change that was removed
-      || (context.adjustedVision && !this.adjustsVision)
+      // Item contains a vision change and active state was toggled
+      (changed?.system?.active !== undefined && this.adjustsVision) ||
+      // Item contains a new or updated vision change
+      ItemPF._hasVisionUpdate(changed) ||
+      // Item contained a vision change that was removed
+      (context.adjustedVision && !this.adjustsVision)
     ) {
       const initializeVision = true;
       const refreshLighting = this.system.changeFlags.lowLightVision || false;

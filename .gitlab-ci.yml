@@ -8,9 +8,15 @@ variables:
   PACKAGE_REGISTRY_URL: $CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/$PACKAGE_NAME
   # Directory into which package will be built, and from which the zip will be created
   BUILD_DIRECTORY: dist
+  # API URL of the project
+  PROJECT_API_URL: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}"
+  # Rich text variables
+  INFO: \e[36m
+  CLEAR: \e[0m
 
 stages:
   - check
+  - labels
   - build
   - prepare-release
   - release
@@ -44,6 +50,46 @@ format:
     - npm run format:check
   cache:
     <<: *global_cache
+
+# Add i18n labels if language files were updated
+i18n-labels:
+  stage: labels
+  rules:
+    # Only run for MRs which update language files
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        - "lang/*.json"
+  script:
+    - echo -e "${INFO}Adding i18n label...${CLEAR}"
+    - >
+      curl --fail-with-body
+      --location "${PROJECT_API_URL}/merge_requests/${CI_MERGE_REQUEST_IID}"
+      --request PUT
+      --header "Content-Type: application/json"
+      --header "PRIVATE-TOKEN: ${LABELS_AUTOMATION_TOKEN}"
+      --data "{
+        \"add_labels\": \"i18n::Key Changes\"
+      }"
+
+# Add Compendium labels if compendium files were updated
+compendium-labels:
+  stage: labels
+  rules:
+    # Only run for MRs which update compendium files
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        - "packs/*.yaml"
+  script:
+    - echo -e "${INFO}Adding compendium label...${CLEAR}"
+    - >
+      curl --fail-with-body
+      --location "${PROJECT_API_URL}/merge_requests/${CI_MERGE_REQUEST_IID}"
+      --request PUT
+      --header "Content-Type: application/json"
+      --header "PRIVATE-TOKEN: ${LABELS_AUTOMATION_TOKEN}"
+      --data "{
+        \"add_labels\": \"Compendium\"
+      }"
 
 # Generate manifest links, build dist directory
 build:

@@ -369,15 +369,15 @@ export class ItemSheetPF extends ItemSheet {
           label: game.i18n.localize("PF1.HPShort"),
           current: {
             name: "system.hp.value",
-            value: itemData.hp?.value || 0,
+            value: item.getHP(itemData.hp?.value) || 0,
             constraints: {
               step: 1,
-              max: itemData.hp?.max || 0,
+              max: item.getHP(itemData.hp?.max) || 0,
             },
           },
           max: {
             name: "system.hp.max",
-            value: itemData.hp?.max || 0,
+            value: item.getHP(itemData.hp?.max) || 0,
             constraints: {
               min: 0,
               step: 1,
@@ -392,7 +392,7 @@ export class ItemSheetPF extends ItemSheet {
           label: game.i18n.localize("PF1.Hardness"),
           name: "system.hardness",
           decimals: 0,
-          value: itemData.hardness || 0,
+          value: item.getHardness() || 0,
           constraints: {
             min: 0,
             step: 1,

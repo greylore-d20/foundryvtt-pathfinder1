@@ -391,6 +391,31 @@ export class ItemPhysicalPF extends ItemPF {
     return labels;
   }
 
+  /**
+   * Dynamically calculates and returns the item's hardness including  enhancement bonus modifications.
+   *
+   * @returns {number} The calculated hardness value
+   */
+  getHardness() {
+    // Calculate hardness and HP based on enhancement bonus
+    const hardness = this.system.hardness + 2 * (this.system.enh || 0);
+
+    return hardness;
+  }
+
+  /**
+   * Dynamically calculates and returns the item's HP including enhancement bonus modifications.
+   *
+   * @param {number} baseHPValue - The base hp Value
+   * @returns {number} A Number with adjusted HP value
+   */
+  getHP(baseHPValue) {
+    // Calculate HP based on enhancement bonus
+    const hpValue = baseHPValue + 10 * (this.system.enh || 0);
+
+    return hpValue;
+  }
+
   /** @inheritDoc */
   adjustContained() {
     super.adjustContained();

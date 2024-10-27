@@ -60,11 +60,11 @@ export class SensesSelector extends HandlebarsApplicationMixin(DocumentSheetV2) 
   async _prepareContext() {
     const actor = this.document;
 
-    const senses = foundry.utils.deepClone(actor.system.traits?.senses ?? {});
+    const senses = actor.toObject().system.traits?.senses ?? {};
     for (const [key, type] of Object.entries(this.constructor.convertKeys)) {
       const value = senses[key];
-      if (type === "distance" && value > 0) {
-        senses[key] = pf1.utils.convertDistance(value)[0];
+      if (type === "distance" && value.value > 0) {
+        senses[key].value = pf1.utils.convertDistance(value.value)[0];
       }
     }
 
@@ -126,8 +126,8 @@ export class SensesSelector extends HandlebarsApplicationMixin(DocumentSheetV2) 
     // Convert data back
     Object.entries(this.constructor.convertKeys).forEach(([key, type]) => {
       const value = senses[key];
-      if (value > 0 && type === "distance") {
-        senses[key] = pf1.utils.convertDistanceBack(value)[0];
+      if (value.value > 0 && type === "distance") {
+        senses[key].value = pf1.utils.convertDistanceBack(value.value)[0];
       }
     });
 

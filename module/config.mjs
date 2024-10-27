@@ -2389,6 +2389,12 @@ export const buffTargets = /** @type {const} */ ({
   },
   cl: { label: "PF1.CasterLevel", category: "spell", sort: 230000 },
   dc: { label: "PF1.SpellDC", category: "spell", sort: 240000 },
+  sensedv: { label: "PF1.Sense.darkvision", category: "senses", sort: 250000 },
+  sensets: { label: "PF1.Sense.tremorsense", category: "senses", sort: 250100 },
+  sensebse: { label: "PF1.Sense.blindsense", category: "senses", sort: 250200 },
+  sensebs: { label: "PF1.Sense.blindsight", category: "senses", sort: 250300 },
+  sensesc: { label: "PF1.Sense.scent", category: "senses", sort: 250400 },
+  sensetr: { label: "PF1.Sense.trueseeing", category: "senses", sort: 250500 },
 });
 
 /**
@@ -2407,6 +2413,7 @@ export const buffTargetCategories = /** @type {const} */ ({
   speed: { label: "PF1.Movement.Speed" },
   spell: { label: "PF1.BuffTarSpells", filters: { ...baseActorFilters() } },
   misc: { label: "PF1.Misc" },
+  senses: { label: "PF1.Senses" },
 });
 
 export const contextNoteTargets = {
@@ -2467,6 +2474,9 @@ export const contextNoteCategories = {
 };
 
 export const changeFlags = {
+  lowLightVision: "PF1.ChangeFlags.LowLightVision",
+  seeInDarkness: "PF1.ChangeFlags.SeeInDarkness",
+  seeInvisibility: "PF1.ChangeFlags.SeeInvisibility",
   immuneToMorale: "PF1.ChangeFlags.ImmuneToMoraleEffects",
   loseDexToAC: "PF1.ChangeFlags.LoseDexToAC",
   noMediumEncumbrance: "PF1.ChangeFlags.NoMediumEncumbrance",

@@ -139,12 +139,15 @@ export class TokenDocumentPF extends TokenDocument {
 
     const convertDistance = (d) => pf1.utils.convertDistance(d)[0];
 
-    // Darkvision
-    const darkvision = senses.dv ?? 0;
-    if (darkvision > 0) {
+    // Darkvision, also includes blindsight until we have a better representation
+    const darkvision = senses.dv?.total ?? 0;
+    const blindsight = senses.bs?.total ?? 0;
+    const blackAndWhite = Math.max(darkvision, blindsight);
+
+    if (blackAndWhite > 0) {
       this.sight.visionMode = "darkvision";
       // Upgrade basic mode range if greater
-      basicMode.range = Math.max(baseRange, convertDistance(darkvision));
+      basicMode.range = Math.max(baseRange, convertDistance(blackAndWhite));
     }
 
     // -----------------------
@@ -155,12 +158,12 @@ export class TokenDocumentPF extends TokenDocument {
     }
 
     // True seeing
-    const trueseeing = senses.tr ?? 0;
+    const trueseeing = senses.tr?.total ?? 0;
     if (trueseeing > 0) {
       // Add normal vision within range of true seeing
       const trr = convertDistance(trueseeing);
       basicMode.range = Math.max(trr, basicMode.range);
-      if (trueseeing > darkvision) this.sight.visionMode = "basic";
+      if (trueseeing > blackAndWhite) this.sight.visionMode = "basic";
 
       this.detectionModes.push({ id: "seeInvisibility", enabled: true, range: trr, limited: true });
     }
@@ -168,18 +171,18 @@ export class TokenDocumentPF extends TokenDocument {
     this.sight.range = Math.max(baseRange, basicMode.range);
 
     // Tremor sense
-    if (senses.ts) {
-      this.detectionModes.push({ id: "feelTremor", enabled: true, range: convertDistance(senses.ts) });
+    if (senses.ts?.total) {
+      this.detectionModes.push({ id: "feelTremor", enabled: true, range: convertDistance(senses.ts?.total) });
     }
 
     // Blind sense
-    if (senses.bse) {
-      this.detectionModes.push({ id: "blindSense", enabled: true, range: convertDistance(senses.bse) });
+    if (senses.bse?.total) {
+      this.detectionModes.push({ id: "blindSense", enabled: true, range: convertDistance(senses.bse?.total) });
     }
 
     // Blind sight
-    if (senses.bs) {
-      this.detectionModes.push({ id: "blindSight", enabled: true, range: convertDistance(senses.bs) });
+    if (senses.bs?.total) {
+      this.detectionModes.push({ id: "blindSight", enabled: true, range: convertDistance(senses.bs?.total) });
     }
 
     // Sort detection modes

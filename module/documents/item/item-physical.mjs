@@ -202,6 +202,9 @@ export class ItemPhysicalPF extends ItemPF {
       // Set unidentified description for players
       this.system.description.value = this.system.description.unidentified;
     }
+
+    // Calculate and set total hardness
+    this.prepareHardness();
   }
 
   /** @inheritDoc */
@@ -224,6 +227,19 @@ export class ItemPhysicalPF extends ItemPF {
    */
   get activeState() {
     return this.system.equipped || false;
+  }
+
+  /**
+   * Prepare item's hardness base and total (including enhancement bonus modification).
+   */
+  prepareHardness() {
+    // Calculate hardness based on enhancement bonus
+    const itemData = this.system;
+
+    itemData.hardness = {
+      base: itemData.hardness || 0,
+      total: (itemData.hardness || 0) + pf1.config.itemEnhancementMods.hardness * (itemData.enh || 0),
+    };
   }
 
   /**

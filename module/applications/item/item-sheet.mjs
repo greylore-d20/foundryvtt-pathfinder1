@@ -392,7 +392,9 @@ export class ItemSheetPF extends ItemSheet {
           label: game.i18n.localize("PF1.Hardness"),
           name: "system.hardness",
           decimals: 0,
-          value: itemData.hardness || 0,
+          value: itemData.hardness.total || 0,
+          fakeValue: true,
+          inputValue: itemData.hardness.base,
           constraints: {
             min: 0,
             step: 1,

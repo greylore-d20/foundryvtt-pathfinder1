@@ -2336,6 +2336,7 @@ export const buffTargets = /** @type {const} */ ({
   burrowSpeed: { label: "PF1.Movement.Mode.burrow", category: "speed", sort: 93000 },
   flySpeed: { label: "PF1.Movement.Mode.fly", category: "speed", sort: 94000 },
   allSpeeds: { label: "PF1.BuffTarAllSpeeds", category: "speed", sort: 95000 },
+  flyManeuverability: { label: "PF1.Movement.FlyManeuverability.Label", category: "speed", sort: 96000 },
   ac: { label: "PF1.BuffTarACGeneric", category: "defense", sort: 100000 },
   aac: { label: "PF1.BuffTarACArmor", category: "defense", sort: 101000 },
   sac: { label: "PF1.BuffTarACShield", category: "defense", sort: 102000 },

@@ -205,9 +205,6 @@ export class ItemPhysicalPF extends ItemPF {
 
     // Calculate and set total hardness
     this.prepareHardness();
-
-    // Calculate and set total HP
-    //this.system.hp.max = this.calculateTotalHP(this.system.hp.max, this.system.size);
   }
 
   /** @inheritDoc */

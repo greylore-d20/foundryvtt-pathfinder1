@@ -58,7 +58,6 @@
           {{#if race}}
           <h4>{{race.name}}</h4>
           <div class="tag-list">
-            {{log system.traits}}
             {{#each system.traits.creatureTypes.selected}}
               <span class="tag type3 {{@key}}">{{this}}</span>
             {{/each}}

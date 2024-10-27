@@ -557,6 +557,24 @@ export const getChangeFlat = function (target, modifierType, value) {
     case "dc":
       result.push(`system.attributes.spells.school.all.dc`);
       break;
+    case "sensedv":
+      result.push("system.traits.senses.dv.total");
+      break;
+    case "sensets":
+      result.push("system.traits.senses.ts.total");
+      break;
+    case "sensebse":
+      result.push("system.traits.senses.bse.total");
+      break;
+    case "sensebs":
+      result.push("system.traits.senses.bs.total");
+      break;
+    case "sensetr":
+      result.push("system.traits.senses.tr.total");
+      break;
+    case "sensesc":
+      result.push("system.traits.senses.sc.total");
+      break;
   }
 
   // Per school DC target

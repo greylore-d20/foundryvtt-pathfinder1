@@ -915,6 +915,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateItemUnusedData(itemData, updateData);
   _migrateSpellSubschool(itemData, updateData);
   _migrateItemDefaultAmmo(itemData, updateData);
+  _migrateCreatureType(itemData, updateData);
 
   // Migrate action data
   const alreadyHasActions = itemData.system.actions instanceof Array && itemData.system.actions.length > 0;
@@ -1661,6 +1662,30 @@ const _migrateItemDefaultAmmo = (itemData, updateData) => {
     updateData["system.ammo.default"] = ammoId;
   }
   updateData["flags.pf1.-=defaultAmmo"] = null;
+};
+
+const _migrateCreatureType = (itemData, updateData) => {
+  if (itemData.system.creatureType) {
+    updateData["system.creatureTypes"] = { value: [itemData.system.creatureType] };
+    updateData["system.-=creatureType"] = null;
+  }
+
+  if (itemData.system.subTypes) {
+    const subTypeData = {
+      value: [],
+      custom: [],
+    };
+    for (const subType of itemData.system.subTypes) {
+      const lowerCaseKey = subType.charAt(0).toLowerCase() + subType.slice(1).replace(" ", "");
+      if (pf1.config.creatureSubTypes[lowerCaseKey]) {
+        subTypeData.value.push(lowerCaseKey);
+      } else {
+        subTypeData.custom.push(subType);
+      }
+    }
+    updateData["system.creatureSubTypes"] = subTypeData;
+    updateData["system.-=subTypes"] = null;
+  }
 };
 
 const _migrateItemSize = function (ent, updateData) {

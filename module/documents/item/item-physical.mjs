@@ -236,7 +236,7 @@ export class ItemPhysicalPF extends ItemPF {
    * Prepare item's hardness base and total (including enhancement bonus modification).
    */
   prepareHardness() {
-    // Calculate hardness and HP based on enhancement bonus
+    // Calculate hardness based on enhancement bonus
     const itemData = this.system;
 
     itemData.hardness = {
@@ -244,30 +244,6 @@ export class ItemPhysicalPF extends ItemPF {
       total: (itemData.hardness || 0) + 2 * (itemData.enh || 0),
     };
   }
-
-  /**
-   * Dynamically calculates and returns the item's HP including enhancement bonus modifications.
-   *
-   * @param {number} baseHPValue - The base hp Value
-   * @param {string} itemSize - items size
-   * @returns {number} A Number with adjusted HP value
-   */
-  /*   prepareHP(baseHPValue, itemSize) {
-    // Caluclate Size Modifier
-    let sizeMod = pf1.config.sizeMods[this.system.size];
-    if (sizeMod < 0) {
-      sizeMod = 1 / (sizeMod * 2);
-    } else if (sizeMod > 0) {
-      sizeMod *= -(sizeMod * 2);
-    } else {
-      sizeMod = 1;
-    }
-
-    // Calculate HP based on enhancement bonus// Calculate HP based on enhancement bonus
-    const hpValue = Math.floor(baseHPValue * sizeMod) + 10 * (this.system.enh || 0);
-
-    return hpValue;
-  } */
 
   /**
    * Prepare this item's {@link ItemWeightData}

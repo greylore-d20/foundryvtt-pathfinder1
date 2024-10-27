@@ -58,9 +58,12 @@
           {{#if race}}
           <h4>{{race.name}}</h4>
           <div class="tag-list">
-            <span class="tag type3">{{lookup config.creatureTypes race.system.creatureType}}</span>
-            {{#each race.system.subTypes as |v|}}
-            <span class="tag">{{v}}</span>
+            {{log system.traits}}
+            {{#each system.traits.creatureTypes.selected}}
+              <span class="tag type3 {{@key}}">{{this}}</span>
+            {{/each}}
+            {{#each system.traits.creatureSubTypes.selected}}
+              <span class="tag {{@key}}">{{this}}</span>
             {{/each}}
           </div>
           {{/if}}

@@ -557,13 +557,15 @@ export class ActorSheetPF extends ActorSheet {
       languages: pf1.config.languages,
       armorProf: pf1.config.armorProficiencies,
       weaponProf: pf1.config.weaponProficiencies,
+      creatureTypes: pf1.config.creatureTypes,
+      creatureSubTypes: pf1.config.creatureSubTypes,
     };
     for (const [t, choices] of Object.entries(map)) {
       const trait = traits[t];
       if (!trait) continue;
       let values = [];
       // Prefer total over value for dynamically collected proficiencies
-      if (["armorProf", "weaponProf", "languages"].includes(t)) {
+      if (["armorProf", "weaponProf", "languages", "creatureTypes", "creatureSubTypes"].includes(t)) {
         values = trait.total ?? trait.value;
       } else if (trait.value) {
         values = trait.value instanceof Array ? trait.value : [trait.value];

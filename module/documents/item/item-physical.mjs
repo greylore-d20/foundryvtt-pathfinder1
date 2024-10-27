@@ -202,6 +202,12 @@ export class ItemPhysicalPF extends ItemPF {
       // Set unidentified description for players
       this.system.description.value = this.system.description.unidentified;
     }
+
+    // Calculate and set total hardness
+    this.prepareHardness();
+
+    // Calculate and set total HP
+    //this.system.hp.max = this.calculateTotalHP(this.system.hp.max, this.system.size);
   }
 
   /** @inheritDoc */
@@ -225,6 +231,43 @@ export class ItemPhysicalPF extends ItemPF {
   get activeState() {
     return this.system.equipped || false;
   }
+
+  /**
+   * Prepare item's hardness base and total (including enhancement bonus modification).
+   */
+  prepareHardness() {
+    // Calculate hardness and HP based on enhancement bonus
+    const itemData = this.system;
+
+    itemData.hardness = {
+      base: itemData.hardness || 0,
+      total: (itemData.hardness || 0) + 2 * (itemData.enh || 0),
+    };
+  }
+
+  /**
+   * Dynamically calculates and returns the item's HP including enhancement bonus modifications.
+   *
+   * @param {number} baseHPValue - The base hp Value
+   * @param {string} itemSize - items size
+   * @returns {number} A Number with adjusted HP value
+   */
+  /*   prepareHP(baseHPValue, itemSize) {
+    // Caluclate Size Modifier
+    let sizeMod = pf1.config.sizeMods[this.system.size];
+    if (sizeMod < 0) {
+      sizeMod = 1 / (sizeMod * 2);
+    } else if (sizeMod > 0) {
+      sizeMod *= -(sizeMod * 2);
+    } else {
+      sizeMod = 1;
+    }
+
+    // Calculate HP based on enhancement bonus// Calculate HP based on enhancement bonus
+    const hpValue = Math.floor(baseHPValue * sizeMod) + 10 * (this.system.enh || 0);
+
+    return hpValue;
+  } */
 
   /**
    * Prepare this item's {@link ItemWeightData}
@@ -389,42 +432,6 @@ export class ItemPhysicalPF extends ItemPF {
     else labels.identified = checkNo;
 
     return labels;
-  }
-
-  /**
-   * Dynamically calculates and returns the item's hardness including  enhancement bonus modifications.
-   *
-   * @returns {number} The calculated hardness value
-   */
-  getTotalHardness() {
-    // Calculate hardness and HP based on enhancement bonus
-    const hardness = this.system.hardness + 2 * (this.system.enh || 0);
-
-    return hardness;
-  }
-
-  /**
-   * Dynamically calculates and returns the item's HP including enhancement bonus modifications.
-   *
-   * @param {number} baseHPValue - The base hp Value
-   * @param {string} itemSize - items size
-   * @returns {number} A Number with adjusted HP value
-   */
-  getTotalHP(baseHPValue, itemSize) {
-    // Caluclate Size Modifier
-    let sizeMod = pf1.config.sizeMods[this.system.size];
-    if (sizeMod < 0) {
-      sizeMod = 1 / (sizeMod * 2);
-    } else if (sizeMod > 0) {
-      sizeMod *= -(sizeMod * 2);
-    } else {
-      sizeMod = 1;
-    }
-
-    // Calculate HP based on enhancement bonus// Calculate HP based on enhancement bonus
-    const hpValue = Math.floor(baseHPValue * sizeMod) + 10 * (this.system.enh || 0);
-
-    return hpValue;
   }
 
   /** @inheritDoc */

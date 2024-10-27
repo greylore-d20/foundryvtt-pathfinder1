@@ -149,7 +149,7 @@ export class ItemChange extends foundry.abstract.DataModel {
 
   /** @type {boolean} - Does this change refer to a distance? */
   get isDistance() {
-    return /speed/i.test(this.target);
+    return /speed|sense/i.test(this.target);
   }
 
   get source() {

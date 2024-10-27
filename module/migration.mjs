@@ -2811,6 +2811,12 @@ const _migrateActorSenses = function (ent, updateData, token) {
   if (typeof oldSenses?.tr === "boolean") {
     updateData["system.traits.senses.tr"] = oldSenses.tr ? 120 : 0;
   }
+
+  for (const id of ["dv", "ts", "bs", "bse", "sc", "tr"]) {
+    if (typeof oldSenses?.[id] === "number" || !oldSenses?.[id]) {
+      updateData[`system.traits.senses.${id}`] = { value: oldSenses[id] || 0 };
+    }
+  }
 };
 
 const _migrateActorSkillJournals = function (ent, updateData) {

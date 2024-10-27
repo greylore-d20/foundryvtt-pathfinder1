@@ -590,22 +590,36 @@ export class ActorSheetPF extends ActorSheet {
     const senses = this.actor.system.traits.senses ?? {};
 
     for (const [key, value] of Object.entries(senses)) {
-      if (value === 0 || value === false) continue;
-      else if (key === "ll" && senses[key].enabled) {
-        result[key] = pf1.config.senses[key];
-      } else if (key === "custom") {
-        if (value.length) {
-          value
-            .split(pf1.config.re.traitSeparator)
-            .map((c) => c.trim())
-            .filter((c) => c)
-            .forEach((svalue, idx) => (result[`custom${idx + 1}`] = svalue));
-        }
-      } else if (value === true) {
-        result[key] = pf1.config.senses[key];
-      } else if (value > 0) {
-        const converted = pf1.utils.convertDistance(value);
-        result[key] = `${pf1.config.senses[key]} ${converted[0]} ${converted[1]}`;
+      switch (key) {
+        case "ll":
+          if (senses[key].enabled) {
+            result[key] = pf1.config.senses[key];
+          }
+          break;
+
+        case "si":
+        case "sid":
+          if (senses[key]) {
+            result[key] = pf1.config.senses[key];
+          }
+          break;
+
+        case "custom":
+          if (value.length) {
+            value
+              .split(pf1.config.re.traitSeparator)
+              .map((c) => c.trim())
+              .filter((c) => c)
+              .forEach((svalue, idx) => (result[`custom${idx + 1}`] = svalue));
+          }
+          break;
+
+        default:
+          if (value.total > 0) {
+            const converted = pf1.utils.convertDistance(value.total);
+            result[key] = `${pf1.config.senses[key]} ${converted[0]} ${converted[1]}`;
+          }
+          break;
       }
     }
 
@@ -1643,6 +1657,23 @@ export class ActorSheetPF extends ActorSheet {
         break;
       case "stature":
         paths.push({ path: "@traits.stature", value: system.traits.stature });
+        break;
+      case "senses":
+        for (const i of ["dv", "ts", "bse", "bs", "sc", "tr"]) {
+          const isMetricDist = pf1.utils.getDistanceSystem() === "metric";
+          paths.push({
+            path: `@traits.senses.${i}.total`,
+            value: pf1.utils.convertDistance(system.traits.senses[i]?.total)[0],
+            unit: isMetricDist ? pf1.config.measureUnitsShort.m : pf1.config.measureUnitsShort.ft,
+            signed: false,
+          });
+          sources.push({
+            label: pf1.config.senses[i],
+            sources: getSource(`system.traits.senses.${i}.total`),
+            left: true,
+            untyped: true,
+          });
+        }
         break;
       case "aura":
         paths.push({ path: "@traits.aura.custom", empty: true });
@@ -3810,6 +3841,7 @@ export class ActorSheetPF extends ActorSheet {
       name: path,
       title: label.innerText,
       subject: a.dataset.options,
+      hasCustom: a.dataset.hasCustom !== "false",
       choices,
     };
 

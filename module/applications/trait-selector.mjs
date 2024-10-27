@@ -107,6 +107,7 @@ export class ActorTraitSelector extends HandlebarsApplicationMixin(DocumentSheet
       hideSearch: Object.keys(choices).length < pf1.config.traitSelector.minChoicesForSearch,
       custom: Array.from(new Set(custom)),
       search: this._searchFilter,
+      hasCustom: this.options.hasCustom,
       buttons: [
         {
           type: "submit",
@@ -167,11 +168,13 @@ export class ActorTraitSelector extends HandlebarsApplicationMixin(DocumentSheet
   _onRender(context, options) {
     // Custom tag handling
     const customInput = this.element.querySelector("input[name='custom']");
-    customInput.addEventListener("input", this._onCustomInput.bind(this), { passive: true });
-    customInput.addEventListener("keydown", this._onActiveCustomInput.bind(this));
-    this.element.querySelectorAll(".custom-tags .custom-tag > a[data-action='delete']").forEach((el) => {
-      el.addEventListener("click", this._deleteCustomTag.bind(this), { passive: true });
-    });
+    if (customInput) {
+      customInput.addEventListener("input", this._onCustomInput.bind(this), { passive: true });
+      customInput.addEventListener("keydown", this._onActiveCustomInput.bind(this));
+      this.element.querySelectorAll(".custom-tags .custom-tag > a[data-action='delete']").forEach((el) => {
+        el.addEventListener("click", this._deleteCustomTag.bind(this), { passive: true });
+      });
+    }
 
     // Search handling
     const search = this.element.querySelector("input[type='search']");

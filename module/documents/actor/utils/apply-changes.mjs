@@ -1,4 +1,5 @@
 import { RollPF } from "@dice/roll.mjs";
+import { flyManeuverabilities, flyManeuverabilityValues } from "@config";
 
 /**
  * @this {pf1.documents.actor.ActorPF}
@@ -476,6 +477,9 @@ export const getChangeFlat = function (target, modifierType, value) {
       break;
     case "flySpeed":
       result.push("system.attributes.speed.fly.total");
+      break;
+    case "flyManeuverability":
+      result.push("system.attributes.speed.fly.maneuverabilityValue");
       break;
     case "cmb":
       result.push("system.attributes.cmb.bonus");
@@ -1213,19 +1217,16 @@ export const addDefaultChanges = function (changes) {
 
   // Add fly bonuses or penalties based on maneuverability
   {
-    const flyKey = actorData.attributes.speed.fly.maneuverability;
-    let flyValue = 0;
-    if (flyKey != null) flyValue = pf1.config.flyManeuverabilityValues[flyKey];
-    if (flyValue !== 0) {
-      changes.push(
-        new pf1.components.ItemChange({
-          formula: flyValue,
-          target: "skill.fly",
-          type: "racial",
-          flavor: game.i18n.localize("PF1.Movement.FlyManeuverability.Label"),
-        })
-      );
-    }
+    changes.push(
+      new pf1.components.ItemChange({
+        formula:
+          "lookup(@flyManeuverability + 1, 0, " + Object.values(pf1.config.flyManeuverabilityValues).join(", ") + ")",
+        target: "skill.fly",
+        type: "racial",
+        flavor: game.i18n.localize("PF1.Movement.FlyManeuverability.Label"),
+        priority: -1000,
+      })
+    );
   }
   // Add swim and climb skill bonuses based on having speeds for them
   {

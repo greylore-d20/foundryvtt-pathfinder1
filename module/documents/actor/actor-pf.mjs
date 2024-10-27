@@ -560,6 +560,10 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
+    this.system.attributes.speed.fly.maneuverabilityValue = Object.keys(pf1.config.flyManeuverabilities).indexOf(
+      this.system.attributes.speed.fly.maneuverability
+    );
+
     this._prepareClassSkills();
 
     // Reset HD
@@ -4570,6 +4574,13 @@ export class ActorPF extends ActorBasePF {
 
     // @since PF1 v10
     result.alignment = pf1.utils.parseAlignment(this.system.details?.alignment || "tn");
+
+    const flyManeuverabilities = Object.values(pf1.config.flyManeuverabilities);
+    result.flyManeuverability = Math.clamp(
+      this.system.attributes.speed.fly.maneuverabilityValue,
+      0,
+      flyManeuverabilities.length - 1
+    );
 
     this._rollData = result;
 

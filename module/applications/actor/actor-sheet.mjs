@@ -1387,10 +1387,16 @@ export class ActorSheetPF extends ActorSheet {
         break;
       }
       case "flyManeuverability":
-        paths.push({
-          path: "@attributes.speed.fly.maneuverability",
-          value: system.attributes.speed.fly.maneuverability,
-        });
+        paths.push(
+          {
+            path: "@attributes.speed.fly.maneuverability",
+            value: system.attributes.speed.fly.maneuverability,
+          },
+          {
+            path: "@flyManeuverability",
+            value: lazy.rollData.flyManeuverability,
+          }
+        );
         break;
       case "ac": {
         const ac = system.attributes.ac[detail];

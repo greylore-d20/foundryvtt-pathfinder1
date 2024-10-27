@@ -1850,22 +1850,43 @@ export class ActorSheetPF extends ActorSheet {
         }
         break;
       }
-      case "carryCapacity":
+      case "carryCapacity": {
         paths.push(
           { path: "@attributes.encumbrance.level", value: system.attributes.encumbrance.level },
           { path: "@details.carryCapacity.bonus.total", value: system.details.carryCapacity.bonus.total },
-          { path: "@details.carryCapacity.multiplier.total", value: system.details.carryCapacity.multiplier.total }
+          {
+            path: "@details.carryCapacity.multiplier.total",
+            value: pf1.utils.limitPrecision(system.details.carryCapacity.multiplier.total, 2),
+          }
         );
+
+        const bonusMults = [];
+        const size = this.actor.system.traits?.size || "med";
+        if (size) {
+          const isQuadruped = this.actor.system.attributes?.quadruped || false;
+          const mults = isQuadruped
+            ? pf1.config.encumbranceMultipliers.quadruped
+            : pf1.config.encumbranceMultipliers.normal;
+          const smult = mults[size];
+          bonusMults.push({
+            name: game.i18n.localize("PF1.Size") + (isQuadruped ? ` (${game.i18n.localize("PF1.Quadruped")})` : ""),
+            value: smult,
+          });
+        }
 
         sources.push({
           label: game.i18n.localize("PF1.CarryStrength"),
           sources: getSource("system.details.carryCapacity.bonus.total"),
+          untyped: true,
         });
         sources.push({
           label: game.i18n.localize("PF1.CarryMultiplier"),
-          sources: getSource("system.details.carryCapacity.multiplier.total"),
+          sources: [...getSource("system.details.carryCapacity.multiplier.total"), ...bonusMults],
+          decimals: 1,
+          untyped: true,
         });
         break;
+      }
       case "feats": {
         const feats = this.actor.getFeatCount();
 

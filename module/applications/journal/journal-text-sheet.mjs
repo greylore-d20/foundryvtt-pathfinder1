@@ -12,7 +12,8 @@ export class JournalTextPageSheetPF1 extends JournalTextPageSheet {
 
     // Find parent pages if deeper than level 1 heading
     const current = this.document;
-    if (current.title.level > 1 && current.parent instanceof JournalEntry) {
+    const level = current.title.level;
+    if (level > 1 && current.parent instanceof JournalEntry) {
       /** @type {JournalEntryPage[]} */
       const pages = current.parent.pages.contents.sort((a, b) => a.sort - b.sort);
 
@@ -23,7 +24,7 @@ export class JournalTextPageSheetPF1 extends JournalTextPageSheet {
         if (page.title.level === 1) {
           h1 = page;
           h2 = undefined;
-        } else if (page.title.level === 2) {
+        } else if (level > 2 && page.title.level === 2) {
           h2 = page;
         }
       }

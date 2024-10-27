@@ -159,6 +159,8 @@ export class ItemPF extends ItemBasePF {
    * @param {User} user
    */
   async _preUpdate(changed, context, user) {
+    context.adjustedVision = this.adjustsVision;
+
     await super._preUpdate(changed, context, user);
 
     // Obsolete ammo location
@@ -1104,6 +1106,47 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
+   * Determine whether this item adjusts senses
+   *
+   * @type {boolean}
+   * @readonly
+   * @private
+   */
+  get adjustsVision() {
+    if (
+      this.system.changeFlags.lowLightVision ||
+      this.system.changeFlags.seeInvisibility ||
+      this.system.changeFlags.seeInDarkness
+    ) {
+      return true;
+    }
+
+    return this.system.changes.some((change) => pf1.config.buffTargets[change.target]?.category === "senses");
+  }
+
+  /**
+   * Determine whether a given change set affect senses
+   *
+   * @static
+   * @param {object} changes - An object containing changeFlags and changes to be inspected.
+   * @returns {boolean}
+   * @internal
+   */
+  static _hasVisionUpdate(changes) {
+    if (
+      changes.system?.changeFlags?.lowLightVision !== undefined ||
+      changes.system?.changeFlags?.seeInvisibility !== undefined ||
+      changes.system?.changeFlags?.seeInDarkness !== undefined
+    ) {
+      return true;
+    }
+
+    return (
+      changes.system?.changes?.some((change) => pf1.config.buffTargets[change.target]?.category === "senses") || false
+    );
+  }
+
+  /**
    * @override
    * @param {object} changed
    * @param {object} context
@@ -1141,6 +1184,19 @@ export class ItemPF extends ItemBasePF {
       if (level.new !== undefined && level.new !== level.previous) {
         this.executeScriptCalls("changeLevel", { level });
       }
+    }
+
+    if (
+      // Item contains a vision change and active state was toggled
+      (changed?.system?.active !== undefined && this.adjustsVision) ||
+      // Item contains a new or updated vision change
+      this.constructor._hasVisionUpdate(changed) ||
+      // Item contained a vision change that was removed
+      (context.adjustedVision && !this.adjustsVision)
+    ) {
+      const initializeVision = true;
+      const refreshLighting = this.system.changeFlags.lowLightVision || false;
+      this.actor.updateVision(initializeVision, refreshLighting);
     }
 
     // Forget memory variables

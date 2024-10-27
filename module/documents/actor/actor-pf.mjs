@@ -544,6 +544,22 @@ export class ActorPF extends ActorBasePF {
       if (this.system.attributes.bab.value) this.system.attributes.bab.total += this.system.attributes.bab.value ?? 0;
     }
 
+    // Refresh senses
+    for (const [senseId, sense] of Object.entries(this.system.traits.senses)) {
+      if (typeof sense !== "object") continue;
+
+      switch (senseId) {
+        case "ll":
+        case "si":
+        case "sid":
+          break;
+
+        default:
+          sense.total = sense.value;
+          break;
+      }
+    }
+
     this._prepareClassSkills();
 
     // Reset HD
@@ -1586,6 +1602,12 @@ export class ActorPF extends ActorBasePF {
       });
     }
 
+    // Enable senses based on flags
+    const senses = this.system.traits.senses;
+    senses.ll.enabled ||= this.changeFlags.lowLightVision;
+    senses.si ||= this.changeFlags.seeInvisibility;
+    senses.sid ||= this.changeFlags.seeInDarkness;
+
     this.updateSpellbookInfo();
   }
 
@@ -2228,6 +2250,37 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
+   * Synchronize actor and token vision
+   *
+   * @internal
+   * @param {boolean} initializeVision
+   * @param {boolean} refreshLighting
+   */
+  updateVision(initializeVision = false, refreshLighting = false) {
+    if (this.testUserPermission(game.user, "OBSERVER")) {
+      const visionUpdate = {
+        refreshLighting: true,
+        refreshVision: true,
+      };
+
+      // Ensure vision immediately updates
+      if (initializeVision) {
+        for (const token of this.getActiveTokens(false, true)) {
+          token._syncSenses();
+        }
+        visionUpdate.initializeVision = true;
+      }
+
+      // Ensure LLV functions correctly
+      if (refreshLighting) {
+        visionUpdate.initializeLighting = true;
+      }
+
+      canvas.perception.update(visionUpdate, true);
+    }
+  }
+
+  /**
    * @override
    * @param {object} changed
    * @param {object} context
@@ -2255,27 +2308,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (initializeVision || refreshLighting) {
-      if (this.testUserPermission(game.user, "OBSERVER")) {
-        const visionUpdate = {
-          refreshLighting: true,
-          refreshVision: true,
-        };
-
-        // Ensure vision immediately updates
-        if (initializeVision) {
-          for (const token of this.getActiveTokens(false, true)) {
-            token._syncSenses();
-          }
-          visionUpdate.initializeVision = true;
-        }
-
-        // Ensure LLV functions correctly
-        if (refreshLighting) {
-          visionUpdate.initializeLighting = true;
-        }
-
-        canvas.perception.update(visionUpdate, true);
-      }
+      this.updateVision(initializeVision, refreshLighting);
     }
 
     if (sourceUser) {

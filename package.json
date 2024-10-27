@@ -39,10 +39,10 @@
   },
   "lint-staged": {
     "*.{mjs,js}": "eslint --cache --fix",
-    "*.d.ts": "prettier --write",
-    "*.json": "prettier --write",
-    "*.less": "prettier --write",
-    "*.md": "prettier --write"
+    "*.d.ts": "prettier --write --cache",
+    "*.{json,yaml}": "prettier --write --cache",
+    "*.less": "prettier --write --cache",
+    "*.md": "prettier --write --cache"
   },
   "scripts": {
     "prebuild": "npm run link jsconfig && npm run packs:compile",
@@ -60,7 +60,6 @@
     "lint:ci": "eslint --quiet .",
     "format": "prettier --write --cache .",
     "format:check": "prettier --cache --check .",
-    "format:ci": "prettier --check .",
     "link": "node ./tools/link.mjs",
     "docs": "typedoc --plugin typedoc-plugin-missing-exports",
     "patch": "node ./tools/release.mjs patch",

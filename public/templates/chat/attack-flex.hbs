@@ -1,0 +1,230 @@
+{{!-- Apply full damage --}}
+{{#*inline "applyFullButton"}}
+  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{damage}}"
+    data-tooltip="{{#if isHealing}}PF1.ApplyHealing{{else}}PF1.ApplyDamage{{/if}}" data-tags="{{#if nonlethal}}nonlethal{{/if}}">
+    <i class="fas fa-hammer"></i>
+    <i class="absolute fas fa-plus"></i>
+  </a>
+{{/inline}}
+{{!-- Apply half damage --}}
+{{#*inline "applyHalfButton"}}
+  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{halfNumber damage}}"
+    data-tooltip="PF1.ApplyHalf" data-tags="{{#if nonlethal}}nonlethal{{/if}}">
+    <i class="fas fa-hammer"></i>
+    <i class="absolute">½</i>
+  </a>
+{{/inline}}
+
+{{#*inline "totalDamage"}}
+{{!> applyFullButton damage=damage.total isHealing=isHealing nonlethal=nonlethal}}
+<span class="total" data-tooltip="{{#if isHealing}}{{localize "PF1.TotalHealing"}}{{else}}{{localize "PF1.TotalDamage"}}{{/if}}<br><br>
+  {{#each (sortedDamageTypes this critical)}}
+    {{#with (lookup @root.damageTypes type)}}<label>{{../total}} {{localize name}}</label>{{/with}}{{#unless @last}}<br>{{/unless}}
+  {{/each}}">
+  <i class="ra ra-health-{{#if isHealing}}increase{{else}}decrease{{/if}}"></i>
+  <span class="value">{{damage.total}}</span>
+</span>
+{{!> applyHalfButton damage=damage.total isHealing=isHealing nonlethal=nonlethal}}
+{{/inline}}
+
+{{#*inline "damageIcons"}}
+<span class="types">
+  {{#each (sortedDamageTypes this critical)}}
+    {{#with (lookup @root.damageTypes type)}}
+      <span class="type visual {{../type}}" data-damage-type="{{../type}}"
+      data-tooltip="{{../total}} {{localize name}}">
+        {{#if icon}}
+        <i class="{{icon}} icon" style="color:{{color}}"></i>
+        {{else}}
+        <img class="icon" src="{{img}}">
+        {{/if}}
+      </span>
+    {{/with}}
+  {{/each}}
+  </span>
+</span>
+{{/inline}}
+
+{{!-- Damage row partial --}}
+{{#*inline "damagePart"}}
+<div class="part">
+  <span class="roll">
+    <a class="inline-roll inline-dsn-hidden inline-result" data-tooltip="{{dr.formula}}" data-tooltip-direction="UP"
+      data-roll="{{json-string dr}}">
+      <i class="fas fa-dice-d20"></i>
+      <span class="total">{{dr.total}}</span>
+    </a>
+  </span>
+  <span class="types">
+    {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=dr.damageType damageTypes=@root.damageTypes}}
+  </span>
+</div>
+{{/inline}}
+
+{{#*inline "attackRoll"}}
+{{#with atk}}
+<!--span class="flavor">{{flavor}}</span-->
+
+{{! Attack Check }}
+<a class="attack-check inline-roll inline-dsn-hidden inline-result{{#if isNat20}} natural-20 success{{/if}}{{#if isNat1}} natural-1 failure{{/if}}{{#if (and (not ../critical) isCrit)}} critical-threat{{/if}}"
+  data-tooltip="{{formula}}" data-tooltip-direction="UP" data-roll="{{json-string this}}">
+  <span class="parts">
+    <span class="natural">{{natural}}</span>
+    <span class="bonus">{{bonus}}</span>
+  </span>
+  <span class="total">{{total}}</span>
+</a>
+{{/with}}
+{{/inline}}
+
+{{!-- Attack sub-instance (check + damage) --}}
+{{#*inline "attackInstance"}}
+<h2 class="instance">
+  {{! Attack Roll }}
+  <div class='check'>
+    <span class="flavor">{{attack.flavor}}</span>
+
+    <div class="rolls">
+      {{> attackRoll atk=attack critical=critical}}
+      {{#if d20}}<i class="fas fa-dice-d20" data-tooltip="PF1.CustomRollDesc" data-tooltip-direction="UP"></i>{{/if}}
+    </div>
+  </div>
+
+  {{! Damage }}
+  {{#if hasDamage}}
+  <div class='damage'>
+    <div class='summary'>
+      {{! Types }}
+      <span class='types'>
+        TYPES EEEEE
+      </span>
+
+      {{! Total Damage }}
+      {{> totalDamage attack=atk critical=false}}
+    </div>
+
+    <div class="details">
+      {{! Damage Parts }}
+      <div class="parts hidden">
+        {{#each atk.damageRows as |dr|}}
+        {{> damagePart atk=../atk dr=dr.normal critical=../critical}}
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</h2>
+{{/inline}}
+
+{{!-- Attack rolls (attack check, damage, & critical) --}}
+{{#*inline "attackRolls"}}
+{{#if atk.hasAttack}}
+<div class="attack">
+  {{! Normal Attack }}
+  <div class="normal attack-instance">
+    {{> attackInstance attack=atk.attack critical=false d20=atk.rollData.d20 hasDamage=atk.hasDamage}}
+  </div>
+
+  {{! Critical Attack }}
+  {{#if atk.hasCritConfirm}}
+  <div class="critical crit-confirm attack-instance">
+    {{> attackInstance attack=atk.critConfirm critical=true d20=atk.rollData.d20 hasDamage=atk.hasDamage}}
+  </div>
+  {{/if}}
+</div>
+{{else if atk.hasDamage}}
+{{! Damage Only }}
+<div class="damage">
+  <h2 class="damage-header">
+    <span class="flavor">{{atk.label}}</span>
+  </h2>
+
+  {{! Total Damage }}
+  <h3 class="total">
+    {{> totalDamage attack=atk critical=false}}
+  </h3>
+
+  {{! Damage Parts }}
+  <div class="parts hidden">
+    {{#each atk.damageRows as |dr|}}
+    {{> damagePart atk=../atk dr=dr.normal critical=false}}
+    {{/each}}
+  </div>
+</div>
+{{else}}
+{{! Passive }}
+<p>I'm a passive?</p>
+{{/if}}
+
+{{!-- Ammo --}}
+{{#if atk.ammo}}
+  <div class="ammo group-container" data-ammo-id="{{atk.ammo.id}}">
+    <label class="group-title">{{localize "PF1.LootTypeAmmoSingle"}}</label>
+    <img src="{{atk.ammo.img}}" />
+    <span class="name">{{atk.ammo.name}}</span>
+
+    {{!-- Recover --}}
+    <a class="inline-action" data-action="recoverAmmo" data-tooltip="PF1.RecoverAmmunition">
+      <i class="fas fa-rocket"></i>
+    </a>
+
+    {{!-- Force Recover --}}
+    <a class="inline-action" data-action="forceRecoverAmmo" data-tooltip="PF1.ForceRecover">
+      <i class="fas fa-rocket"></i>
+      <i class="absolute fas fa-plus"></i>
+    </a>
+  </div>
+{{/if}}
+{{/inline}}
+
+<div class="pf1 chat-card attack item-card"
+	data-actor-id="{{actor._id}}" data-item-id="{{item._id}}" {{#if actionId}}data-action-id="{{actionId}}"{{/if}}
+	{{#if tokenUuid}}data-token-uuid="{{tokenUuid}}"{{/if}}>
+  {{~> "systems/pf1/templates/chat/parts/attack-roll-header.hbs"}}
+
+  {{#if targets}}
+  {{> "systems/pf1/templates/chat/parts/attack-roll-targets.hbs"}}
+  {{/if}}
+
+  {{#each attacks as |atk idx|}}
+  <div class="chat-attack instance" data-index="{{idx}}">
+    {{> attackRolls atk=atk}}
+
+    {{#if atk.hasCards}}
+    <hr>
+
+    {{! Buttons }}
+    <div class="flexcol card-buttons">
+      {{#each atk.cards as |cardGroup|}}
+      <div class="card-button-group flexcol">
+        <label>{{cardGroup.label}}</label>
+        <div class="flexrow">
+        {{#each cardGroup.items as |item|}}
+          <button data-action="{{item.action}}" data-value="{{item.value}}" data-tags="{{item.tags}}"{{#if item.data}}{{#each item.data as |dValue dKey|}} data-{{dKey}}="{{dValue}}"{{/each}}{{/if}}>{{item.label}}</button>
+        {{/each}}
+        </div>
+      </div>
+      {{/each}}
+      {{#if ../hasSave}}
+      {{! Save Button }}
+      <button data-action="save" data-dc="{{../save.dc}}" data-type="{{../save.type}}"
+        {{#if ../save.gmSensitiveLabel}} data-gm-sensitive-inner="{{../save.gmSensitiveLabel}}"{{/if}}
+        data-tags="{{item.tags}}">{{../save.label}}</button>
+      {{/if}}
+    </div>
+    {{else}}
+    <div class="card-button-group flexcol">
+      {{#if ../hasSave}}
+      <button data-action="save" data-dc="{{../save.dc}}" data-type="{{../save.type}}"
+        {{#if ../save.gmSensitiveLabel}} data-gm-sensitive-inner="{{../save.gmSensitiveLabel}}"{{/if}}
+        data-tags="{{item.tags}}">{{../save.label}}</button>
+      {{/if}}
+    </div>
+    {{/if}}
+
+    {{{atk.effectNotesHTML}}}
+  </div>
+  {{/each}}
+
+  {{~> "systems/pf1/templates/chat/parts/attack-roll-footer.hbs"}}
+</div>

@@ -186,7 +186,7 @@ export class ChatAttack {
       }
 
       // Add tooltip
-      roll.options.flavor = critical ? game.i18n.localize("PF1.CriticalConfirmation") : this.label;
+      roll.options.flavor = critical ? game.i18n.localize("PF1.Critical") : this.label;
     }
   }
 

@@ -1,7 +1,280 @@
+// Old attack cards
 .chat-message .pf1 {
   table {
     td {
       padding: 0;
+    }
+  }
+}
+
+.pf1.chat-card.attack {
+  .chat-attack {
+    &.instance {
+      h2,
+      h3 {
+        margin: 0;
+        text-align: center;
+      }
+
+      h2 {
+        background: rgba(0, 0, 0, 0.35);
+        color: var(--color-text-light-highlight);
+        text-shadow: 1px 1px var(--color-shadow-dark);
+        border-bottom: 1px solid var(--color-border-dark);
+      }
+
+      // Name (header)
+      h2 {
+        font-size: var(--font-size-16, 12pt);
+      }
+
+      // Damage
+      h3 {
+        font-size: var(--font-size-14, 10pt);
+        background: rgba(0, 0, 0, 0.2);
+
+        &.total {
+          font-size: var(--font-size-14, 10pt);
+          background: rgba(0, 0, 0, 0.12);
+        }
+      }
+
+      .attack-check {
+        font-size: var(--font-size-16, 14pt);
+        text-shadow: none;
+
+        display: inline-flex;
+        align-items: center;
+        text-align: center;
+        color: black;
+
+        padding: 0 3px;
+
+        border: 1px solid var(--pf1-card-attack-check-border);
+        border-bottom-left-radius: 7px;
+
+        .parts {
+          .natural {
+            font-weight: bold;
+            background: url(../../../icons/svg/d20-grey.svg) no-repeat;
+            background-size: contain;
+            mix-blend-mode: color-burn;
+            filter: drop-shadow(0 0 1px #333);
+
+            width: 1.25em;
+            height: 1.25em;
+            display: inline-block;
+          }
+          .bonus {
+            vertical-align: super;
+            font-size: var(--font-size-11, 8pt);
+          }
+
+          &::after {
+            content: "⇒";
+          }
+        }
+
+        .total {
+          font-weight: bold;
+          min-width: 1.25em;
+        }
+      }
+
+      .damage {
+        color: black;
+        text-shadow: none;
+      }
+
+      // Normal and Critical attack panels
+      .attack {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 1px;
+
+        .attack-instance {
+          &.critical {
+            margin-left: 1rem;
+          }
+
+          .instance {
+            display: flex;
+            text-align: unset;
+            border: unset;
+            align-items: center;
+            flex-flow: row wrap;
+
+            .check {
+              display: flex;
+              flex-flow: row nowrap;
+              flex: 1 100%;
+            }
+
+            .damage {
+              flex: 1 100%;
+
+              > .summary {
+                display: flex;
+                //flex-flow: row nowrap;
+                //flex: 1 100%;
+                gap: 3px;
+                justify-content: flex-end;
+              }
+
+              > .details {
+                display: flex;
+                flex-flow: row;
+                flex: 1 100%;
+              }
+            }
+
+            .flavor {
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+              padding-left: 3px;
+              flex: 1;
+            }
+          }
+
+          &.critical .instance {
+            background: var(--pf1-card-attack-critical-bg);
+          }
+
+          .rolls {
+            background: var(--pf1-card-attack-rolls-bg);
+            border-bottom-left-radius: 10px;
+          }
+        }
+      }
+
+      .rolls {
+        display: flex;
+
+        .damage .total,
+        .inline-roll {
+          &:hover {
+            text-shadow: 0 0 8px var(--color-shadow-primary);
+
+            .dice-tooltip {
+              text-shadow: none;
+            }
+          }
+        }
+      }
+
+      .attack-header,
+      .damage-header {
+        justify-content: space-between;
+        padding: 1px;
+
+        align-items: center;
+
+        .rolls {
+          display: flex;
+          color: var(--color-text-dark-primary);
+          text-shadow: none;
+        }
+      }
+
+      .attack .attack-header,
+      .damage .total {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        //padding: 1px 3px;
+        gap: 3px;
+        border: unset;
+      }
+
+      .damage .total {
+        justify-content: right;
+      }
+
+      .damage {
+        //display: flex;
+        //flex-flow: row nowrap;
+        //gap: 2px;
+
+        .icon {
+          background-color: unset;
+          text-shadow: var(--pf1-card-damage-icon-shadow);
+        }
+
+        .total {
+          display: flex;
+          flex-flow: row nowrap;
+          gap: 2px;
+
+          min-width: 3em;
+          justify-content: space-between;
+          text-shadow: none;
+
+          height: 100%;
+          border: 1px solid var(--pf1-card-attack-damage-border);
+          border-bottom-left-radius: 7px;
+          background: var(--pf1-card-attack-damage-bg);
+          white-space: nowrap;
+          padding: 0 0.2em;
+          align-items: center;
+
+          .value {
+            font-size: var(--font-size-16, 14pt);
+          }
+
+          .inline-action {
+            visibility: collapse;
+            pointer-events: none;
+          }
+          &:hover {
+            .inline-action {
+              visibility: visible;
+              pointer-events: initial;
+            }
+          }
+        }
+
+        .parts {
+          display: flex;
+          flex-flow: column nowrap;
+          justify-content: center;
+
+          &.hidden {
+            display: none;
+          }
+
+          .part {
+            display: flex;
+            flex-flow: row nowrap;
+            gap: 3px;
+
+            align-items: center;
+            justify-content: center;
+
+            line-height: 1.7em;
+
+            &:nth-child(even) {
+              background-color: rgba(0, 0, 0, 0.05);
+            }
+
+            .types {
+              .damage-type-visual {
+                height: unset;
+                line-height: unset;
+              }
+              gap: 2px;
+            }
+          }
+        }
+      }
+
+      .effect-notes {
+        border-radius: 0 0 5px 5px;
+        border-style: solid;
+        border-color: rgba(0, 0, 0, 0.35);
+        border-width: 0 1px 1px 1px;
+        padding: 2px 3px;
+      }
     }
   }
 }

@@ -781,6 +781,14 @@ export const encumbranceMultipliers = {
 };
 
 /**
+ * Item Modifiers based on their enhancement bonus
+ */
+export const itemEnhancementMods = {
+  hp: 10,
+  hardness: 2,
+};
+
+/**
  * Damage multipliers from ability score.
  */
 export const abilityDamageMultipliers = [

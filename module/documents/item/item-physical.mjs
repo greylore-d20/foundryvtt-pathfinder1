@@ -238,7 +238,7 @@ export class ItemPhysicalPF extends ItemPF {
 
     itemData.hardness = {
       base: itemData.hardness || 0,
-      total: (itemData.hardness || 0) + 2 * (itemData.enh || 0),
+      total: (itemData.hardness || 0) + pf1.config.itemEnhancementMods.hardness * (itemData.enh || 0),
     };
   }
 

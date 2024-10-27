@@ -703,7 +703,7 @@ export class ItemSheetPF extends ItemSheet {
       weaponGroups: pf1.config.weaponGroups,
       weaponProf: pf1.config.weaponProficiencies,
       creatureTypes: pf1.config.creatureTypes,
-      creatureSubTypes: pf1.config.creatureSubTypes,
+      creatureSubtypes: pf1.config.creatureSubtypes,
     };
 
     for (const [t, choices] of Object.entries(profs)) {

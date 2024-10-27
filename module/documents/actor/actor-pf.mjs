@@ -1306,7 +1306,7 @@ export class ActorPF extends ActorBasePF {
       weaponProf: pf1.config.weaponProficiencies,
       languages: pf1.config.languages,
       creatureTypes: pf1.config.creatureTypes,
-      creatureSubTypes: pf1.config.creatureSubTypes,
+      creatureSubtypes: pf1.config.creatureSubtypes,
     };
 
     const validItems = this.items.filter((i) => i.isActive);

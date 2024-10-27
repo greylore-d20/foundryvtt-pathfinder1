@@ -1677,13 +1677,13 @@ const _migrateCreatureType = (itemData, updateData) => {
     };
     for (const subType of itemData.system.subTypes) {
       const lowerCaseKey = subType.charAt(0).toLowerCase() + subType.slice(1).replace(" ", "");
-      if (pf1.config.creatureSubTypes[lowerCaseKey]) {
+      if (pf1.config.creatureSubtypes[lowerCaseKey]) {
         subTypeData.value.push(lowerCaseKey);
       } else {
         subTypeData.custom.push(subType);
       }
     }
-    updateData["system.creatureSubTypes"] = subTypeData;
+    updateData["system.creatureSubtypes"] = subTypeData;
     updateData["system.-=subTypes"] = null;
   }
 };

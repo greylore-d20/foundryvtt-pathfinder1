@@ -2583,7 +2583,7 @@ export const creatureTypes = {
  *
  * @type {Record<subtype, string>}
  */
-export const creatureSubTypes = {
+export const creatureSubtypes = {
   adlet: "PF1.CreatureSubTypes.adlet",
   aeon: "PF1.CreatureSubTypes.aeon",
   aether: "PF1.CreatureSubTypes.aether",

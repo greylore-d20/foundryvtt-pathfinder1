@@ -903,6 +903,16 @@
       "scriptCalls": {
         "scriptCalls": []
       },
+      "creatureType": {
+        "creatureTypes": {
+          "value": ["humanoid"],
+          "custom": []
+        },
+        "creatureSubtypes": {
+          "value": [],
+          "custom": []
+        }
+      },
       "resource": {
         "uses": {
           "value": null,
@@ -1068,7 +1078,8 @@
         "links",
         "tagged",
         "flags",
-        "scriptCalls"
+        "scriptCalls",
+        "creatureType"
       ],
       "subType": "temp",
       "active": false,
@@ -1120,7 +1131,8 @@
         "scriptCalls",
         "enhancable",
         "hasAttack",
-        "ammo"
+        "ammo",
+        "creatureType"
       ],
       "subType": "armor",
       "slot": "slotless",
@@ -1160,7 +1172,8 @@
         "tagged",
         "proficiencies",
         "flags",
-        "scriptCalls"
+        "scriptCalls",
+        "creatureType"
       ],
       "subType": "feat",
       "traitType": "",
@@ -1310,8 +1323,16 @@
       "showInQuickbar": true
     },
     "race": {
-      "templates": ["description", "changes", "contextNotes", "links", "proficiencies", "flags", "scriptCalls"],
-      "creatureType": "humanoid",
+      "templates": [
+        "description",
+        "changes",
+        "contextNotes",
+        "links",
+        "proficiencies",
+        "flags",
+        "scriptCalls",
+        "creatureType"
+      ],
       "size": "med",
       "speeds": {
         "land": null,
@@ -1320,8 +1341,7 @@
         "swim": null,
         "climb": null,
         "burrow": null
-      },
-      "subTypes": []
+      }
     },
     "implant": {
       "templates": [

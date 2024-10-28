@@ -53,6 +53,7 @@ const templatePaths = /** @type {const} */ ([
   "systems/pf1/templates/items/parts/item-notes.hbs",
   "systems/pf1/templates/items/parts/item-proficiencies.hbs",
   "systems/pf1/templates/items/parts/item-class-skills.hbs",
+  "systems/pf1/templates/items/parts/item-creature-type.hbs",
   "systems/pf1/templates/items/parts/item-conditions.hbs",
   "systems/pf1/templates/items/parts/item-size.hbs",
   "systems/pf1/templates/items/parts/item-tag.hbs",

@@ -702,6 +702,8 @@ export class ItemSheetPF extends ItemSheet {
       subschool: pf1.config.spellSubschools,
       weaponGroups: pf1.config.weaponGroups,
       weaponProf: pf1.config.weaponProficiencies,
+      creatureTypes: pf1.config.creatureTypes,
+      creatureSubtypes: pf1.config.creatureSubtypes,
     };
 
     for (const [t, choices] of Object.entries(profs)) {

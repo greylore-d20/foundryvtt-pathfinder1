@@ -216,17 +216,17 @@ export class ItemBuffPF extends ItemPF {
   }
 
   /**
-   * Duration of the buff in seconds.
+   * Evaluated duration of the buff in seconds.
    *
    * @internal
-   * @param {object} [options]
-   * @param {object} [options.rollData]
-   * @returns {number|null} Duration in seconds or null if if it has no duration.
+   * @param {object} [options] - Additional options
+   * @param {object} [options.rollData] - Roll data
+   * @returns {number|undefined} - Duration in seconds or undefined if it has no finite duration.
    */
   async getDuration({ rollData } = {}) {
     const duration = this.system.duration ?? {};
     const { units, value: formula } = duration;
-    if (!units) return null;
+    if (!units) return;
 
     rollData ??= this.getRollData();
 
@@ -242,7 +242,7 @@ export class ItemBuffPF extends ItemPF {
       const duration = droll.total;
       switch (units) {
         case "hour":
-          seconds = duration * 60 * 60;
+          seconds = duration * 3_600;
           break;
         case "minute":
           seconds = duration * 60;

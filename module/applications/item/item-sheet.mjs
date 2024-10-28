@@ -659,6 +659,18 @@ export class ItemSheetPF extends ItemSheet {
 
     if (this.item.type === "buff") {
       context.noDurationTiming = !itemData.duration.units || itemData.duration.units === "turn";
+
+      if (this.item.isActive) {
+        const seconds = this.item.effect?.duration?.seconds;
+        if (seconds > 0) {
+          // TODO: Make this duration be displayed in appropriate units if it's long.
+          const rounds = Math.floor(seconds / CONFIG.time.roundTime);
+          context.labels.duration = {
+            value: rounds,
+            unit: pf1.config.timePeriods.round,
+          };
+        }
+      }
     }
 
     // Prepare class specific stuff

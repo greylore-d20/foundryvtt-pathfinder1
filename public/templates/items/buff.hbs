@@ -13,17 +13,23 @@
       {{~> "systems/pf1/templates/internal/content-source-view.hbs"}}
 
       <ul class="summary">
-        <li data-tooltip="@item.level : {{#if system.level}}{{system.level}}{{else}}0{{/if}}">
+        <li class="level" data-tooltip="@item.level : {{#if system.level}}{{system.level}}{{else}}0{{/if}}">
           <label>
             {{localize "PF1.Level"}}:
             <input class="value level blended" type="text" name="system.level" data-dtype="Number" value="{{system.level}}" placeholder="0">
           </label>
         </li>
-        <li>
+        <li class="active">
           <label>
             <input type="checkbox" name="system.active" {{checked system.active}}> {{localize "PF1.Active"}}
           </label>
         </li>
+        {{#if labels.duration}}
+        <li class="duration" data-tooltip="PF1.ActiveDurationHint">
+          <label>{{labels.duration.unit}}:</label>
+          <span>{{labels.duration.value}}</span>
+        </li>
+        {{/if}}
       </ul>
     </div>
   </header>

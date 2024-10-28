@@ -469,6 +469,32 @@ export const actorSizes = {
 };
 
 /**
+ * Possible creature age categories
+ */
+export const ageCategories = {
+  young: {
+    label: "PF1.AgeCategories.young",
+    modifiers: { str: -2, dex: 2, con: -2, int: 0, wis: -2, cha: 0 },
+  },
+  adult: {
+    label: "PF1.AgeCategories.adult",
+    modifiers: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
+  },
+  middleAge: {
+    label: "PF1.AgeCategories.middleAge",
+    modifiers: { str: -1, dex: -1, con: -1, int: 1, wis: 1, cha: 1 },
+  },
+  old: {
+    label: "PF1.AgeCategories.old",
+    modifiers: { str: -3, dex: -3, con: -3, int: 2, wis: 2, cha: 2 },
+  },
+  venerable: {
+    label: "PF1.AgeCategories.venerable",
+    modifiers: { str: -6, dex: -6, con: -6, int: 3, wis: 3, cha: 3 },
+  },
+};
+
+/**
  * Armor & shield cost multipliers for different creature sizes.
  *
  * @see https://aonprd.com/Rules.aspx?Name=Armor%20for%20Unusual%20Creatures&Category=Armor
@@ -2317,6 +2343,19 @@ export const buffTargets = /** @type {const} */ ({
   },
   carryStr: { label: "PF1.CarryStrength", category: "misc", sort: 60000, filters: { ...baseActorFilters() } },
   carryMult: { label: "PF1.CarryMultiplier", category: "misc", sort: 61000, filters: { ...baseActorFilters() } },
+  ageCategory: { label: "PF1.AgeCategory.Base", category: "misc", sort: 62000, filters: { ...baseActorFilters() } },
+  ageCategoryPhysical: {
+    label: "PF1.AgeCategory.Physical",
+    category: "misc",
+    sort: 62250,
+    filters: { ...baseActorFilters() },
+  },
+  ageCategoryMental: {
+    label: "PF1.AgeCategory.Mental",
+    category: "misc",
+    sort: 62500,
+    filters: { ...baseActorFilters() },
+  },
   strSkills: { label: "PF1.BuffTarStrSkills", category: "skills", sort: 70000 }, // TODO: Should be deferred
   dexSkills: { label: "PF1.BuffTarDexSkills", category: "skills", sort: 71000 }, // TODO: Should be deferred
   conSkills: { label: "PF1.BuffTarConSkills", category: "skills", sort: 72000 }, // TODO: Should be deferred

@@ -1648,6 +1648,14 @@ export class ActorSheetPF extends ActorSheet {
       case "size":
         paths.push({ path: "@traits.size", value: system.traits.size }, { path: "@size", value: lazy.rollData.size });
         break;
+      case "age-category":
+        paths.push(
+          { path: "@traits.ageCategory.base", value: system.traits.ageCategory.base },
+          { path: "@ageCategory.value", value: lazy.rollData.ageCategory.value },
+          { path: "@ageCategory.physical", value: lazy.rollData.ageCategory.physical },
+          { path: "@ageCategory.mental", value: lazy.rollData.ageCategory.mental }
+        );
+        break;
       case "stature":
         paths.push({ path: "@traits.stature", value: system.traits.stature });
         break;

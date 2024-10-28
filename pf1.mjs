@@ -472,7 +472,13 @@ Hooks.once("i18nInit", function () {
   }
 
   // Localize buff targets
-  const localizeLabels = ["buffTargets", "buffTargetCategories", "contextNoteTargets", "contextNoteCategories"];
+  const localizeLabels = [
+    "buffTargets",
+    "buffTargetCategories",
+    "contextNoteTargets",
+    "contextNoteCategories",
+    "ageCategories",
+  ];
   for (const l of localizeLabels) {
     for (const [k, v] of Object.entries(pf1.config[l])) {
       pf1.config[l][k].label = game.i18n.localize(v.label);

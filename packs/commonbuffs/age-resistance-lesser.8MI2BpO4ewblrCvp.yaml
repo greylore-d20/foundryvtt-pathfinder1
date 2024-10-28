@@ -1,0 +1,21 @@
+_id: 8MI2BpO4ewblrCvp
+_key: '!items!8MI2BpO4ewblrCvp'
+img: systems/pf1/icons/misc/magic-swirl.png
+name: Age Resistance, Lesser
+system:
+  changes:
+    - _id: zVCpjEGH
+      formula: min(@abilities.str.base, lookup(@ageCategory.physical, 0, 0, 1, 1, 1))
+      target: str
+      type: untyped
+    - _id: Hh6IsAYr
+      formula: min(@abilities.dex.base, lookup(@ageCategory.physical, 0, 0, 1, 1, 1))
+      target: dex
+      type: untyped
+    - _id: ieYso59a
+      formula: min(@abilities.con.base, lookup(@ageCategory.physical, 0, 0, 1, 1, 1))
+      target: con
+      type: untyped
+  description:
+    value: <p>You ignore the physical detriments of being middle-aged.</p>
+type: buff

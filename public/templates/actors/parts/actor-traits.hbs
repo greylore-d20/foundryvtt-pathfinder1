@@ -13,6 +13,13 @@
     </select>
   </div>
 
+  <div class="form-group age-category" data-tooltip-extended="age-category">
+    <label>{{localize "PF1.AgeCategory.Base"}}</label>
+    <select name="system.traits.ageCategory.base">
+      {{selectOptions config.ageCategories selected=system.traits.ageCategory.base labelAttr="label"}}
+    </select>
+  </div>
+
   <div class="form-group senses" data-tooltip-extended="senses">
     <label>{{localize "PF1.Senses"}}</label>
     <ul class="traits-list tag-list">

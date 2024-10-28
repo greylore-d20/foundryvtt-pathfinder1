@@ -159,6 +159,7 @@ export class ItemPF extends ItemBasePF {
    * @param {User} user
    */
   async _preUpdate(changed, context, user) {
+    context.adjustedSize = this.adjustsSize;
     context.adjustedVision = this.adjustsVision;
 
     await super._preUpdate(changed, context, user);
@@ -1106,6 +1107,29 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
+   * Determine whether this item adjusts actor size
+   *
+   * @type {boolean}
+   * @readonly
+   * @private
+   */
+  get adjustsSize() {
+    return this.changes.some((change) => ["size", "tokenSize"].includes(change.target));
+  }
+
+  /**
+   * Determine whether a given change set affects size
+   *
+   * @static
+   * @param {object} base
+   * @returns {boolean}
+   * @internal
+   */
+  static _hasSizeUpdate(base) {
+    return base.system?.changes?.some((change) => ["size", "tokenSize"].includes(change.target)) || false;
+  }
+
+  /**
    * Determine whether this item adjusts senses
    *
    * @type {boolean}
@@ -1165,6 +1189,17 @@ export class ItemPF extends ItemBasePF {
     if (state != null) {
       const startTime = this.effect?.duration.startTime ?? game.time.worldTime;
       this.executeScriptCalls("toggle", { state, startTime });
+    }
+
+    if (
+      // Item contains a size change and active state was toggled
+      (changed?.system?.active !== undefined && this.adjustsSize) ||
+      // Item contains a new or updated size change
+      this.constructor._hasSizeUpdate(changed) ||
+      // Item contained a size change that was removed
+      (context.adjustedSize && !this.adjustsSize)
+    ) {
+      this.actor.updateTokenSize();
     }
 
     if (this._memoryVariables) this._onMemorizedUpdate(changed, context);

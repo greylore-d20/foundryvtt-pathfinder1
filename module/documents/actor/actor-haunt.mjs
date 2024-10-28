@@ -148,9 +148,9 @@ export class ActorHauntPF extends ActorNPCPF {
     /* Set the following data on a refresh
     /* ----------------------------- */
 
-    // Set size index
-    const sizeChart = Object.keys(pf1.config.sizeChart);
-    result.size = sizeChart.indexOf(result.traits.size);
+    // Spoof size as Medium instead of letting it fail to Fine
+    result.size = 4;
+    result.tokenSize = 4;
 
     // Add item dictionary flags
     result.dFlags = this.itemFlags?.dictionary ?? {};

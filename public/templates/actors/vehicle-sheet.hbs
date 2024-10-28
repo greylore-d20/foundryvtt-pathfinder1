@@ -22,13 +22,13 @@
           {{! Vehicle Size }}
           <li data-tooltip="{{localize "PF1.Size"}}">
             <label>{{localize "PF1.Size"}}</label>
-            <select name="system.traits.size">
-              {{selectOptions @root.vehicleSizes selected=system.traits.size}}
+            <select name="system.traits.size.base">
+              {{selectOptions @root.vehicleSizes selected=system.traits.size.base}}
             </select>
           </li>
           {{! Space }}
           <li data-tooltip="{{localize "PF1.Vehicles.OccupiedSpace"}}">
-            <label>{{#with (lookup config.vehicles.size system.traits.size) as |vehicle|}}{{vehicle.space}}{{/with}}</label>
+            <label>{{#with (lookup config.vehicles.size system.traits.size.base) as |vehicle|}}{{vehicle.space}}{{/with}}</label>
           </li>
           {{! Cost }}
           <li>

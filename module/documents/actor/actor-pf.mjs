@@ -1374,8 +1374,8 @@ export class ActorPF extends ActorBasePF {
       genAtk = this.system.attributes.attack.general ?? 0,
       cmbAbl = this.system.attributes.cmbAbility,
       cmbAblMod = this.system.abilities[cmbAbl]?.mod ?? 0,
-      size = this.system.traits.size,
-      szCMBMod = pf1.config.sizeSpecialMods[size] ?? 0,
+      size = this.system.traits.size.value,
+      szCMBMod = Object.values(pf1.config.sizeSpecialMods)[size] ?? 0,
       cmbBonus = this.system.attributes.cmb.bonus ?? 0,
       cmb = shrAtk + genAtk + szCMBMod + cmbBonus + cmbAblMod;
     this.system.attributes.cmb.total = cmb;
@@ -2122,6 +2122,32 @@ export class ActorPF extends ActorBasePF {
     return 0; // Only used by PCs
   }
 
+  /**
+   * Create a new Token document, not yet saved to the database, which represents the Actor, and apply actor size to it.
+   *
+   * @override
+   * @param {object} [data={}]            Additional data, such as x, y, rotation, etc. for the created token data
+   * @param {object} [options={}]         The options passed to the TokenDocument constructor
+   * @returns {Promise<TokenDocumentPF>}  The created TokenDocument instance
+   */
+  async getTokenDocument(data = {}, options = {}) {
+    if (!this.prototypeToken.flags?.pf1?.staticSize) {
+      const size = Object.values(pf1.config.tokenSizes)[this.getRollData({ refresh: true }).tokenSize];
+      if (size) {
+        Object.assign(data, {
+          width: size.w,
+          height: size.h,
+          texture: {
+            scaleX: size.scale * (this.prototypeToken.texture.scaleX || 1),
+            scaleY: size.scale * (this.prototypeToken.texture.scaleY || 1),
+          },
+        });
+      }
+    }
+
+    return super.getTokenDocument(data, options);
+  }
+
   /* -------------------------------------------- */
 
   /* -------------------------------------------- */
@@ -2141,8 +2167,6 @@ export class ActorPF extends ActorBasePF {
     if (context.diff === false || context.recursive === false) return; // Don't diff if we were told not to diff
 
     const oldData = this.system;
-
-    this._syncProtoTokenSize(changed);
 
     // Offset HP values
     const attributes = changed.system.attributes;
@@ -2222,34 +2246,6 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * Synchronize prototype token sizing with actor size.
-   *
-   * @internal
-   * @param {object} changed - Pre-uppdate data
-   */
-  _syncProtoTokenSize(changed) {
-    const sizeKey = changed.system.traits?.size;
-    if (!sizeKey) return;
-
-    if (this.token) return;
-
-    const staticSize =
-      changed.prototypeToken?.flags?.pf1?.staticSize ?? this.prototypeToken.getFlag("pf1", "staticSize") ?? false;
-    if (staticSize) return;
-
-    const size = pf1.config.tokenSizes[sizeKey];
-    if (!size) return;
-
-    changed.prototypeToken ??= {};
-    if (changed.prototypeToken?.width === undefined) {
-      changed.prototypeToken.width = size.w;
-    }
-    if (changed.prototypeToken?.height === undefined) {
-      changed.prototypeToken.height = size.h;
-    }
-  }
-
-  /**
    * Synchronize actor and token vision
    *
    * @internal
@@ -2311,11 +2307,8 @@ export class ActorPF extends ActorBasePF {
       this.updateVision(initializeVision, refreshLighting);
     }
 
-    if (sourceUser) {
-      const sizeKey = changed.system.traits?.size;
-      if (sizeKey !== undefined) {
-        this._updateTokenSize(sizeKey);
-      }
+    if (sourceUser && changed?.system?.traits?.size?.base) {
+      this.updateTokenSize();
     }
   }
 
@@ -2327,12 +2320,18 @@ export class ActorPF extends ActorBasePF {
    * @todo Add option to update token size on all scenes.
    *
    * @internal
-   * @param {string} sizeKey - New size key
+   * @param {string} [sizeKey] - Size key to update to. If not provided, will use actor's current size.
    * @param {object} [options] - Additional options
    * @returns {Promise<TokenDocument[]>|null} - Updated token documents, or null if no update was performed.
    * @throws {Error} - On invalid parameters
    */
-  async _updateTokenSize(sizeKey, options = {}) {
+  async updateTokenSize(sizeKey = undefined, options = {}) {
+    if (!sizeKey) {
+      const sizes = Object.keys(pf1.config.tokenSizes);
+      sizeKey = sizes[this.getRollData({ refresh: true }).tokenSize];
+      if (sizeKey === undefined) return;
+    }
+
     const size = pf1.config.tokenSizes[sizeKey];
     if (!size) throw new Error(`Size key "${sizeKey}" is invalid`);
     const scene = canvas.scene;
@@ -2862,12 +2861,13 @@ export class ActorPF extends ActorBasePF {
 
     // Alter attack ability
     const atkAbl = this.system.attributes?.attack?.[`${ranged ? "ranged" : "melee"}Ability`];
-    atkData.abiliy ??= {};
+    atkData.ability ??= {};
     atkData.ability.attack = ability ?? (atkAbl || (ranged ? "dex" : "str"));
 
     // Alter activation type
     atkData.activation ??= {};
     atkData.activation.type = "attack";
+    atkData.activation.unchained ??= {};
     atkData.activation.unchained.type = "attack";
 
     // Generate temporary item
@@ -4353,7 +4353,7 @@ export class ActorPF extends ActorBasePF {
     const carryCapacity = this.system.details?.carryCapacity ?? {};
     const carryStr = this.system.abilities.str.total + carryCapacity.bonus?.total;
     let carryMultiplier = carryCapacity.multiplier?.total;
-    const size = this.system.traits.size;
+    const size = this.system.traits.size.base;
     if (this.system.attributes.quadruped) carryMultiplier *= pf1.config.encumbranceMultipliers.quadruped[size];
     else carryMultiplier *= pf1.config.encumbranceMultipliers.normal[size];
     const table = pf1.config.encumbranceLoads;
@@ -4520,8 +4520,9 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Set size index
-    const sizeChart = Object.keys(pf1.config.sizeChart);
-    result.size = sizeChart.indexOf(result.traits.size);
+    const sizes = Object.values(pf1.config.sizeChart);
+    result.size = Math.clamp(result.traits.size.value, 0, sizes.length - 1);
+    result.tokenSize = Math.clamp(result.traits.size.token, 0, sizes.length - 1);
 
     // Add more info for formulas
     result.armor = { type: 0, total: 0, ac: 0, enh: 0 };

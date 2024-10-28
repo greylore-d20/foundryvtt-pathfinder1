@@ -2317,6 +2317,8 @@ export const buffTargets = /** @type {const} */ ({
   },
   carryStr: { label: "PF1.CarryStrength", category: "misc", sort: 60000, filters: { ...baseActorFilters() } },
   carryMult: { label: "PF1.CarryMultiplier", category: "misc", sort: 61000, filters: { ...baseActorFilters() } },
+  size: { label: "PF1.Size", category: "misc", sort: 63000, filters: { ...baseActorFilters() } },
+  tokenSize: { label: "PF1.TokenSize", category: "misc", sort: 63250, filters: { ...baseActorFilters() } },
   strSkills: { label: "PF1.BuffTarStrSkills", category: "skills", sort: 70000 }, // TODO: Should be deferred
   dexSkills: { label: "PF1.BuffTarDexSkills", category: "skills", sort: 71000 }, // TODO: Should be deferred
   conSkills: { label: "PF1.BuffTarConSkills", category: "skills", sort: 72000 }, // TODO: Should be deferred

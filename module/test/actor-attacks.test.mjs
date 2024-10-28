@@ -96,14 +96,14 @@ export const registerActorItemAttackTests = () => {
               let rolls;
               let prevSize;
               before(async () => {
-                prevSize = actor.system.traits.size;
-                await actor.update({ "system.traits.size": "tiny" });
+                prevSize = actor.system.traits.size.base;
+                await actor.update({ "system.traits.size.base": "tiny" });
                 roll = await items.aLongsword.use({ skipDialog: true });
                 messages.push(roll);
                 rolls = roll.systemRolls.attacks[0];
               });
               after(async () => {
-                await actor.update({ "system.traits.size": prevSize });
+                await actor.update({ "system.traits.size.base": prevSize });
               });
 
               it("should have the correct attack formula", function () {
@@ -121,13 +121,13 @@ export const registerActorItemAttackTests = () => {
               let prevSize;
               before(async () => {
                 prevSize = actor.system.traits.size;
-                await actor.update({ "system.traits.size": "huge" });
+                await actor.update({ "system.traits.size.base": "huge" });
                 roll = await items.aLongsword.use({ skipDialog: true });
                 messages.push(roll);
                 rolls = roll.systemRolls.attacks[0];
               });
               after(async () => {
-                await actor.update({ "system.traits.size": prevSize });
+                await actor.update({ "system.traits.size.base": prevSize });
               });
 
               it("should have the correct attack formula", function () {

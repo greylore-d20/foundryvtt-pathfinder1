@@ -225,7 +225,7 @@ export class ActorSheetPF extends ActorSheet {
     {
       const attributes = context.system.attributes,
         abilities = context.system.abilities,
-        sizeModifier = pf1.config.sizeMods[context.system.traits.size],
+        sizeModifier = Object.values(pf1.config.sizeMods)[context.system.traits.size.value],
         baseBonus = attributes.attack.shared + attributes.attack.general + sizeModifier,
         meleeAbility = abilities[attributes.attack.meleeAbility]?.mod ?? 0,
         rangedAbility = abilities[attributes.attack.rangedAbility]?.mod ?? 0;
@@ -1481,11 +1481,14 @@ export class ActorSheetPF extends ActorSheet {
           // omit: + @attributes.attack.general
         });
 
-        if (system.traits.size !== "med") {
-          sources.push({
-            sources: [{ name: game.i18n.localize("PF1.Size"), value: pf1.config.sizeSpecialMods[system.traits.size] }],
-          });
-        }
+        sources.push({
+          sources: [
+            {
+              name: game.i18n.localize("PF1.Size"),
+              value: Object.values(pf1.config.sizeSpecialMods)[system.traits.size.value],
+            },
+          ],
+        });
 
         if (system.attributes.cmbAbility) {
           sources.push({
@@ -1646,7 +1649,11 @@ export class ActorSheetPF extends ActorSheet {
         break;
       }
       case "size":
-        paths.push({ path: "@traits.size", value: system.traits.size }, { path: "@size", value: lazy.rollData.size });
+        paths.push(
+          { path: "@traits.size.base", value: system.traits.size.base },
+          { path: "@size", value: lazy.rollData.size },
+          { path: "@tokenSize", value: lazy.rollData.tokenSize }
+        );
         break;
       case "stature":
         paths.push({ path: "@traits.stature", value: system.traits.stature });
@@ -2247,16 +2254,14 @@ export class ActorSheetPF extends ActorSheet {
               }
             );
 
-            if (system.traits.size !== "med") {
-              sources.push({
-                sources: [
-                  {
-                    name: game.i18n.localize("PF1.Size"),
-                    value: pf1.config.sizeMods[system.traits.size],
-                  },
-                ],
-              });
-            }
+            sources.push({
+              sources: [
+                {
+                  name: game.i18n.localize("PF1.Size"),
+                  value: Object.values(pf1.config.sizeMods)[system.traits.size.value],
+                },
+              ],
+            });
 
             sources.push({ sources: getSource("system.attributes.attack.general") });
             sources.push({ sources: getSource(`system.attributes.attack.${subTarget}`) });
@@ -4033,7 +4038,7 @@ export class ActorSheetPF extends ActorSheet {
     // But do so only when the drop originates from compendium or items directory
     if (source.isPhysical) {
       if (fromCompendium || fromItemsDir) {
-        data.system.size = this.actor.system.traits?.size || "med";
+        data.system.size = this.actor.system.traits?.size?.base || "med";
       }
     }
   }

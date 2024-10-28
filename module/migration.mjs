@@ -723,6 +723,7 @@ export async function migrateActorData(actorData, token, { actor } = {}) {
   _migrateActorDRandER(actorData, updateData);
   _migrateActorTraitsCustomToArray(actorData, updateData);
   _migrateActorFlags(actorData, updateData);
+  _migrateActorSize(actorData, updateData);
 
   // Migrate Owned Items
   const items = [];
@@ -2910,6 +2911,20 @@ const _migrateActorFlags = (actorData, updateData) => {
     );
     updateData["flags.pf1.-=visionPermission"] = null;
   }
+};
+
+/**
+ * @param actorData
+ * @param updateData
+ * @since PF1 vNEXT
+ */
+const _migrateActorSize = (actorData, updateData) => {
+  const sizeData = actorData.system.traits.size;
+  if (typeof sizeData === "object") return;
+
+  updateData["system.traits.size"] = {
+    base: sizeData || "med",
+  };
 };
 
 const _Action_ConvertDamageType = function (damageTypeString) {

@@ -878,8 +878,8 @@ export class ItemAction extends CompactingMixin(DocumentLikeModel) {
 
     // Determine size bonus
     if (this.hasAttack) {
-      const size = result.traits?.size || "med";
-      result.sizeBonus = this.isCombatManeuver ? pf1.config.sizeSpecialMods[size] : pf1.config.sizeMods[size];
+      const size = result.size || 4;
+      result.sizeBonus = Object.values(this.isCombatManeuver ? pf1.config.sizeSpecialMods : pf1.config.sizeMods)[size];
     }
 
     // BAB override

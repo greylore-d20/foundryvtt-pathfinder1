@@ -20,23 +20,20 @@ system:
       formula: '.5'
       target: carryMult
       type: untyped
+    - _id: wQ6lK0Ix
+      formula: '-1'
+      target: size
+      type: untyped
   description:
     value: >-
       <p>See @UUID[Compendium.pf1.spells.2y9e1l6zso9tdg0a] spell for
       details.</p><p>Included carry capacity adjustments partially account for
       your gear not changing in size.</p>
   duration:
+    end: turnStart
     units: minute
     value: '@item.level'
   level: 1
-  scriptCalls:
-    - _id: w7BponIBWaArrOiD
-      category: toggle
-      hidden: false
-      img: icons/svg/dice-target.svg
-      name: Toggle Actor Size (Reduce)
-      type: script
-      value: "if (!actor) return;\n\nconst defaultSize = 'med'; // Fallback if no size info is found\nconst naturalSize = actor.race?.system.size || defaultSize;\nconst currentSize = actor.system.traits?.size || defaultSize;\n\nlet newSize = naturalSize;\nif (state) {\n\tconst steps = Object.keys(pf1.config.sizeChart);\n\tconst current = steps.indexOf(currentSize);\n\tconst adjusted = Math.clamp(current - 1, 0, steps.length - 1);\n\tnewSize = steps[adjusted];\n}\n\nactor.update({ 'system.traits.size': newSize });\n"
   sources:
     - id: PZO1110
       pages: 330, 331

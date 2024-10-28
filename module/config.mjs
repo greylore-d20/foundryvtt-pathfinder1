@@ -2753,6 +2753,11 @@ export const temporaryRollDataFields = {
   ],
 };
 
+export const numericValueRollFunctionConfigMap = {
+  fly: "flyManeuverabilities",
+  size: "sizeChart",
+};
+
 export const traitSelector = {
   minChoicesForSearch: 6,
 };

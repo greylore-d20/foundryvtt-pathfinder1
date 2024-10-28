@@ -55,12 +55,22 @@ export class ExperienceDistributor extends DragDropApplicationMixin(HandlebarsAp
   _actors = [];
 
   constructor(options) {
-    const actorData = options?.actors;
-    delete options?.actors;
+    let actors = [];
+    if (options?.actors) {
+      foundry.utils.logCompatibilityWarning(
+        "ExperienceDistributor first parameter is no longer directly actor array. Please provide options object with actors property instead.",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        }
+      );
+      actors = options.actors ?? [];
+      delete options.actors;
+    }
 
     super(options);
 
-    this._actors = actorData?.map((o) => this.constructor.getActorData(o)).filter((o) => o != null) || [];
+    this._actors = actors.map((o) => this.constructor.getActorData(o)).filter((o) => !!o);
   }
 
   /* -------------------------------------------- */

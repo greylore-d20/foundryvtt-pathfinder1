@@ -47,6 +47,16 @@ export class AbstractDocumentSelector extends HandlebarsApplicationMixin(Applica
   };
 
   constructor(options) {
+    if (options?.title) {
+      foundry.utils.logCompatibilityWarning("AbstractDocumentSelector options title property is deprecated", {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      });
+      options.window ??= {};
+      options.window.title = options.title;
+      delete options.title;
+    }
+
     super(options);
     this.selected = this.options.selected || "";
   }

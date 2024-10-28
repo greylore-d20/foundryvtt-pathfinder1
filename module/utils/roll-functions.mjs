@@ -1,3 +1,5 @@
+import { numericValueRollFunctionConfigMap } from "@config";
+
 /**
  * Returns the result of a roll of die, which changes based on different sizes.
  *
@@ -236,6 +238,30 @@ function lookup(condition, fallback, ...results) {
 }
 
 /**
+ * `numericValue` roll function
+ *
+ * numericValue(type, value)
+ *
+ * @example
+ * ```txt
+ * numericValue(size, med)
+ * numericValue(fly, good)
+ * numericValue(age, old)
+ * ```
+ *
+ * @param {string} type
+ * @param {string|number} value
+ * @returns {number}
+ */
+function numericValue(type, value) {
+  if (typeof value === "number") return value;
+  const configKey = pf1.config.numericValueRollFunctionConfigMap[type];
+  if (!configKey) return -1;
+  const keys = Object.keys(pf1.config[configKey]);
+  return keys.indexOf(value);
+}
+
+/**
  * Roll functions
  *
  * @example
@@ -256,6 +282,7 @@ export const functions = {
   sizeRoll: sizeRollFn,
   sizeReach,
   lookup,
+  numericValue,
   ifelse,
   if: _if,
   eq: (a, b) => (a === b ? 1 : 0),

@@ -170,3 +170,24 @@ The results are 1-indexed, so 1 will give the first result. You can also treat t
 **Example**: `lookup(1d6, 0, 0, 2, 2, 4, 4, 5)` – Resulting in 1d6 roll turning into [1=0, 1=2, 3=2, 4=4, 5=4, 6=5] mapping.
 
 **Example**: `lookup(min(@class.level, 7), 0, 1, 1, 1, 2, 2, 2, 4)` – resulting in 1 to 4 range from level being 1 to 7 or higher with 7 or higher giving 1 more than previous increments.
+
+### `numericValue`
+
+A function that provides the numeric equivalent of configuration keys for certain system types.
+This is especially helpful for the change system to set specific values without having to rely on the
+configuration being static.
+
+Format is: `numericValue(type, key)`
+
+Returns `-1` if the requested key is not found within the type.
+
+Supported types are:
+
+- `fly` - Fly Maneuverability
+- `size` - Size Category
+
+**Example**: `numericValue(size, med)` - Returns the numeric equivalent of medium size, which by default is `4`.
+
+**Example**: `numericValue(fly, good)` - Returns `3` as the numeric equivalent of good fly maneuverability.
+
+**Example**: `numericValue(fly, invalid)` - Returns `-1` as the key is not found.
